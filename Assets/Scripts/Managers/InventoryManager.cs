@@ -13,6 +13,7 @@ public class InventoryManager : MonoBehaviour
 
     [Header("Set Dynamically")]
     public static InventoryManager Instance;
+    public bool boxActive = false;
 
     //Private Vars
     private List<Collectables> inventory;
@@ -205,13 +206,17 @@ public class InventoryManager : MonoBehaviour
 
     void Update()
     {
-        if(inventory.Count > 6 && GameManager.Instance.answers[9] > 0)
+        if(inventory.Count > 6 && System.Array.IndexOf(GameManager.Instance.answers, 0) == -1)
         {
             pandorasBox.SetActive(true);
-            /*Component halo = podiums[8].GetComponent("Halo");
-            halo.GetType().GetProperty("enabled").SetValue(halo, true, null);*/
+            boxActive = true;
+            TextManager.Instance.SetWinText();
             podiums[8].SetActive(true); // green pandora podium
             podiums[9].SetActive(false); // red pandora podium
+        }
+        else if(System.Array.IndexOf(GameManager.Instance.answers, 0) == -1 && inventory.Count <= 6)
+        {
+            TextManager.Instance.SetLoseText();
         }
     }
 }

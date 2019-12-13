@@ -39,14 +39,7 @@ public class RiddleSpot : MonoBehaviour
             {
                 if((Input.GetKeyDown(KeyCode.A) || OVRInput.Get(OVRInput.Button.One)))
                 {
-                    if(roomNum == 0)
-                    {
-                        answer = 0;
-                    }
-                    else
-                    {
-                        answer = 1;
-                    }
+                    answer = 1;
                     GameManager.Instance.answers[roomNum] = 1;
                     onSpot = false;
                     TextManager.Instance.SetResultText(roomNum,answer,correctAnswer);
@@ -57,7 +50,7 @@ public class RiddleSpot : MonoBehaviour
                 {
                     if(roomNum == 0)
                     {
-                        answer = 0;
+                        answer = 1;
                     }
                     else
                     {

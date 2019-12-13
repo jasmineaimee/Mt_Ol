@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public GameObject[] riddleSpots;
     public int[] answers = new int[10] {0,0,0,0,0,0,0,0,0,0};
     public GameObject[] doors;
+    public GameObject pandoraDoor;
     public Material wood;
 
 
@@ -36,6 +37,17 @@ public class GameManager : MonoBehaviour
     {
         Instance = this;
         playerStartY = ovrPlayer.transform.position.y;
+        if(!PlayerPrefs.HasKey("loadGame"))
+        {
+            Debug.Log("Something went wrong. Could not find player prefs");
+        }
+        else
+        {
+            if(PlayerPrefs.GetInt("loadGame") == 1)
+            {
+                Invoke("Load", 1f);
+            }
+        }
     }
 
     public void Save()
@@ -105,6 +117,7 @@ public class GameManager : MonoBehaviour
             playerStartY = ovrPlayer.transform.position.y;
             teleportLocation = new Vector3(underTeleport.x, underTeleport.y + playerStartY, underTeleport.z); // if on hades teleport go to underworld
         }
+        SoundManager.Instance.PlayOneShot(SoundManager.Instance.teleportClip);
 
         Invoke("Teleport", .5f);
     }

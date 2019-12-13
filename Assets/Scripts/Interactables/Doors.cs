@@ -8,11 +8,14 @@ public class Doors : MonoBehaviour
     [Header("Set in Inspector")]
     public float yOpenRot;
     public float yCloseRot;
+
+    [Header("Set Dynamically")]
+    public float yRot;
+    public bool turning = false;
     
     // Private Vars
     private float timer = 0.0f;
-    private bool turning = false;
-    private float yRot;
+    
 
     void Start()
     {

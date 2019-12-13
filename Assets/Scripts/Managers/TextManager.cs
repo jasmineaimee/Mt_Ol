@@ -8,6 +8,7 @@ public class TextManager : MonoBehaviour
     [Header("T E X T  M A N A G E R")]
     [Header("Set In Inspector")]
     public TextMeshPro[] riddleText;
+    public TextMeshPro winText;
     [Header("Set Dynamically")]
     public static TextManager Instance;
 
@@ -43,6 +44,16 @@ public class TextManager : MonoBehaviour
         riddleText[num].text = ready;
     }
 
+    public void SetWinText()
+    {
+        winText.text = "Winner!";
+    }
+
+    public void SetLoseText()
+    {
+        winText.text = "You Lost!";
+    }
+
     public void SetResultText(int num, int answer, int correctAnswer)
     {
         Debug.Log(num + " " + (answer == correctAnswer));
@@ -52,10 +63,12 @@ public class TextManager : MonoBehaviour
             riddleText[num].text = correct;
             InventoryManager.Instance.SetGrabbable(num);
             InventoryManager.Instance.SetCollectableActive(num);
+            SoundManager.Instance.PlayOneShot(SoundManager.Instance.correctClip);
         }
         else
         {
             riddleText[num].text = incorrect;
+            SoundManager.Instance.PlayOneShot(SoundManager.Instance.incorrectClip);
         }
     }
 }

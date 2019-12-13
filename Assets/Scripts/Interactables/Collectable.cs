@@ -17,7 +17,8 @@ public class Collectable : MonoBehaviour
             InventoryManager.Instance.AddToInventory(type);
             InventoryManager.Instance.SetPodiumHalo(type);
             InventoryManager.Instance.MoveCollectable(this);
-            this.GetComponent<CapsuleCollider>().enabled = false;
+            SoundManager.Instance.PlayOneShot(SoundManager.Instance.collectableClip);
+            this.GetComponent<Collider>().enabled = false;
         }
     }
 }
