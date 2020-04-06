@@ -11,7 +11,6 @@ public class SoundManager : MonoBehaviour
     public AudioClip incorrectClip;
     public AudioClip correctClip;
     public AudioClip teleportClip;
-    public AudioSource backgroundMusic;
     public AudioMixer masterMixer;
     
     [Header("Set Dynamically")]
@@ -50,11 +49,6 @@ public class SoundManager : MonoBehaviour
             soundLevel = -80.0f;
         }
         masterMixer.SetFloat("masterSound", soundLevel);
-    }
-
-    public void MuteBackground()
-    {
-        backgroundMusic.mute = !backgroundMusic.mute;
     }
 
     public void MuteEffects()
