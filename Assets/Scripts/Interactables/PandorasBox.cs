@@ -10,11 +10,6 @@ public class PandorasBox : Collectable
         type = Collectables.Box;
     }
 
-    void Update()
-    {
-        transform.Rotate(5f, 5f, 5f);
-    }
-
     void OnTriggerEnter(Collider other)
     {
         // just to override the other stuff in collectable (keeping this class as a collectiable child for future grabbing implementation)

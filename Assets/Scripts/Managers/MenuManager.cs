@@ -13,7 +13,7 @@ public class MenuManager : MonoBehaviour
     public Vector3 prevLoc = new Vector3(0f,0f,0f);
 
     // Private Vars
-    private bool inventoryOpen = false;
+    //private bool inventoryOpen = false;
 
     void Start()
     {

@@ -7,12 +7,11 @@ public class SoundManager : MonoBehaviour
 {
     [Header("S O U N D  M A N A G E R")]
     [Header("Set In Inspector")]
-    public AudioClip collectableClip;
+    //public AudioClip collectableClip;
     public AudioClip incorrectClip;
     public AudioClip correctClip;
     public AudioClip teleportClip;
     public AudioMixer masterMixer;
-    
     [Header("Set Dynamically")]
     public static SoundManager Instance;
 

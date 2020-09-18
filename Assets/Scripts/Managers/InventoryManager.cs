@@ -10,6 +10,7 @@ public class InventoryManager : MonoBehaviour
     public GameObject[] chestLids;
     public GameObject[] podiums;
     public GameObject pandorasBox;
+    public GameObject pandora;
 
     [Header("Set Dynamically")]
     public static InventoryManager Instance;
@@ -118,7 +119,7 @@ public class InventoryManager : MonoBehaviour
                 deceitHalo.GetType().GetProperty("enabled").SetValue(deceitHalo, true, null);
                 break;
             default:
-                Debug.Log("Collectable type somehow out of bounds?.");
+                Debug.Log("Collectable type somehow out of bounds?");
                 break;    
         }
     }
@@ -129,32 +130,23 @@ public class InventoryManager : MonoBehaviour
         {
             case Collectables.Dirt:
                 return podiums[0].transform.position;
-                break;
             case Collectables.Water:
                 return podiums[1].transform.position;
-                break;
             case Collectables.Clothing:
                 return podiums[2].transform.position;
-                break;
             case Collectables.Grace:
                 return podiums[3].transform.position;
-                break;
             case Collectables.Jewellery:
                 return podiums[4].transform.position;
-                break;
             case Collectables.Flowers:
                 return podiums[5].transform.position;
-                break;
             case Collectables.Wovens:
                 return podiums[6].transform.position;
-                break;
             case Collectables.Deceit:
                 return podiums[7].transform.position;
-                break;
             default:
                 Debug.Log("No podium to grab or out of bounds. " + type);
                 return Vector3.zero;
-                break;
         }
     }
 
@@ -193,7 +185,7 @@ public class InventoryManager : MonoBehaviour
                 collectableGOs[7].SetActive(true);
                 break;
             default:
-                Debug.Log("No collectable to activate or out of bounds. " + num);
+                Debug.Log("No collectable to activate or out of bounds: " + num);
                 break;
         }
     }
@@ -209,6 +201,7 @@ public class InventoryManager : MonoBehaviour
         if(inventory.Count > 6 && System.Array.IndexOf(GameManager.Instance.answers, 0) == -1)
         {
             pandorasBox.SetActive(true);
+            pandora.SetActive(true);
             boxActive = true;
             TextManager.Instance.SetWinText();
             podiums[8].SetActive(true); // green pandora podium
@@ -217,6 +210,10 @@ public class InventoryManager : MonoBehaviour
         else if(System.Array.IndexOf(GameManager.Instance.answers, 0) == -1 && inventory.Count <= 6)
         {
             TextManager.Instance.SetLoseText();
+        }
+        else
+        {
+            TextManager.Instance.SetContinueText();
         }
     }
 }

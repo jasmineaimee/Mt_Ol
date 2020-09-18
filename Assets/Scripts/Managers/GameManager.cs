@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
     
     // Private Vars
     private Vector3 loadPos = Vector3.zero;
-    private bool loading = false;
+    //private bool loading = false;
 
     void Start()
     {
@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour
     {
         if(File.Exists(Application.persistentDataPath + "/gamesave.save"))
         {
-            loading = true;
+            //loading = true;
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(Application.persistentDataPath + "/gamesave.save", FileMode.Open);
             Save save = (Save) bf.Deserialize(file);
@@ -119,12 +119,13 @@ public class GameManager : MonoBehaviour
         }
         SoundManager.Instance.PlayOneShot(SoundManager.Instance.teleportClip);
 
-        Invoke("Teleport", .5f);
+        StartCoroutine(Teleport());
     }
 
 
-    public void Teleport()
+    public IEnumerator Teleport()
     {
+        yield return new WaitForSeconds(0.5f);
         ovrPlayer.transform.position = teleportLocation;
         ovrPlayer.transform.rotation = Quaternion.identity;
         isPlayerActive = true;
@@ -170,6 +171,11 @@ public class GameManager : MonoBehaviour
                 Debug.Log("No door to change or out of bounds. " + num);
                 break;
         }
+    }
+
+    public void ControlMovement(bool enableMove)
+    {
+        ovrPlayer.GetComponent<OVRPlayerController>().EnableLinearMovement = enableMove;
     }
     
      void Update()

@@ -63,12 +63,12 @@ public class OvrAvatarTestDriver : OvrAvatarDriver {
                 voiceAmplitude = voiceAmplitude,
                 headPosition = headPos,
                 headRotation = headRot,
-                handLeftPosition = OVRInput.GetLocalControllerPosition(OVRInput.Controller.LTrackedRemote),
-                handLeftRotation = OVRInput.GetLocalControllerRotation(OVRInput.Controller.LTrackedRemote),
-                handRightPosition = OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTrackedRemote),
-                handRightRotation = OVRInput.GetLocalControllerRotation(OVRInput.Controller.RTrackedRemote),
-                controllerLeftPose = GetMalibuControllerPose(OVRInput.Controller.LTrackedRemote),
-                controllerRightPose = GetMalibuControllerPose(OVRInput.Controller.RTrackedRemote),
+                // handLeftPosition = OVRInput.GetLocalControllerPosition(OVRInput.Controller.LTrackedRemote),
+                // handLeftRotation = OVRInput.GetLocalControllerRotation(OVRInput.Controller.LTrackedRemote),
+                // handRightPosition = OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTrackedRemote),
+                // handRightRotation = OVRInput.GetLocalControllerRotation(OVRInput.Controller.RTrackedRemote),
+                // controllerLeftPose = GetMalibuControllerPose(OVRInput.Controller.LTrackedRemote),
+                // controllerRightPose = GetMalibuControllerPose(OVRInput.Controller.RTrackedRemote),
             };
         }
         else

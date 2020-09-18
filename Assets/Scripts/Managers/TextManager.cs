@@ -49,6 +49,11 @@ public class TextManager : MonoBehaviour
         winText.text = "Winner!";
     }
 
+    public void SetContinueText()
+    {
+        winText.text = "Keep Looking";
+    }
+
     public void SetLoseText()
     {
         winText.text = "You Lost!";
