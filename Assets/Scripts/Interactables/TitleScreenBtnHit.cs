@@ -6,7 +6,7 @@ public class TitleScreenBtnHit : MonoBehaviour
 {
     [Header("T I T L E S C R E E N B T N H I T")]
     [Header("Set In Inspector")]
-    public string thisName;
+    public string thisName; // which button this is
     void OnTriggerEnter(Collider other)
     {
         TitleScreen.Instance.ButtonHit(thisName);

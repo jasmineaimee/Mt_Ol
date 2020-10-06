@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class RiddleSpot : MonoBehaviour
 {
+    // TODO: Comments
     [Header("R I D D L E  S P O T")]
     [Header("Set In Inspector")]
     public int roomNum;
@@ -12,8 +13,10 @@ public class RiddleSpot : MonoBehaviour
     [Header("Set Dynamically")]
     public int answer;
 
-    //Private Vars
-    private bool onSpot = false;
+    public bool onSpot {
+        get;
+        private set;
+    }
 
     void OnTriggerEnter(Collider other)
     {

@@ -8,20 +8,21 @@ public class SoundManager : MonoBehaviour
     [Header("S O U N D  M A N A G E R")]
     [Header("Set In Inspector")]
     //public AudioClip collectableClip;
-    public AudioClip incorrectClip;
-    public AudioClip correctClip;
-    public AudioClip teleportClip;
-    public AudioMixer masterMixer;
+    public AudioClip incorrectClip; // clip that plays when player doesn't solve riddle
+    public AudioClip correctClip; // clip that plays when player solves riddle
+    public AudioClip teleportClip; // clip that plays when teleporting player
+    public AudioMixer masterMixer; // the sound mixer
     [Header("Set Dynamically")]
-    public static SoundManager Instance;
+    public static SoundManager Instance; // only want one SoundManager
 
     // Private Vars
-    private AudioSource soundEffectAudio;
-    private float soundLevel = -80.0f;
+    private AudioSource soundEffectAudio; // which sound effect channel
+    private float soundLevel = -80.0f; // to mute or unmute sounds.
 
     void Start()
     {
         Instance = this;
+        // grab all audiosources on this gameObject if it doesn't already have a clip, that's for sound effects.
         AudioSource[] sources = GetComponents<AudioSource>();
         foreach(AudioSource source in sources)
         {
@@ -34,11 +35,13 @@ public class SoundManager : MonoBehaviour
 
     public void PlayOneShot(AudioClip clip)
     {
+        // play the sound effect once
         soundEffectAudio.PlayOneShot(clip);
     }
 
     public void MuteGame()
     {
+        // toggle mute.
         if(soundLevel == -80.0f)
         {
             soundLevel = -20.0f;
@@ -52,6 +55,7 @@ public class SoundManager : MonoBehaviour
 
     public void MuteEffects()
     {
+        // mute sound effects
         soundEffectAudio.mute = !soundEffectAudio.mute;
     }
 }

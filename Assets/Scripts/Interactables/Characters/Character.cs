@@ -6,9 +6,9 @@ abstract public class Character : MonoBehaviour
 {
     public float friendshipLevel = 0f; // current friendship level with the player
     public bool missionActive = false; // if the player is currently accomplishing this mission
-    public string[] talkingPoints = new string[4]; // things tio say when not in mission
+    public string[] talkingPoints = new string[4]; // things to say when not in mission
     public string[] missionStatement = new string[4]; // mission statements
-    public Animator animator;
+    public Animator animator; // the characters animator
 
     // Protcted Vars
     protected List<Character> friends = new List<Character>(); // other characters this one is friendly with
@@ -35,13 +35,15 @@ abstract public class Character : MonoBehaviour
 
     public void ControlSpeaking()
     {
+        // if speaking to the character, start character animation, and disable player linear movement or vice versa
         animator.SetBool("isSpeaking",isSpeaking);
         GameManager.Instance.ControlMovement(!isSpeaking);
     }
 
     protected virtual void Update()
     {
-        if(inRange)
+        // if player in range of the character, and not already speaking to them, if press A, we can speak to them
+        if(inRange && !isSpeaking)
         {
             if((Input.GetKeyDown(KeyCode.A) || OVRInput.Get(OVRInput.Button.One)))
             {
@@ -50,6 +52,7 @@ abstract public class Character : MonoBehaviour
             }
         }
 
+        // if speaking to the character and press B, exit dialogue
         if(isSpeaking)
         {
             if((Input.GetKeyDown(KeyCode.B) || OVRInput.Get(OVRInput.Button.Two)))
@@ -62,6 +65,7 @@ abstract public class Character : MonoBehaviour
 
     protected void OnTriggerEnter(Collider other)
     {
+        // ? Could i do this with vector3 distance in update instead of a huge ass hitbox?
         if(other.tag == "lHand" || other.tag == "rHand")
         {
             inRange = true;
@@ -70,6 +74,7 @@ abstract public class Character : MonoBehaviour
     
     protected void OnTriggerExit(Collider other)
     {
+        // ? Could i do this with vector3 distance in update instead of a huge ass hitbox?
         if(other.tag == "lHand" || other.tag == "rHand")
         {
             inRange = false;

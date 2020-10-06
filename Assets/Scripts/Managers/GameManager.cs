@@ -5,28 +5,34 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine.UI;
 
+
+// REFERENCES
+// Text Riddle Answers: start = a/b, hephaistos = a, aphrodite = a, kharities = b, inventory/pandora, hera = a, athena = b, hades = b, hermes = b, zeus = a, underworld = a
+// RoomNums: 0 = Start, 1 = Hephaistos, 2 = Aphrodite, 3 = Kharities, 4 = Hera, 5 = Athena, 6 = Hades, 7 = Underworld, 8 = Hermes, 9 = Zeus
+// Collectables: Dirt, Water, Clothing, Grace, Jewellery, Flowers, Wovens, Deceit, Box
+
 public class GameManager : MonoBehaviour
 {
     [Header("G A M E  M A N A G E R")]
     [Header("Set In Inspector")]
-    public GameObject ovrPlayer;
-    public GameObject cameraRig;
-    public GameObject[] riddleSpots;
-    public int[] answers = new int[10] {0,0,0,0,0,0,0,0,0,0};
-    public GameObject[] doors;
-    public GameObject pandoraDoor;
-    public Material wood;
+    public GameObject ovrPlayer; // vr player
+    public GameObject cameraRig; // vr camera
+    public GameObject[] riddleSpots; // all the RiddleSpots in the game in room order.
+    public int[] answers = new int[10] {0,0,0,0,0,0,0,0,0,0}; // player's answers to the riddles, in room order
+    public GameObject[] doors; // all the doors in the game, in room order
+    public GameObject pandoraDoor; // inventory room door
+    public Material wood; // door material
 
 
     [Header("Set Dynamically")]
-    public static GameManager Instance;
-    public bool isPlayerActive = true;
-    public bool recentre = false;
-    public Vector3 teleportLocation;
-    public Vector3 underTeleport;
-    public Vector3 hadesTeleport;
-    public Vector3 menuTeleport;
-    public float playerStartY;
+    public static GameManager Instance; // only want one GameManager
+    public bool isPlayerActive = true; // false if the player being teleported right now
+    public bool recentre = false; // should we recentre the local positions of vr player/camera
+    public Vector3 teleportLocation; // where are we going?
+    public Vector3 underTeleport; // underworld teleport location
+    public Vector3 hadesTeleport; // hades room teleport location
+    public Vector3 menuTeleport; // menu player positon
+    public float playerStartY; // player's y position (so they don't become real short or hella tall after teleport)
     
     
     // Private Vars
@@ -36,6 +42,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         Instance = this;
+        // grab the player's y position for teleportion reasons
         playerStartY = ovrPlayer.transform.position.y;
         if(!PlayerPrefs.HasKey("loadGame"))
         {
@@ -52,6 +59,7 @@ public class GameManager : MonoBehaviour
 
     public void Save()
     {
+        // turn data into binary format and save to persistent data
         Save save = CreateSave();
 
         BinaryFormatter bf = new BinaryFormatter();
@@ -64,6 +72,7 @@ public class GameManager : MonoBehaviour
 
     public void Load()
     {
+        // if player has previously saved, there will be persistent data, and we can pull it.
         if(File.Exists(Application.persistentDataPath + "/gamesave.save"))
         {
             //loading = true;
@@ -125,6 +134,7 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator Teleport()
     {
+        // after half a second, move player to new location and restore movement
         yield return new WaitForSeconds(0.5f);
         ovrPlayer.transform.position = teleportLocation;
         ovrPlayer.transform.rotation = Quaternion.identity;
@@ -134,6 +144,7 @@ public class GameManager : MonoBehaviour
 
     public void ChangeDoorMaterial(int num)
     {
+        // riddle has been answered, change door material.
         switch(num)
         {
             case 0:
@@ -175,11 +186,13 @@ public class GameManager : MonoBehaviour
 
     public void ControlMovement(bool enableMove)
     {
+        // set if player can move right now
         ovrPlayer.GetComponent<OVRPlayerController>().EnableLinearMovement = enableMove;
     }
     
      void Update()
     {
+        // check if player is active and recenter local positions if necessary
         ovrPlayer.GetComponent<CharacterController>().enabled = isPlayerActive;
         if(recentre)
         {
@@ -192,6 +205,7 @@ public class GameManager : MonoBehaviour
 
     private Save CreateSave()
     {
+        // save data in the Save script for binary formatting.
         Save save = new Save();
         Vector3 pos = MenuManager.Instance.prevLoc;
         save.playerPositionX = pos.x;

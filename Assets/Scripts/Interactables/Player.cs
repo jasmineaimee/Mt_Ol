@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     //[Header("Set Dynamically")]
     // collectable booleans
     // current location?
-    public static Player Instance;
+    public static Player Instance; // only want one Player
     
 
     void Awake()

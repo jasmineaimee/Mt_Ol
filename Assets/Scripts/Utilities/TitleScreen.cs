@@ -7,13 +7,14 @@ public class TitleScreen : MonoBehaviour
 {
     [Header("T I T L E  S C R E E N")]
     [Header("Set Dynamically")]
-    public static TitleScreen Instance;
+    public static TitleScreen Instance; // only want one TitleScreen
     void Start()
     {
         Instance = this;
     }
     public void ButtonHit(string text)
     {
+        // which button player has hit
         switch(text)
         {
             case "PlayBtn":
@@ -33,6 +34,7 @@ public class TitleScreen : MonoBehaviour
 
     public void StartGame()
     {
+        // start new game
         PlayerPrefs.SetInt("loadGame", 0);
         PlayerPrefs.Save();
         SceneManager.LoadScene("_Scene_0");
@@ -40,6 +42,7 @@ public class TitleScreen : MonoBehaviour
 
     public void LoadGame()
     {
+        // load from previous save, if any
         PlayerPrefs.SetInt("loadGame", 1);
         PlayerPrefs.Save();
         SceneManager.LoadScene("_Scene_0");

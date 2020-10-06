@@ -6,23 +6,24 @@ public class InventoryManager : MonoBehaviour
 {
     [Header("I N V E N T O R Y  M A N A G E R")]
     [Header("Set In Inspector")]
-    public GameObject[] collectableGOs;
-    public GameObject[] chestLids;
-    public GameObject[] podiums;
-    public GameObject pandorasBox;
-    public GameObject pandora;
+    public GameObject[] collectableGOs; // The collectables in collectable order
+    public GameObject[] chestLids; // lids for collectable chests in room order
+    public GameObject[] podiums; // inventory room collectible podiums, in collectable order
+    public GameObject pandorasBox; // the final collectable
+    public GameObject pandora; // win character
 
     [Header("Set Dynamically")]
-    public static InventoryManager Instance;
-    public bool boxActive = false;
+    public static InventoryManager Instance; // only want one InventoryManager
+    public bool boxActive = false; // if box is showing
 
     //Private Vars
-    private List<Collectables> inventory;
-    private int tail = 0;
+    private List<Collectables> inventory; // player's current collected collectables
+    private int tail = 0; // end of the inventory list
 
     void Start()
     {
         Instance = this;
+        // set new inventory
         inventory = new List<Collectables>();
     }
 
@@ -51,6 +52,7 @@ public class InventoryManager : MonoBehaviour
 
     public void SetInventory(List<Collectables> inven)
     {
+        // called when loading saved data, update list, collectable locations, riddles, door materials
         inventory = inven;
         foreach(Collectables i in inventory)
         {
@@ -78,12 +80,14 @@ public class InventoryManager : MonoBehaviour
 
     public void SetLidHalo(int num)
     {
+        // add or remove halo from chest lid.
         Component lidHalo = chestLids[num].GetComponent("Halo");
         lidHalo.GetType().GetProperty("enabled").SetValue(lidHalo, true, null);
     }
 
     public void SetPodiumHalo(Collectables type)
     {
+        // set podium halos when collectable is added to inventory
         switch(type)
         {
             case Collectables.Dirt:
@@ -126,6 +130,7 @@ public class InventoryManager : MonoBehaviour
 
     public Vector3 GetPodiumLocation(Collectables type)
     {
+        // return the position of the matching collectable's podium
         switch(type)
         {
             case Collectables.Dirt:
@@ -152,12 +157,14 @@ public class InventoryManager : MonoBehaviour
 
     public void SetGrabbable(int num)
     {
+        // set the lid to be able to be grabbed
         SetLidHalo(num);
         chestLids[num].GetComponent<OVRGrabbable>().allowOffhandGrab = true;
     }
 
     public void SetCollectableActive(int num)
     {
+        // if the player solved the riddle correctly, put collectable in box for player to grab.
         switch(num)
         {
             case 0:
@@ -192,12 +199,16 @@ public class InventoryManager : MonoBehaviour
 
     public void MoveCollectable(Collectable collectable)
     {
+        // shift collectables from box to podium
         Vector3 location = GetPodiumLocation(collectable.type);
         collectable.gameObject.transform.position = new Vector3(location.x, location.y + 1.0f, location.z);
     }
 
     void Update()
     {
+        // if player has answered all the riddles, and solved at least 6 of the 8 that had collectables, they won. show box, pandora, and win
+        // otherwise set lose
+        // if not answered all riddles, we just continue
         if(inventory.Count > 6 && System.Array.IndexOf(GameManager.Instance.answers, 0) == -1)
         {
             pandorasBox.SetActive(true);

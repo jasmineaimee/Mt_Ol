@@ -9,7 +9,6 @@ public class Collectable : MonoBehaviour
     [Header("Set in Inspector")]
     public Collectables type;
     public int roomNum;
-    public float bodySize; // is for chunity mandolin
 
     private void OnTriggerEnter(Collider other)
     {

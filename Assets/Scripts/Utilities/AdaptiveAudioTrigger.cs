@@ -5,10 +5,11 @@ using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider))]
 public class AdaptiveAudioTrigger : MonoBehaviour {
-    public int triggerLevel;
+    public int triggerLevel; // what level area this is
     
     void OnDrawGizmosSelected()
     {
+        // color box colliders in scene; not game tho
         Gizmos.color = GetGizmoColor();
         Gizmos.matrix = transform.localToWorldMatrix;
         Gizmos.DrawWireCube(Vector3.zero, GetComponent<BoxCollider>().size);        
@@ -44,7 +45,8 @@ public class AdaptiveAudioTrigger : MonoBehaviour {
     }
 
     void OnTriggerEnter(Collider collider)
-    {        
+    {
+        // change bg music when entering new area
         AdaptiveAudioManager.Instance.AdjustAudioLevel(triggerLevel);
     }
 
@@ -52,6 +54,7 @@ public class AdaptiveAudioTrigger : MonoBehaviour {
 
     void OnTriggerExit(Collider collider)
     {
+        // if not in area, play default.
         AdaptiveAudioManager.Instance.AdjustAudioLevel(2);
     }    
 }

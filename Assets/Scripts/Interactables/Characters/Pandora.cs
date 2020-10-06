@@ -10,8 +10,9 @@ public class Pandora : Character
         base.Start();
     }
 
-    protected override void Update()
+    protected override void Update() //Pandora isn't a speaking character, so we override update.
     {
+        // if player close enough, Pandora bows.
         if(inRange)
         {
             animator.SetBool("InRange", true);

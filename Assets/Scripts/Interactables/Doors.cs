@@ -6,24 +6,26 @@ public class Doors : MonoBehaviour
 {
     [Header("D O O R S")]
     [Header("Set in Inspector")]
-    public float yOpenRot;
-    public float yCloseRot;
+    public float yOpenRot; // y degree when door is open
+    public float yCloseRot; // y degree when door is closed
 
     [Header("Set Dynamically")]
-    public float yRot;
-    public bool turning = false;
+    public float yRot; // degree to turn door to
+    public bool turning = false; // is door currently turning
     
     // Private Vars
-    private float timer = 0.0f;
+    private float timer = 0.0f; // time for door to open/close
     
 
     void Start()
     {
+        // all doors start closed
         yRot = yCloseRot;
     }
 
     void Update()
     {
+        // if it's turning rotate the door, until it's completely open
         if(turning)
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0.0f, yRot, 0.0f), timer);
@@ -38,6 +40,7 @@ public class Doors : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        // if not already turning, if player hits door, open/close door.
         if(!turning)
         {
             if(other.gameObject.tag == "rHand" || other.gameObject.tag == "lHand")

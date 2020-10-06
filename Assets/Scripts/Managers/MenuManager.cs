@@ -8,9 +8,9 @@ public class MenuManager : MonoBehaviour
     [Header("M E N U  M A N A G E R")]
     //[Header("Set In Inspector")]
     [Header("Set Dynamically")]
-    public static MenuManager Instance;
-    public bool isPaused = false;
-    public Vector3 prevLoc = new Vector3(0f,0f,0f);
+    public static MenuManager Instance; // only want one MenuManager
+    public bool isPaused = false; // is the player paused right now (in the menu area)
+    public Vector3 prevLoc = new Vector3(0f,0f,0f); // where was the player when they hit menu button?
 
     // Private Vars
     //private bool inventoryOpen = false;
@@ -18,11 +18,13 @@ public class MenuManager : MonoBehaviour
     void Start()
     {
         Instance = this;
+        // set location to teleport player into menu
         GameManager.Instance.menuTeleport = new Vector3(139f,GameManager.Instance.playerStartY, 0f);
     }
 
     public void ButtonHit(string text)
     {
+        // which button the player hit in the menu.
         switch(text)
         {
             case "ResumeBtn":
@@ -45,6 +47,7 @@ public class MenuManager : MonoBehaviour
 
     public void Unpause()
     {
+        // send player back to where they were before.
         isPaused = false;
         GameManager.Instance.StartTeleport("Back");
     }
@@ -66,6 +69,7 @@ public class MenuManager : MonoBehaviour
 
     void Update()
     {
+        // if the player hit the menu button, teleport them to menu and pause the game.
         if((Input.GetKeyDown(KeyCode.Escape) || OVRInput.Get(OVRInput.Button.Start)))
         {
             prevLoc = GameManager.Instance.ovrPlayer.transform.position;
