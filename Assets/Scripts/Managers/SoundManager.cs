@@ -21,14 +21,17 @@ public class SoundManager : MonoBehaviour
 
     void Start()
     {
-        Instance = this;
-        // grab all audiosources on this gameObject if it doesn't already have a clip, that's for sound effects.
-        AudioSource[] sources = GetComponents<AudioSource>();
-        foreach(AudioSource source in sources)
+        if(Instance == null)
         {
-            if(source.clip == null)
+            Instance = this;
+            // grab all audiosources on this gameObject if it doesn't already have a clip, that's for sound effects.
+            AudioSource[] sources = GetComponents<AudioSource>();
+            foreach(AudioSource source in sources)
             {
-                soundEffectAudio = source;
+                if(source.clip == null)
+                {
+                    soundEffectAudio = source;
+                }
             }
         }
     }
@@ -57,5 +60,11 @@ public class SoundManager : MonoBehaviour
     {
         // mute sound effects
         soundEffectAudio.mute = !soundEffectAudio.mute;
+    }
+
+    public void PlayRiddleSound(int soundToPlay)
+    {
+        // TODO: Play sound from array.
+        Debug.Log("Playing sound number: " + soundToPlay);
     }
 }

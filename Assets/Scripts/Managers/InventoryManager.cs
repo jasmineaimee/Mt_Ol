@@ -22,9 +22,12 @@ public class InventoryManager : MonoBehaviour
 
     void Start()
     {
-        Instance = this;
-        // set new inventory
-        inventory = new List<Collectables>();
+        if(Instance == null)
+        {
+            Instance = this;
+            // set new inventory
+            inventory = new List<Collectables>();
+        }
     }
 
     public Collectables GetLastInventory()

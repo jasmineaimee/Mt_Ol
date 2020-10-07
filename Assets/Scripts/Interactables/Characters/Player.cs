@@ -14,6 +14,9 @@ public class Player : MonoBehaviour
 
     void Awake()
     {
-        Instance = this;
+        if(Instance == null)
+        {
+            Instance = this;
+        }
     }
 }

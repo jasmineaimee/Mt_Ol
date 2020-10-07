@@ -8,8 +8,8 @@ public class MenuManager : MonoBehaviour
     [Header("M E N U  M A N A G E R")]
     //[Header("Set In Inspector")]
     [Header("Set Dynamically")]
-    public static MenuManager Instance; // only want one MenuManager
     public bool isPaused = false; // is the player paused right now (in the menu area)
+    public static MenuManager Instance; // only want one MenuManager
     public Vector3 prevLoc = new Vector3(0f,0f,0f); // where was the player when they hit menu button?
 
     // Private Vars
@@ -17,9 +17,12 @@ public class MenuManager : MonoBehaviour
 
     void Start()
     {
-        Instance = this;
-        // set location to teleport player into menu
-        GameManager.Instance.menuTeleport = new Vector3(139f,GameManager.Instance.playerStartY, 0f);
+        if(Instance == null)
+        {
+            Instance = this;
+            // set location to teleport player into menu
+            GameManager.Instance.menuTeleport = new Vector3(139f,GameManager.Instance.playerStartY, 0f);
+        }
     }
 
     public void ButtonHit(string text)

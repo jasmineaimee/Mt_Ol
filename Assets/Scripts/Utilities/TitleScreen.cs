@@ -10,7 +10,10 @@ public class TitleScreen : MonoBehaviour
     public static TitleScreen Instance; // only want one TitleScreen
     void Start()
     {
-        Instance = this;
+        if(Instance == null)
+        {
+            Instance = this;
+        }
     }
     public void ButtonHit(string text)
     {

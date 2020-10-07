@@ -10,6 +10,8 @@ using UnityEngine.UI;
 // Text Riddle Answers: start = a/b, hephaistos = a, aphrodite = a, kharities = b, inventory/pandora, hera = a, athena = b, hades = b, hermes = b, zeus = a, underworld = a
 // RoomNums: 0 = Start, 1 = Hephaistos, 2 = Aphrodite, 3 = Kharities, 4 = Hera, 5 = Athena, 6 = Hades, 7 = Underworld, 8 = Hermes, 9 = Zeus
 // Collectables: Dirt, Water, Clothing, Grace, Jewellery, Flowers, Wovens, Deceit, Box
+// River Puzzle Solution: Charon Takes H, Returns alone, Takes either L or D, Returns with H, takes other (either L or D), Returns alone, Takes H
+// Simon Says Colour Buttons: 1 = Pink, 2 = Orange, 3 = Yellow, 4 = Green, 5 = Blue, 6 = Purple, 7 = White, 8 = Black
 
 public class GameManager : MonoBehaviour
 {
@@ -41,18 +43,21 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        Instance = this;
-        // grab the player's y position for teleportion reasons
-        playerStartY = ovrPlayer.transform.position.y;
-        if(!PlayerPrefs.HasKey("loadGame"))
+        if(Instance == null)
         {
-            Debug.Log("Something went wrong. Could not find player prefs");
-        }
-        else
-        {
-            if(PlayerPrefs.GetInt("loadGame") == 1)
+            Instance = this;
+            // grab the player's y position for teleportion reasons
+            playerStartY = ovrPlayer.transform.position.y;
+            if(!PlayerPrefs.HasKey("loadGame"))
             {
-                Invoke("Load", 1f);
+                Debug.Log("Something went wrong. Could not find player prefs");
+            }
+            else
+            {
+                if(PlayerPrefs.GetInt("loadGame") == 1)
+                {
+                    Invoke("Load", 1f);
+                }
             }
         }
     }

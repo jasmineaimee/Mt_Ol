@@ -10,14 +10,28 @@ public class Collectable : MonoBehaviour
     public Collectables type;
     public int roomNum;
 
-    private void OnTriggerEnter(Collider other)
+    void Update()
     {
-        if(other.gameObject.tag == "rHand" || other.gameObject.tag == "lHand")
+        if(this.GetComponent<OVRGrabbable>().isGrabbed)
         {
-            InventoryManager.Instance.AddToInventory(type);
-            InventoryManager.Instance.SetPodiumHalo(type);
-            InventoryManager.Instance.MoveCollectable(this);
-            this.GetComponent<Collider>().enabled = false;
+            Invoke("SendToInventory", 2.0f);
         }
     }
+
+    private void SendToInventory()
+    {
+        InventoryManager.Instance.AddToInventory(type);
+        InventoryManager.Instance.SetPodiumHalo(type);
+        InventoryManager.Instance.MoveCollectable(this);
+        this.GetComponent<OVRGrabbable>().allowOffhandGrab = false;
+        this.GetComponent<Collider>().enabled = false;
+    }
+
+    // private void OnTriggerEnter(Collider other)
+    // {
+    //     if(other.gameObject.tag == "rHand" || other.gameObject.tag == "lHand")
+    //     {
+            
+    //     }
+    // }
 }

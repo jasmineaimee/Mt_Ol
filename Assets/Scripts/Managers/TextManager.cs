@@ -30,7 +30,10 @@ public class TextManager : MonoBehaviour
 
     void Start()
     {
-        Instance = this;
+        if(Instance == null)
+        {
+            Instance = this;
+        }
     }
 
     public void SetText(int num)

@@ -11,8 +11,8 @@ public class PandorasBox : Collectable
         type = Collectables.Box;
     }
 
-    void OnTriggerEnter(Collider other)
-    {
-        // just to override the other stuff in collectable (keeping this class as a collectiable child for future grabbing implementation)
-    }
+    // void OnTriggerEnter(Collider other)
+    // {
+    //     // just to override the other stuff in collectable (keeping this class as a collectable child for future grabbing implementation)
+    // }
 }
