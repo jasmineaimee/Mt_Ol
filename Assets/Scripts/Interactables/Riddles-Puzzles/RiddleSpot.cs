@@ -40,7 +40,7 @@ public class RiddleSpot : MonoBehaviour
         {
             if(answer == 0)
             {
-                if((Input.GetKeyDown(KeyCode.A) || OVRInput.Get(OVRInput.Button.One)))
+                if((Input.GetKeyDown(KeyCode.A) || OVRInput.Get(OVRInput.Touch.One)))
                 {
                     answer = 1;
                     GameManager.Instance.answers[roomNum] = 1;
@@ -49,7 +49,7 @@ public class RiddleSpot : MonoBehaviour
                     GameManager.Instance.ChangeDoorMaterial(roomNum);
                     this.gameObject.SetActive(false);
                 }
-                else if((Input.GetKeyDown(KeyCode.B) || OVRInput.Get(OVRInput.Button.Two)))
+                else if((Input.GetKeyDown(KeyCode.B) || OVRInput.Get(OVRInput.Touch.Two)))
                 {
                     if(roomNum == 0)
                     {

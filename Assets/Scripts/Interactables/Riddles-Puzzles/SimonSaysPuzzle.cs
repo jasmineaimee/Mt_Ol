@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SimonSaysPuzzle : MonoBehaviour
 {
+    public static SimonSaysPuzzle Instance;
+    
     [Header("S I M O N  S A Y S  P U Z Z L E")]
     [Header("Set In Inspector")]
     public bool isSounds; // the sound version of simon says
@@ -12,7 +14,7 @@ public class SimonSaysPuzzle : MonoBehaviour
     [Header("Set Dynamically")]
     public int numberCorrect = 0; // how far the player played to.
     public bool hasLost = false; // if the player has lost
-    public static SimonSaysPuzzle Instance;
+    public bool hasWon = false; // if the player has won
     // Private vars
     private List<int> sequence; // the current sequence of colours/sounds
     private int currentSeqPos = 0; // currnt position player is in the sequence

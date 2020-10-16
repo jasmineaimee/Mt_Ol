@@ -15,6 +15,8 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance; // only want one GameManager
+
     [Header("G A M E  M A N A G E R")]
     [Header("Set In Inspector")]
     public GameObject ovrPlayer; // vr player
@@ -27,7 +29,6 @@ public class GameManager : MonoBehaviour
 
 
     [Header("Set Dynamically")]
-    public static GameManager Instance; // only want one GameManager
     public bool isPlayerActive = true; // false if the player being teleported right now
     public bool recentre = false; // should we recentre the local positions of vr player/camera
     public Vector3 teleportLocation; // where are we going?

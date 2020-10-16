@@ -45,7 +45,7 @@ abstract public class Character : MonoBehaviour
         // if player in range of the character, and not already speaking to them, if press A, we can speak to them
         if(inRange && !isSpeaking)
         {
-            if((Input.GetKeyDown(KeyCode.A) || OVRInput.Get(OVRInput.Button.One)))
+            if((Input.GetKeyDown(KeyCode.A) || OVRInput.Get(OVRInput.Touch.One)))
             {
                 isSpeaking =true;
                 ControlSpeaking();
@@ -55,7 +55,7 @@ abstract public class Character : MonoBehaviour
         // if speaking to the character and press B, exit dialogue
         if(isSpeaking)
         {
-            if((Input.GetKeyDown(KeyCode.B) || OVRInput.Get(OVRInput.Button.Two)))
+            if((Input.GetKeyDown(KeyCode.B) || OVRInput.Get(OVRInput.Touch.Two)))
             {
                 isSpeaking = false;
                 ControlSpeaking();

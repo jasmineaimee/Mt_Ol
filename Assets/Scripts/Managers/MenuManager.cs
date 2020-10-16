@@ -5,11 +5,13 @@ using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
+    public static MenuManager Instance; // only want one MenuManager
+
+
     [Header("M E N U  M A N A G E R")]
     //[Header("Set In Inspector")]
     [Header("Set Dynamically")]
     public bool isPaused = false; // is the player paused right now (in the menu area)
-    public static MenuManager Instance; // only want one MenuManager
     public Vector3 prevLoc = new Vector3(0f,0f,0f); // where was the player when they hit menu button?
 
     // Private Vars

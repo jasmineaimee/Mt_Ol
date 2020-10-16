@@ -4,12 +4,14 @@ using UnityEngine;
 using TMPro;
 public class TextManager : MonoBehaviour
 {
+    public static TextManager Instance;
+    
     [Header("T E X T  M A N A G E R")]
     [Header("Set In Inspector")]
     public TextMeshPro[] riddleText;
     public TextMeshPro winText;
-    [Header("Set Dynamically")]
-    public static TextManager Instance;
+    // [Header("Set Dynamically")]
+
 
     // Private Vars
     private string ready = "Ready?";

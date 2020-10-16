@@ -15,6 +15,7 @@ using UnityEngine;
 // Each turn Charon asks Player if he should ferry someone or cross alone.
 // Once Charon is crossing the River, the player can move again
 
+// TODO: Text Options based on who's here
 public class RiverPuzzle : MonoBehaviour
 {
     [Header("R I V E R  P U Z Z L E")]
@@ -24,6 +25,7 @@ public class RiverPuzzle : MonoBehaviour
     public RiverPuzzle otherSide; // the other hitbox on other side of the river
     [Header("Set Dynamically")]
     public bool hasLost = false; // player lost the riddle
+    public bool hasWon = false;
     // Private vars
     private bool deathHere = false; // death character is in this hitbox
     private bool lifeHere = false; // life character is in this hitbox
@@ -39,6 +41,10 @@ public class RiverPuzzle : MonoBehaviour
             deathHere = lifeHere = humanHere = true;
             Debug.Log("RiverPuzzle: Set Left bools");
             riddleSpot.answer = -1; // this stops the code in RiddleSpot from going with the keycode/ovrinput
+        }
+        else
+        {
+            PuzzleManager.Instance.rightRiverSide = this;
         }
     }
 
@@ -72,7 +78,7 @@ public class RiverPuzzle : MonoBehaviour
             if((Input.GetKeyDown(KeyCode.Y) || OVRInput.Get(OVRInput.Touch.Four)))
             {
                 Debug.Log("RiverPuzzle: Chose Y");
-                decision = 3;
+                decision = 4;
                 Invoke("MakeDecision", 3.0f);
             }
         }
@@ -89,6 +95,14 @@ public class RiverPuzzle : MonoBehaviour
             otherSide.hasLost = true;
             otherSide.gameObject.SetActive(false);
             this.gameObject.SetActive(false);
+        }
+        // if all the characters are on the other side of the river, player has won
+        if(!isLeft && humanHere && lifeHere && deathHere)
+        {
+            Debug.Log("Won River Puzzle");
+            riddleSpot.gameObject.SetActive(false);
+            hasWon = true;
+            otherSide.hasWon = true;
         }
     }
     

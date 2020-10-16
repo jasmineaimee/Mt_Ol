@@ -5,9 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class TitleScreen : MonoBehaviour
 {
-    [Header("T I T L E  S C R E E N")]
-    [Header("Set Dynamically")]
     public static TitleScreen Instance; // only want one TitleScreen
+
+    // [Header("T I T L E  S C R E E N")]
+    // [Header("Set Dynamically")]
     void Start()
     {
         if(Instance == null)

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
+    public static InventoryManager Instance; // only want one InventoryManager
+
     [Header("I N V E N T O R Y  M A N A G E R")]
     [Header("Set In Inspector")]
     public GameObject[] collectableGOs; // The collectables in collectable order
@@ -13,7 +15,6 @@ public class InventoryManager : MonoBehaviour
     public GameObject pandora; // win character
 
     [Header("Set Dynamically")]
-    public static InventoryManager Instance; // only want one InventoryManager
     public bool boxActive = false; // if box is showing
 
     //Private Vars

@@ -5,6 +5,8 @@ using UnityEngine.Audio;
 
 public class SoundManager : MonoBehaviour
 {
+    public static SoundManager Instance; // only want one SoundManager
+
     [Header("S O U N D  M A N A G E R")]
     [Header("Set In Inspector")]
     //public AudioClip collectableClip;
@@ -12,8 +14,7 @@ public class SoundManager : MonoBehaviour
     public AudioClip correctClip; // clip that plays when player solves riddle
     public AudioClip teleportClip; // clip that plays when teleporting player
     public AudioMixer masterMixer; // the sound mixer
-    [Header("Set Dynamically")]
-    public static SoundManager Instance; // only want one SoundManager
+    // [Header("Set Dynamically")]
 
     // Private Vars
     private AudioSource soundEffectAudio; // which sound effect channel
