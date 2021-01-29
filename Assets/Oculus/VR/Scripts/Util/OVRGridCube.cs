@@ -63,26 +63,26 @@ public class OVRGridCube : MonoBehaviour
 	void UpdateCubeGrid()
 	{
 		// Toggle the grid cube display on 'G'
-		if(Input.GetKeyDown(GridKey))
-		{
-			if(CubeGridOn == false)
-			{
-				CubeGridOn = true;
-				Debug.LogWarning("CubeGrid ON");
-				if(CubeGrid != null)
-					CubeGrid.SetActive(true);
-				else
-					CreateCubeGrid();
-			}
-			else
-			{
-				CubeGridOn = false;
-				Debug.LogWarning("CubeGrid OFF");
+		// if(Input.GetKeyDown(GridKey))
+		// {
+		// 	if(CubeGridOn == false)
+		// 	{
+		// 		CubeGridOn = true;
+		// 		Debug.LogWarning("CubeGrid ON");
+		// 		if(CubeGrid != null)
+		// 			CubeGrid.SetActive(true);
+		// 		else
+		// 			CreateCubeGrid();
+		// 	}
+		// 	else
+		// 	{
+		// 		CubeGridOn = false;
+		// 		Debug.LogWarning("CubeGrid OFF");
 
-				if(CubeGrid != null)
-					CubeGrid.SetActive(false);
-			}
-		}
+		// 		if(CubeGrid != null)
+		// 			CubeGrid.SetActive(false);
+		// 	}
+		// }
 
 		if(CubeGrid != null)
 		{

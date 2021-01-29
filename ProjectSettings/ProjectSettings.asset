@@ -119,6 +119,7 @@ PlayerSettings:
   stadiaTargetFramerate: 0
   vulkanNumSwapchainBuffers: 3
   vulkanEnableSetSRGBWrite: 0
+  vulkanEnableLateAcquireNextImage: 0
   m_SupportedAspectRatios:
     4:3: 1
     5:4: 1
@@ -430,8 +431,7 @@ PlayerSettings:
     - OpenVR
   - m_BuildTarget: Android
     m_Enabled: 0
-    m_Devices:
-    - Oculus
+    m_Devices: []
   openGLRequireES31: 0
   openGLRequireES31AEP: 0
   openGLRequireES32: 0
@@ -774,7 +774,7 @@ PlayerSettings:
   projectName: Mt_Ol350
   organizationId: missperfect1400
   cloudEnabled: 0
-  enableNativePlatformBackendsForNewInputSystem: 1
+  enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0
   legacyClampBlendShapeWeights: 0
   virtualTexturingSupportEnabled: 0

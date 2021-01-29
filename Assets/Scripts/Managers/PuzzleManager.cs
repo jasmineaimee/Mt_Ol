@@ -15,6 +15,7 @@ public class PuzzleManager : MonoBehaviour
     public RiverPuzzle rightRiverSide; // reference to the winning side of the river
     public SimonSaysPuzzle simonSaysPuzzle; // reference to the simon says brain
     public int[,] puzzleStatus; // how many 'points' the player has gotten from the puzzles.
+    public bool onLeft = true;
     void Start()
     {
         if(Instance == null)
@@ -28,6 +29,11 @@ public class PuzzleManager : MonoBehaviour
 
     void Update()
     {
-        
+        // if they won the river puzzle, give them points
+        // if(rightRiverSide.hasWon)
+        // {
+        //     puzzleStatus[1,0] += 1; // how many times this puzzle has been attempted
+        //     puzzleStatus[1,1] += 1; // how many points player has gotten from this puzzle
+        // }
     }
 }

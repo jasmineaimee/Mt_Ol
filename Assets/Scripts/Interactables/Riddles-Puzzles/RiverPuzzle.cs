@@ -30,6 +30,7 @@ public class RiverPuzzle : MonoBehaviour
     private bool deathHere = false; // death character is in this hitbox
     private bool lifeHere = false; // life character is in this hitbox
     private bool humanHere = false; // human character is in this hitbox
+    private bool charonHere = false; // charon is in this hitbox
     private bool decisionMade = false; // player has made decision for this turn
     private int decision = 0; // decision player made this turn
 
@@ -38,7 +39,7 @@ public class RiverPuzzle : MonoBehaviour
         // if this is the hitbox on the left (the start of the river), then all the characters are here.
         if(isLeft)
         {
-            deathHere = lifeHere = humanHere = true;
+            deathHere = lifeHere = humanHere = charonHere = true;
             Debug.Log("RiverPuzzle: Set Left bools");
             riddleSpot.answer = -1; // this stops the code in RiddleSpot from going with the keycode/ovrinput
         }
@@ -51,39 +52,54 @@ public class RiverPuzzle : MonoBehaviour
     void Update()
     {   
         // if player is making a Choice for Charon to take
-        if(riddleSpot.onSpot)
+        if(riddleSpot.onSpot && !decisionMade)
         {
-            // Take Death
-            if((Input.GetKeyDown(KeyCode.A) || OVRInput.Get(OVRInput.Touch.One)))
+            if((PuzzleManager.Instance.onLeft && isLeft) || (!PuzzleManager.Instance.onLeft && !isLeft))
             {
-                Debug.Log("RiverPuzzle: Chose A");
-                decision = 1;
-                Invoke("MakeDecision", 3.0f);
-            }
-            // Take Life
-            if((Input.GetKeyDown(KeyCode.B) || OVRInput.Get(OVRInput.Touch.Two)))
-            {
-                Debug.Log("RiverPuzzle: Chose B");
-                decision = 2;
-                Invoke("MakeDecision", 3.0f);
-            }
-            // Take Human
-            if((Input.GetKeyDown(KeyCode.X) || OVRInput.Get(OVRInput.Touch.Three)))
-            {
-                Debug.Log("RiverPuzzle: Chose X");
-                decision = 3;
-                Invoke("MakeDecision", 3.0f);
-            }
-            // Go Alone
-            if((Input.GetKeyDown(KeyCode.Y) || OVRInput.Get(OVRInput.Touch.Four)))
-            {
-                Debug.Log("RiverPuzzle: Chose Y");
-                decision = 4;
-                Invoke("MakeDecision", 3.0f);
+                // Take Death
+                if((Input.GetKeyDown(KeyCode.A) || OVRInput.Get(OVRInput.Touch.One)))
+                {
+                    if(deathHere)
+                    {
+                        Debug.Log("RiverPuzzle: Chose A");
+                        decision = 1;
+                        MakeDecision();
+                    }
+                }
+                // Take Life
+                if((Input.GetKeyDown(KeyCode.B) || OVRInput.Get(OVRInput.Touch.Two)))
+                {
+                    if(lifeHere)
+                    {
+                        Debug.Log("RiverPuzzle: Chose B");
+                        decision = 2;
+                        MakeDecision();
+                    }
+                }
+                // Take Human
+                if((Input.GetKeyDown(KeyCode.X) || OVRInput.Get(OVRInput.Touch.Three)))
+                {
+                    if(humanHere)
+                    {
+                        Debug.Log("RiverPuzzle: Chose X");
+                        decision = 3;
+                        MakeDecision();
+                    }
+                }
+                // Go Alone
+                if((Input.GetKeyDown(KeyCode.Y) || OVRInput.Get(OVRInput.Touch.Four)))
+                {
+                    if(charonHere)
+                    {
+                        Debug.Log("RiverPuzzle: Chose Y");
+                        decision = 4;
+                        MakeDecision();
+                    }
+                }
             }
         }
         // if lose condition is met, after the player has made the choice, do the stuff for losing that was in riddleSpot
-        if(decisionMade && ((humanHere && lifeHere && !deathHere) || (humanHere && !lifeHere && deathHere)))
+        if(decisionMade && ((humanHere && lifeHere && !deathHere && !charonHere) || (humanHere && !lifeHere && deathHere && !charonHere)))
         {
             Debug.Log("RiverPuzzle: OOF");
             hasLost = true;
@@ -103,10 +119,11 @@ public class RiverPuzzle : MonoBehaviour
             riddleSpot.gameObject.SetActive(false);
             hasWon = true;
             otherSide.hasWon = true;
+            otherSide.gameObject.SetActive(false);
+            this.gameObject.SetActive(false);
         }
     }
     
-
     void OnTriggerEnter(Collider other)
     {
         // if we're still playing, and a character has entered the hitbox, adjust location
@@ -121,9 +138,13 @@ public class RiverPuzzle : MonoBehaviour
             {
                 lifeHere = true;
             }
-            if(other.tag == "Player")
+            if(other.tag == "Human")
             {
                 humanHere = true;
+            }
+            if(other.tag == "Charon")
+            {
+                charonHere = true;
             }
         }
     }
@@ -140,9 +161,13 @@ public class RiverPuzzle : MonoBehaviour
         {
             lifeHere = false;
         }
-        if(other.tag == "Player")
+        if(other.tag == "Human")
         {
             humanHere = false;
+        }
+        if(other.tag == "Charon")
+        {
+            charonHere = false;
         }
     }
 
@@ -160,14 +185,23 @@ public class RiverPuzzle : MonoBehaviour
         {
             Debug.Log("Chose Life");
         }
-        if (decision == 2)
+        else if (decision == 2)
         {
             Debug.Log("Chose Death");
         }
-        if (decision == 3)
+        else if (decision == 3)
         {
             Debug.Log("Chose Human");
         }
+        else if(decision == 4)
+        {
+            Debug.Log("Crossing Alone");
+        }
+        Invoke("PlaceHolder", 3.0f);
+    }
+
+    private void PlaceHolder()
+    {
         // reset decision vars for nect decision
         decision = 0;
         decisionMade = false;

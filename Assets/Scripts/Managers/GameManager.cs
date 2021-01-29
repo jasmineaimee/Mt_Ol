@@ -12,6 +12,7 @@ using UnityEngine.UI;
 // Collectables: Dirt, Water, Clothing, Grace, Jewellery, Flowers, Wovens, Deceit, Box
 // River Puzzle Solution: Charon Takes H, Returns alone, Takes either L or D, Returns with H, takes other (either L or D), Returns alone, Takes H
 // Simon Says Colour Buttons: 1 = Pink, 2 = Orange, 3 = Yellow, 4 = Green, 5 = Blue, 6 = Purple, 7 = White, 8 = Black
+// Puzzle Points Array Order: 0 = Maze, 1 = River Puzzle
 
 public class GameManager : MonoBehaviour
 {

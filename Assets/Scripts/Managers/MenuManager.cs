@@ -75,11 +75,11 @@ public class MenuManager : MonoBehaviour
     void Update()
     {
         // if the player hit the menu button, teleport them to menu and pause the game.
-        if((Input.GetKeyDown(KeyCode.Escape) || OVRInput.Get(OVRInput.Button.Start)))
-        {
-            prevLoc = GameManager.Instance.ovrPlayer.transform.position;
-            isPaused = true;
-            GameManager.Instance.StartTeleport("Menu");
-        }
+        // if((Input.GetKeyDown(KeyCode.Escape) || OVRInput.Get(OVRInput.Button.Start)))
+        // {
+            // prevLoc = GameManager.Instance.ovrPlayer.transform.position;
+            // isPaused = true;
+            // GameManager.Instance.StartTeleport("Menu");
+        //}
     }
 }

@@ -145,11 +145,11 @@ public class OVRSceneSampleController : MonoBehaviour
 			UnityEngine.XR.XRSettings.showDeviceView = !UnityEngine.XR.XRSettings.showDeviceView;
 
 #if !UNITY_ANDROID || UNITY_EDITOR
-        // Escape Application
+        //  Escape Application
         if (Input.GetKeyDown(quitKey))
             Application.Quit();
 #endif
-    }
+     }
     #endregion
 
     /// <summary>
