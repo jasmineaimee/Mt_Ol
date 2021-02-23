@@ -72,7 +72,6 @@ public class InventoryManager : MonoBehaviour
                     MoveCollectable(collectableGOs[count].GetComponent<Collectable>());
                     collectableGOs[count].GetComponent<CapsuleCollider>().enabled = false;
                     int roomNum = collectableGOs[count].GetComponent<Collectable>().roomNum;
-                    TextManager.Instance.SetResultText(roomNum, GameManager.Instance.answers[roomNum], GameManager.Instance.riddleSpots[roomNum].GetComponent<RiddleSpot>().correctAnswer);
                     GameManager.Instance.ChangeDoorMaterial(roomNum);
                     GameManager.Instance.riddleSpots[roomNum].SetActive(false);
                 }

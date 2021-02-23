@@ -105,7 +105,6 @@ public class RiverPuzzle : MonoBehaviour
             hasLost = true;
             int answer = 0;
             GameManager.Instance.answers[riddleSpot.roomNum] = 1;
-            TextManager.Instance.SetResultText(riddleSpot.roomNum,answer,riddleSpot.correctAnswer);
             GameManager.Instance.ChangeDoorMaterial(riddleSpot.roomNum);
             riddleSpot.gameObject.SetActive(false);
             otherSide.hasLost = true;

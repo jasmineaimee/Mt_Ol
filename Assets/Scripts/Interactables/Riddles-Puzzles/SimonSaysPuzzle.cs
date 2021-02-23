@@ -6,8 +6,8 @@ public class SimonSaysPuzzle : MonoBehaviour
 {
     public static SimonSaysPuzzle Instance;
     
-    [Header("S I M O N  S A Y S  P U Z Z L E")]
     [Header("Set In Inspector")]
+    [Header("S I M O N  S A Y S  P U Z Z L E")]
     public bool isSounds; // the sound version of simon says
     public GameObject[] buttons; // the buttons the player can hit
     public RiddleSpot riddleSpot; // the corresponding RiddleSpot in the room

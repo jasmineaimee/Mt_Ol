@@ -21,16 +21,11 @@ public class RiddleSpot : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         onSpot = true;
-        TextManager.Instance.SetText(roomNum);
     }
 
     void OnTriggerExit(Collider other)
     {
         onSpot = false;
-        if(answer == 0)
-        {
-            TextManager.Instance.ResetText(roomNum);
-        }
     }
 
     void Update()
@@ -45,7 +40,6 @@ public class RiddleSpot : MonoBehaviour
                     answer = 1;
                     GameManager.Instance.answers[roomNum] = 1;
                     onSpot = false;
-                    TextManager.Instance.SetResultText(roomNum,answer,correctAnswer);
                     GameManager.Instance.ChangeDoorMaterial(roomNum);
                     this.gameObject.SetActive(false);
                 }
@@ -61,7 +55,6 @@ public class RiddleSpot : MonoBehaviour
                     }
                     GameManager.Instance.answers[roomNum] = 2;
                     onSpot = false;
-                    TextManager.Instance.SetResultText(roomNum,answer,correctAnswer);
                     GameManager.Instance.ChangeDoorMaterial(roomNum);
                     this.gameObject.SetActive(false);
                 }
