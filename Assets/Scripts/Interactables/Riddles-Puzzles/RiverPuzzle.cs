@@ -101,9 +101,8 @@ public class RiverPuzzle : MonoBehaviour
         // if lose condition is met, after the player has made the choice, do the stuff for losing that was in riddleSpot
         if(decisionMade && ((humanHere && lifeHere && !deathHere && !charonHere) || (humanHere && !lifeHere && deathHere && !charonHere)))
         {
-            Debug.Log("RiverPuzzle: OOF");
+            Debug.Log("RiverPuzzle: LOST");
             hasLost = true;
-            int answer = 0;
             GameManager.Instance.answers[riddleSpot.roomNum] = 1;
             GameManager.Instance.ChangeDoorMaterial(riddleSpot.roomNum);
             riddleSpot.gameObject.SetActive(false);
