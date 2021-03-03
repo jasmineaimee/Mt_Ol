@@ -2,12 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class TitleScreen : MonoBehaviour
 {
     public static TitleScreen Instance; // only want one TitleScreen
 
-    // [Header("T I T L E  S C R E E N")]
+    [Header("Set in Inspector")]
+    [Header("T I T L E  S C R E E N")]
+    [SerializeField]
+    private GameObject buttonPanel;
+    [SerializeField]
+    private TextMeshProUGUI loadingText;
     // [Header("Set Dynamically")]
     void Start()
     {
@@ -16,29 +22,12 @@ public class TitleScreen : MonoBehaviour
             Instance = this;
         }
     }
-    public void ButtonHit(string text)
-    {
-        // which button player has hit
-        switch(text)
-        {
-            case "PlayBtn":
-                StartGame();
-                break;
-            case "LoadBtn":
-                LoadGame();
-                break;
-            case "QuitBtn":
-                Quit();
-                break;
-            default:
-                Debug.Log("Text does not match a button. " + text);
-                break;
-        }
-    }
 
     public void StartGame()
     {
         // start new game
+        buttonPanel.SetActive(false);
+        loadingText.text = "Loading...";
         PlayerPrefs.SetInt("loadGame", 0);
         PlayerPrefs.Save();
         SceneManager.LoadScene("_Scene_0");
@@ -47,6 +36,8 @@ public class TitleScreen : MonoBehaviour
     public void LoadGame()
     {
         // load from previous save, if any
+        buttonPanel.SetActive(false);
+        loadingText.text = "Loading...";
         PlayerPrefs.SetInt("loadGame", 1);
         PlayerPrefs.Save();
         SceneManager.LoadScene("_Scene_0");

@@ -18031,7 +18031,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &433288480
 Transform:
   m_ObjectHideFlags: 0
@@ -27719,7 +27719,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &658659441
 Transform:
   m_ObjectHideFlags: 0
@@ -38488,7 +38488,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1150497142}
-  m_RootOrder: 21
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!108 &906333961
 Light:
@@ -47601,9 +47601,9 @@ Transform:
   - {fileID: 762652922}
   - {fileID: 1708618519}
   - {fileID: 1832204684}
+  - {fileID: 906333960}
   - {fileID: 1176420893}
   - {fileID: 113498423}
-  - {fileID: 906333960}
   - {fileID: 132506303}
   - {fileID: 2097286127}
   - {fileID: 790200099}
@@ -62539,7 +62539,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1489614049
 Transform:
   m_ObjectHideFlags: 0
@@ -73451,6 +73451,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Shadows.m_Type
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3591331295766184169, guid: f3774e5f0304de747b5f0154a3c93e2d,
+        type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 1975
       objectReference: {fileID: 0}
     - target: {fileID: 3591331295766184170, guid: f3774e5f0304de747b5f0154a3c93e2d,
         type: 3}
