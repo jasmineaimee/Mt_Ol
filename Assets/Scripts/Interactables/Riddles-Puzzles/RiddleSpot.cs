@@ -40,7 +40,6 @@ public class RiddleSpot : MonoBehaviour
                     answer = 1;
                     GameManager.Instance.answers[roomNum] = 1;
                     onSpot = false;
-                    GameManager.Instance.ChangeDoorMaterial(roomNum);
                     this.gameObject.SetActive(false);
                 }
                 else if((Input.GetKeyDown(KeyCode.B) || OVRInput.Get(OVRInput.Touch.Two)))
@@ -55,7 +54,6 @@ public class RiddleSpot : MonoBehaviour
                     }
                     GameManager.Instance.answers[roomNum] = 2;
                     onSpot = false;
-                    GameManager.Instance.ChangeDoorMaterial(roomNum);
                     this.gameObject.SetActive(false);
                 }
             }

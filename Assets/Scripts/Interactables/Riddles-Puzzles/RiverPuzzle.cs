@@ -104,7 +104,6 @@ public class RiverPuzzle : MonoBehaviour
             Debug.Log("RiverPuzzle: LOST");
             hasLost = true;
             GameManager.Instance.answers[riddleSpot.roomNum] = 1;
-            GameManager.Instance.ChangeDoorMaterial(riddleSpot.roomNum);
             riddleSpot.gameObject.SetActive(false);
             otherSide.hasLost = true;
             otherSide.gameObject.SetActive(false);

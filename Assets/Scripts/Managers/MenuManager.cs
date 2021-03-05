@@ -1,51 +1,46 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
+using TMPro;
 
 public class MenuManager : MonoBehaviour
 {
     public static MenuManager Instance; // only want one MenuManager
 
-
+    [Header("Set In Inspector")]
     [Header("M E N U  M A N A G E R")]
-    //[Header("Set In Inspector")]
-    [Header("Set Dynamically")]
-    public bool isPaused = false; // is the player paused right now (in the menu area)
-    public Vector3 prevLoc = new Vector3(0f,0f,0f); // where was the player when they hit menu button?
+    [SerializeField]
+    private GameObject buttonPanel;
+    [SerializeField]
+    private TextMeshProUGUI loadingText;
+    // [Header("Set Dynamically")]
+    
 
     // Private Vars
     //private bool inventoryOpen = false;
 
     void Start()
     {
-        if(Instance == null)
-        {
-            Instance = this;
-            // set location to teleport player into menu
-            GameManager.Instance.menuTeleport = new Vector3(139f,GameManager.Instance.playerStartY, 0f);
-        }
+
     }
 
-    public void ButtonHit(string text)
+    public void ButtonHit(int mode)
     {
         // which button the player hit in the menu.
-        switch(text)
+        switch(mode)
         {
-            case "ResumeBtn":
+            case 0:
                 Unpause();
                 break;
-            case "SaveBtn":
+            case 1:
                 Save();
                 break;
-            case "LoadBtn":
+            case 2:
                 Load();
                 break;
-            case "QuitBtn":
+            case -1:
                 Quit();
                 break;
             default:
-                Debug.Log("Text does not match a button. " + text);
+                Debug.Log("Invalid Button");
                 break;
         }
     }
@@ -53,8 +48,10 @@ public class MenuManager : MonoBehaviour
     public void Unpause()
     {
         // send player back to where they were before.
-        isPaused = false;
-        GameManager.Instance.StartTeleport("Back");
+        buttonPanel.SetActive(false);
+        loadingText.text = "Loading...";
+        GameManager.Instance.isPaused = false;
+        GameManager.Instance.ChangeSceneTo(GameManager.Instance.prevScene,-1);
     }
     
     public void Save()
@@ -69,17 +66,8 @@ public class MenuManager : MonoBehaviour
 
     public void Quit()
     {
+        buttonPanel.SetActive(false);
+        loadingText.text = "Loading...";
         Application.Quit();
-    }
-
-    void Update()
-    {
-        // if the player hit the menu button, teleport them to menu and pause the game.
-        // if((Input.GetKeyDown(KeyCode.Escape) || OVRInput.Get(OVRInput.Button.Start)))
-        // {
-            // prevLoc = GameManager.Instance.ovrPlayer.transform.position;
-            // isPaused = true;
-            // GameManager.Instance.StartTeleport("Menu");
-        //}
     }
 }

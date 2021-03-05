@@ -9,15 +9,10 @@ public class Player : MonoBehaviour
     //[Header("P L A Y E R")]
     //[Header("Set In Inspector")]
     //[Header("Set Dynamically")]
-    // collectable booleans
-    // current location?
     
 
     void Awake()
     {
-        if(Instance == null)
-        {
-            Instance = this;
-        }
+        GameManager.Instance.StartAt();
     }
 }

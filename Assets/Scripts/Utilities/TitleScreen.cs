@@ -30,7 +30,7 @@ public class TitleScreen : MonoBehaviour
         loadingText.text = "Loading...";
         PlayerPrefs.SetInt("loadGame", 0);
         PlayerPrefs.Save();
-        SceneManager.LoadScene("_Scene_0");
+        SceneManager.LoadScene("StartRoom");
     }
 
     public void LoadGame()
@@ -40,7 +40,7 @@ public class TitleScreen : MonoBehaviour
         loadingText.text = "Loading...";
         PlayerPrefs.SetInt("loadGame", 1);
         PlayerPrefs.Save();
-        SceneManager.LoadScene("_Scene_0");
+        SceneManager.LoadScene("StartRoom");
     }
 
     public void Quit()
