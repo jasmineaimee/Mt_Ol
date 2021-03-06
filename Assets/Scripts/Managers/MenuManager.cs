@@ -51,7 +51,7 @@ public class MenuManager : MonoBehaviour
         buttonPanel.SetActive(false);
         loadingText.text = "Loading...";
         GameManager.Instance.isPaused = false;
-        GameManager.Instance.ChangeSceneTo(GameManager.Instance.prevScene,-1);
+        GameManager.Instance.ChangeSceneTo(GameManager.Instance.prevScene,GameManager.Instance.playerLoadLocation, GameManager.Instance.playerLoadRotation);
     }
     
     public void Save()
@@ -61,7 +61,11 @@ public class MenuManager : MonoBehaviour
 
     public void Load()
     {
+        buttonPanel.SetActive(false);
+        loadingText.text = "Loading...";
         GameManager.Instance.Load();
+        GameManager.Instance.ChangeSceneTo(0,new Vector3(0f,GameManager.Instance.playerStartY, 0f), new Vector3(0f,0f,0f));
+
     }
 
     public void Quit()

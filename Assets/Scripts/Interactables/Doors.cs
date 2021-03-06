@@ -11,12 +11,15 @@ public class Doors : MonoBehaviour
     public float playerLocation;
     [Header("Set Dynamically")]
     public bool isColliding = false;
+    public Vector3 playerLoadLocation = new Vector3(1.01f,0f,16.67f);
+    public Vector3 playerLoadRotation = new Vector3(0f,0f,0f);
     // Private Vars
     
 
     void Start()
     {
         GameManager.Instance.doors.Add(this);
+        playerLoadLocation.y = GameManager.Instance.playerStartY;
     }
 
     void OnTriggerEnter(Collider other)

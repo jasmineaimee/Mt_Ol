@@ -10,6 +10,7 @@ public class PuzzleManager : MonoBehaviour
     [Header("Set In Inspector")]
     public int AJNFDSFKSFDJB; // just to see in inspector lol
     public const int NUM_PUZZLES = 4; // number of puzzles in the game (regardless of how many times player plays it)
+    // ! If above is changes the save file also needs to be changed
     [Header("Set Dynamically")]
     public MazePuzzle mazePuzzle; // reference to maze
     public RiverPuzzle rightRiverSide; // reference to the winning side of the river

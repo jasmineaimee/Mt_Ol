@@ -35,10 +35,12 @@ public class GameManager : MonoBehaviour
     public int prevScene = -1;
     public int newScene = -1;
     public Vector3 teleportLocation; // where are we going?
+    public Vector3 teleportRotation; // where are we facing?
     public Vector3 underTeleport; // underworld teleport location
     public Vector3 hadesTeleport; // hades room teleport location
     public float playerStartY; // player's y position (so they don't become real short or hella tall after teleport)
     public Vector3 playerLoadLocation; // the location the player should move to on scene load
+    public Vector3 playerLoadRotation; // the rotation the player should move to on scene load
     
     // Private Vars
 
@@ -88,8 +90,8 @@ public class GameManager : MonoBehaviour
             file.Close();
 
             InventoryManager.Instance.SetInventory(save.inventory);
-            answers = save.answers;
-            prevScene = -1;
+            PuzzleManager.Instance.puzzleStatus = save.puzzleStatus;
+            prevScene = 0;
             newScene = 0;
 
             Debug.Log("Game Loaded");
@@ -127,6 +129,7 @@ public class GameManager : MonoBehaviour
     {
         isPlayerActive = false;
         teleportLocation = playerLoadLocation;
+        teleportRotation = playerLoadRotation;
         StartCoroutine(Teleport());
     }
 
@@ -136,7 +139,7 @@ public class GameManager : MonoBehaviour
         // after half a second, move player to new location and restore movement
         yield return new WaitForSeconds(0.5f);
         ovrPlayer.transform.position = teleportLocation;
-        ovrPlayer.transform.rotation = Quaternion.identity;
+        ovrPlayer.transform.Rotate(teleportRotation);
         isPlayerActive = true;
         recentre = true;
     }
@@ -147,27 +150,66 @@ public class GameManager : MonoBehaviour
         ovrPlayer.GetComponent<OVRPlayerController>().EnableLinearMovement = enableMove;
     }
 
-    public void ResetForNextScene()
+    public void ResetForNextScene(int scene)
     {
-
+        doors.Clear();
+        riddleSpots.Clear();
+        prevScene = newScene;
+        newScene = scene;
     }
 
-    public void ChangeSceneTo(int scene, int location)
+    public void ChangeSceneTo(int scene, Vector3 location, Vector3 rotation)
     {
-        playerStartY = ovrPlayer.transform.position.y;
-        switch(location)
+        Debug.Log(scene + " <- scene   location ->  " + location + "   rotation -> " + rotation);
+        ResetForNextScene(scene);
+
+        if(scene != 10)
         {
-            case -1:
-                Debug.Log("This does nothing");
-                break;
-            default:
-                Debug.Log("Something went wrong. Invalid Location" + location);
-                break;
+            // we're going to the menu
+            playerStartY = ovrPlayer.transform.position.y;
         }
+        playerLoadLocation = location;
+        playerLoadRotation = rotation;
+        // playerLoadLocation = new Vector3(1.01f,playerStartY,12.96f);
+        // playerLoadRotation = new Vector3(0f,180f,0f);
+
         switch(scene)
         {
             case 0:
                 SceneManager.LoadScene("StartRoom");
+                break;
+            case 1:
+                SceneManager.LoadScene("HephaistosRoom");
+                break;
+            case 2:
+                SceneManager.LoadScene("AphroditeRoom");
+                break;
+            case 3:
+                SceneManager.LoadScene("KharitiesRoom");
+                break;
+            case 4:
+                SceneManager.LoadScene("HeraRoom");
+                break;
+            case 5:
+                SceneManager.LoadScene("AthenaRoom");
+                break;
+            case 6:
+                SceneManager.LoadScene("HadesRoom");
+                break;
+            case 7:
+                SceneManager.LoadScene("HermesRoom");
+                break;
+            case 8:
+                SceneManager.LoadScene("ZeusRoom");
+                break;
+            case 9:
+                SceneManager.LoadScene("PandoraRoom");
+                break;
+            case 10:
+                SceneManager.LoadScene("Menu");
+                break;
+            case 11:
+                SceneManager.LoadScene("Hallway");
                 break;
             default:
                 Debug.Log("Something went wrong. scene not exist" + scene);
@@ -188,11 +230,23 @@ public class GameManager : MonoBehaviour
             recentre = false;            
         }
         // if the player hit the menu button, teleport them to menu and pause the game.
-        if((Input.GetKeyDown(KeyCode.Escape) || OVRInput.Get(OVRInput.Button.Start)))
+        if(!isPaused && ((Input.GetKeyDown(KeyCode.Escape) || OVRInput.Get(OVRInput.Button.Start))))
         {
             isPaused = true;
-            prevScene = newScene;
-            newScene = 10;
+            ChangeSceneTo(10, playerLoadLocation, playerLoadRotation);
+        }
+        if(Input.GetKeyDown(KeyCode.Return) || OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger) == 1.0f)
+        {
+            Debug.Log("Wants to Change Scene");
+            foreach(Doors door in doors)
+            {
+                if(door.isColliding)
+                {
+                    ChangeSceneTo(door.toRoomNum, door.playerLoadLocation, door.playerLoadRotation);
+                    door.isColliding = false;
+                    break;
+                }
+            }
         }
     }
 
@@ -201,7 +255,7 @@ public class GameManager : MonoBehaviour
         // save data in the Save script for binary formatting.
         Save save = new Save();
         save.inventory = InventoryManager.Instance.GetInventory();
-        save.answers = answers;
+        save.puzzleStatus = PuzzleManager.Instance.puzzleStatus;
         return save;
     }
 }

@@ -5,10 +5,6 @@ using UnityEngine;
 [System.Serializable]
 public class Save
 {
-    public float playerPositionX = 0f; // player's x position before menu
-    public float playerPositionY = 0f; // player's y position before menu
-    public float playerPositionZ = 0f; // player's z position before menu
-
-    public List<Collectables> inventory = new List<Collectables>(); // their collectables if any
-    public int[] answers = new int[10]; // the answers they have given thus far.
+    public List<Collectables> inventory = new List<Collectables>(); // player's collectables if any
+    public int[,] puzzleStatus = new int[4,2]; // the answers player have given thus far.
 }
