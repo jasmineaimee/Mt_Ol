@@ -13,6 +13,8 @@ public class Player : MonoBehaviour
 
     void Awake()
     {
+        GameManager.Instance.ovrPlayer = this.gameObject;
+        GameManager.Instance.cameraRig = this.transform.Find("OVRCameraRig").gameObject;
         GameManager.Instance.StartAt();
     }
 }

@@ -330,7 +330,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rayTransform: {fileID: 369390683}
   m_Cursor: {fileID: 1789205509}
-  joyPadClickButton: 8192
+  joyPadClickButton: 2097153
   gazeClickKey: 32
   performSphereCastForGazepointer: 0
   useRightStickScroll: 1
@@ -1034,6 +1034,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4089733390515316, guid: 16ef128dc42d14db69456063b938fb1d,
     type: 3}
   m_PrefabInstance: {fileID: 554315369}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &674819643 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100004, guid: 126d619cf4daa52469682f85c1378b4a,
+    type: 3}
+  m_PrefabInstance: {fileID: 369390674}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &697723842
 PrefabInstance:
@@ -2639,6 +2645,67 @@ Transform:
   m_Children: []
   m_Father: {fileID: 239812631}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2089538699
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2089538701}
+  - component: {fileID: 2089538700}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2089538700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2089538699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0217939bad9d634484757506255546e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ovrPlayer: {fileID: 674819643}
+  cameraRig: {fileID: 674819643}
+  riddleSpots: []
+  answers: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
+  doors: []
+  hasSeenZeus: 0
+  isPaused: 0
+  isPlayerActive: 1
+  recentre: 0
+  prevScene: -1
+  newScene: -1
+  teleportLocation: {x: 0, y: 0, z: 0}
+  teleportRotation: {x: 0, y: 0, z: 0}
+  underTeleport: {x: 0, y: 0, z: 0}
+  hadesTeleport: {x: 0, y: 0, z: 0}
+  playerStartY: 0
+  playerLoadLocation: {x: 0, y: 0, z: 0}
+  playerLoadRotation: {x: 0, y: 0, z: 0}
+--- !u!4 &2089538701
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2089538699}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -78.45215, y: 0.49817932, z: 87.887}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &6704020864815778465
 PrefabInstance:

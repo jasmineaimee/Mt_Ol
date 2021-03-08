@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class Pandora : Character
 {
+    private Animator animator;
 
     protected override void Start()
     {
         base.Start();
+        animator = this.gameObject.GetComponent<Animator>();
     }
 
     protected override void Update() //Pandora isn't a speaking character, so we override update.

@@ -28,6 +28,11 @@ public class InventoryManager : MonoBehaviour
             Instance = this;
             // set new inventory
             inventory = new List<Collectables>();
+            DontDestroyOnLoad(this);
+        }
+        else
+        {
+            Destroy(this);
         }
     }
 

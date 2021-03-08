@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: 462c7f8c1223cb34a805255b43311dba,
+  m_LightingDataAsset: {fileID: 112000000, guid: 85b1329b97bbe4b47ae632433d9253d9,
     type: 2}
   m_LightingSettings: {fileID: 4890085278179872738, guid: 3f15fb863c37cd040a85dbb6f1dd16cf,
     type: 2}
@@ -438,7 +438,7 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 0
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
@@ -3094,8 +3094,8 @@ Transform:
   m_Children:
   - {fileID: 2079412834}
   - {fileID: 1344609993}
-  - {fileID: 1393253178}
   - {fileID: 1481021817}
+  - {fileID: 1393253178}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3668,7 +3668,7 @@ Transform:
   - {fileID: 1211134613}
   - {fileID: 1366801450}
   m_Father: {fileID: 1329192597}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1539837492
 GameObject:

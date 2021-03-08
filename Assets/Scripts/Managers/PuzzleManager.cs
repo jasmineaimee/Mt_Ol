@@ -6,8 +6,8 @@ public class PuzzleManager : MonoBehaviour
 {
     public static PuzzleManager Instance; // only want one PuzzleManager
 
-    [Header("P U Z Z L E  M A N A G E R")]
     [Header("Set In Inspector")]
+    [Header("P U Z Z L E  M A N A G E R")]
     public int AJNFDSFKSFDJB; // just to see in inspector lol
     public const int NUM_PUZZLES = 4; // number of puzzles in the game (regardless of how many times player plays it)
     // ! If above is changes the save file also needs to be changed
@@ -25,6 +25,11 @@ public class PuzzleManager : MonoBehaviour
             mazePuzzle = MazePuzzle.Instance;
             simonSaysPuzzle = SimonSaysPuzzle.Instance;
             puzzleStatus = new int[NUM_PUZZLES, 2];
+            DontDestroyOnLoad(this);
+        }
+        else
+        {
+            Destroy(this);
         }
     }
 

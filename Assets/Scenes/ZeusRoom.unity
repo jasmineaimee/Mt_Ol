@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: 462c7f8c1223cb34a805255b43311dba,
+  m_LightingDataAsset: {fileID: 112000000, guid: 9d174c7ec4fce404583419c397708392,
     type: 2}
   m_LightingSettings: {fileID: 4890085278179872738, guid: 3f15fb863c37cd040a85dbb6f1dd16cf,
     type: 2}
@@ -1210,6 +1210,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 961196720}
+  - component: {fileID: 961440557}
   m_Layer: 7
   m_Name: Zeus
   m_TagString: Untagged
@@ -1217,6 +1218,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!65 &961440557
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 961440556}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 5, y: 1, z: 5}
+  m_Center: {x: -1, y: 0, z: 0}
 --- !u!1001 &965858781
 PrefabInstance:
   m_ObjectHideFlags: 0

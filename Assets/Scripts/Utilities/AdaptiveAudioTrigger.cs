@@ -5,9 +5,8 @@ using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider))]
 public class AdaptiveAudioTrigger : MonoBehaviour {
-    [Header("A D A P T I V E  A U D I O  T R I G G E R")]
     [Header("Set In Inspector")]
-    //[Header("Set Dynamically")]
+    [Header("A D A P T I V E  A U D I O  T R I G G E R")]
     public int triggerLevel; // what level area this is
     
     void OnDrawGizmosSelected()

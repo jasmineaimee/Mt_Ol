@@ -15,11 +15,17 @@ public class MenuManager : MonoBehaviour
     
 
     // Private Vars
-    //private bool inventoryOpen = false;
 
     void Start()
     {
-
+        if(Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
     }
 
     public void ButtonHit(int mode)
@@ -65,7 +71,6 @@ public class MenuManager : MonoBehaviour
         loadingText.text = "Loading...";
         GameManager.Instance.Load();
         GameManager.Instance.ChangeSceneTo(0,new Vector3(0f,GameManager.Instance.playerStartY, 0f), new Vector3(0f,0f,0f));
-
     }
 
     public void Quit()

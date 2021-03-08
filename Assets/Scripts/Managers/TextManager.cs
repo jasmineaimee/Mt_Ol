@@ -6,8 +6,8 @@ public class TextManager : MonoBehaviour
 {
     public static TextManager Instance;
     
-    [Header("T E X T  M A N A G E R")]
     [Header("Set In Inspector")]
+    [Header("T E X T  M A N A G E R")]
     public TextMeshPro winText;
     // [Header("Set Dynamically")]
 
@@ -29,6 +29,11 @@ public class TextManager : MonoBehaviour
         if(Instance == null)
         {
             Instance = this;
+            DontDestroyOnLoad(this);
+        }
+        else
+        {
+            Destroy(this);
         }
     }
     public void SetWinText()

@@ -5,12 +5,45 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/TitleScene.unity
     guid: cc594588826d36d4ebe54f097317b7a9
   - enabled: 1
     path: Assets/Scenes/StartRoom.unity
     guid: 10c87d3a7298aab4bbf0f739c2fd69a4
+  - enabled: 1
+    path: Assets/Scenes/AphroditeRoom.unity
+    guid: f4d9c08ebaec3ba4797901e477fa3739
+  - enabled: 1
+    path: Assets/Scenes/AthenaRoom.unity
+    guid: 8c9637ad6e99f034fbc574b68a5eb960
+  - enabled: 1
+    path: Assets/Scenes/HadesRoom.unity
+    guid: dccf7b7aa1e5637429b1e2f5ae87a6fe
+  - enabled: 1
+    path: Assets/Scenes/Hallway.unity
+    guid: 3d98a321141240c4a9d885cb0a472295
+  - enabled: 1
+    path: Assets/Scenes/HephaistosRoom.unity
+    guid: 9ee37f0e9292b9f439813154730a69a7
+  - enabled: 1
+    path: Assets/Scenes/HeraRoom.unity
+    guid: ffd11d0013572d248ae44903823a509b
+  - enabled: 1
+    path: Assets/Scenes/HermesRoom.unity
+    guid: 2f2f6fbfec26309498125783a0d427d7
+  - enabled: 1
+    path: Assets/Scenes/KharitiesRoom.unity
+    guid: 8cd9cf3c8cb1cf341be7101a08332a57
+  - enabled: 1
+    path: Assets/Scenes/Menu.unity
+    guid: b92fea02375c47b45b85bebf2e8843d9
+  - enabled: 1
+    path: Assets/Scenes/PandoraRoom.unity
+    guid: 9a91ce3e8ce7db245aed7d83f895f8f4
+  - enabled: 1
+    path: Assets/Scenes/ZeusRoom.unity
+    guid: 6850618c49997db4e89e9ab2809f328e
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: bd38bf66910eebf49aa55942a930f5ec,
       type: 2}

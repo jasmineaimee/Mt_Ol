@@ -8,8 +8,7 @@ using UnityEngine.SceneManagement;
 
 // REFERENCES
 // Text Riddle Answers: start = a/b, hephaistos = a, aphrodite = a, kharities = b, inventory/pandora, hera = a, athena = b, hades = b, hermes = b, zeus = a, underworld = a
-// RoomNums: 0 = Start, 1 = Hephaistos, 2 = Aphrodite, 3 = Kharities, 4 = Hera, 5 = Athena, 6 = Hades/Underworld, 7 = Hermes, 8 = Zeus, 9 = Pandora/Inventory, 10 = Menu, 11 = Hallway
-// DoorNums: 0 = Start, 11 = Hesphaistos West, 12 = Hephaistos East, 2 = Aphrodite, 3 = Kharities, 4 = Hera, 5 = Athena, 61 = Hades North, 62, = Hades East, 81 = Hermes South, 82 = Hermes North, 91 = Zeus South, 92 = Zeus East
+// RoomNums: 0 = Start, 1 = Hephaistos, 2 = Aphrodite, 3 = Kharities, 4 = Hera, 5 = Athena, 6 = Hades/Underworld, 8 = Hermes, 9 = Zeus, 10 = Pandora/Inventory, 11 = Menu, 12 = Hallway
 // Collectables: Dirt, Water, Clothing, Grace, Jewellery, Flowers, Wovens, Deceit, Box
 // River Puzzle Solution: Charon Takes H, Returns alone, Takes either L or D, Returns with H, takes other (either L or D), Returns alone, Takes H
 // Simon Says Colour Buttons: 1 = Pink, 2 = Orange, 3 = Yellow, 4 = Green, 5 = Blue, 6 = Purple, 7 = White, 8 = Black
@@ -29,6 +28,7 @@ public class GameManager : MonoBehaviour
 
 
     [Header("Set Dynamically")]
+    public bool hasSeenZeus = false; // if the player has seen zeus to get the quest.
     public bool isPaused = false; // is the player paused right now (in the menu area)
     public bool isPlayerActive = true; // false if the player being teleported right now
     public bool recentre = false; // should we recentre the local positions of vr player/camera
@@ -39,8 +39,8 @@ public class GameManager : MonoBehaviour
     public Vector3 underTeleport; // underworld teleport location
     public Vector3 hadesTeleport; // hades room teleport location
     public float playerStartY; // player's y position (so they don't become real short or hella tall after teleport)
-    public Vector3 playerLoadLocation; // the location the player should move to on scene load
-    public Vector3 playerLoadRotation; // the rotation the player should move to on scene load
+    public Vector3 playerLoadLocation = new Vector3(0f,1.6f,0f); // the location the player should move to on scene load
+    public Vector3 playerLoadRotation = new Vector3(0f,0f,0f); // the rotation the player should move to on scene load
     
     // Private Vars
 
@@ -62,6 +62,7 @@ public class GameManager : MonoBehaviour
                     Invoke("Load", 1f);
                 }
             }
+            DontDestroyOnLoad(this);
         }
     }
 
@@ -91,6 +92,7 @@ public class GameManager : MonoBehaviour
 
             InventoryManager.Instance.SetInventory(save.inventory);
             PuzzleManager.Instance.puzzleStatus = save.puzzleStatus;
+            hasSeenZeus = save.hasSeenZeus;
             prevScene = 0;
             newScene = 0;
 
@@ -127,7 +129,9 @@ public class GameManager : MonoBehaviour
 
     public void StartAt()
     {
+        Debug.Log("PlayerLocation Before:" + ovrPlayer.transform.position);
         isPlayerActive = false;
+        playerLoadLocation.y = playerStartY;
         teleportLocation = playerLoadLocation;
         teleportRotation = playerLoadRotation;
         StartCoroutine(Teleport());
@@ -138,16 +142,13 @@ public class GameManager : MonoBehaviour
     {
         // after half a second, move player to new location and restore movement
         yield return new WaitForSeconds(0.5f);
+        Debug.Log(playerLoadLocation);
         ovrPlayer.transform.position = teleportLocation;
+        ovrPlayer.transform.localRotation = Quaternion.identity;
         ovrPlayer.transform.Rotate(teleportRotation);
         isPlayerActive = true;
         recentre = true;
-    }
-
-    public void ControlMovement(bool enableMove)
-    {
-        // set if player can move right now
-        ovrPlayer.GetComponent<OVRPlayerController>().EnableLinearMovement = enableMove;
+        Debug.Log("PlayerLocation After:" + ovrPlayer.transform.position);
     }
 
     public void ResetForNextScene(int scene)
@@ -196,19 +197,19 @@ public class GameManager : MonoBehaviour
             case 6:
                 SceneManager.LoadScene("HadesRoom");
                 break;
-            case 7:
+            case 8:
                 SceneManager.LoadScene("HermesRoom");
                 break;
-            case 8:
+            case 9:
                 SceneManager.LoadScene("ZeusRoom");
                 break;
-            case 9:
+            case 10:
                 SceneManager.LoadScene("PandoraRoom");
                 break;
-            case 10:
+            case 11:
                 SceneManager.LoadScene("Menu");
                 break;
-            case 11:
+            case 12:
                 SceneManager.LoadScene("Hallway");
                 break;
             default:
@@ -221,21 +222,24 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         // check if player is active and recenter local positions if necessary
-        ovrPlayer.GetComponent<CharacterController>().enabled = isPlayerActive;
-        if(recentre)
-        {
+        // if(ovrPlayer.GetComponent<CharacterController>())
+        // {
+        //     ovrPlayer.GetComponent<CharacterController>().enabled = isPlayerActive;
+        // }
+        // if(recentre)
+        // {
 
-            ovrPlayer.transform.localPosition = new Vector3(0, ovrPlayer.transform.localPosition.y, 0);
-            cameraRig.transform.localPosition = new Vector3(0, cameraRig.transform.localPosition.y, 0);
-            recentre = false;            
-        }
+            // ovrPlayer.transform.localPosition = new Vector3(0, ovrPlayer.transform.localPosition.y, 0);
+            // cameraRig.transform.localPosition = new Vector3(0, cameraRig.transform.localPosition.y, 0);
+            // recentre = false;            
+        // }
         // if the player hit the menu button, teleport them to menu and pause the game.
         if(!isPaused && ((Input.GetKeyDown(KeyCode.Escape) || OVRInput.Get(OVRInput.Button.Start))))
         {
             isPaused = true;
             ChangeSceneTo(10, playerLoadLocation, playerLoadRotation);
         }
-        if(Input.GetKeyDown(KeyCode.Return) || OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger) == 1.0f)
+        if(Input.GetKeyDown(KeyCode.Return) || OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger) >= 0.5f)
         {
             Debug.Log("Wants to Change Scene");
             foreach(Doors door in doors)
@@ -256,6 +260,7 @@ public class GameManager : MonoBehaviour
         Save save = new Save();
         save.inventory = InventoryManager.Instance.GetInventory();
         save.puzzleStatus = PuzzleManager.Instance.puzzleStatus;
+        save.hasSeenZeus = hasSeenZeus;
         return save;
     }
 }

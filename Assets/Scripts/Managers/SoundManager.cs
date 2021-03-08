@@ -6,9 +6,8 @@ using UnityEngine.Audio;
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance; // only want one SoundManager
-
-    [Header("S O U N D  M A N A G E R")]
     [Header("Set In Inspector")]
+    [Header("S O U N D  M A N A G E R")]
     //public AudioClip collectableClip;
     public AudioClip incorrectClip; // clip that plays when player doesn't solve riddle
     public AudioClip correctClip; // clip that plays when player solves riddle
@@ -34,6 +33,11 @@ public class SoundManager : MonoBehaviour
                     soundEffectAudio = source;
                 }
             }
+            DontDestroyOnLoad(this);
+        }
+        else
+        {
+            Destroy(this);
         }
     }
 

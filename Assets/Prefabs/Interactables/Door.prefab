@@ -45,8 +45,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 480b82e7b8acd8c44a16637dc8a39370, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  yOpenRot: 0
-  yCloseRot: 0
+  toRoomNum: 0
+  doorNum: 0
+  playerLocation: 0
+  isColliding: 0
+  playerLoadLocation: {x: 0, y: 0, z: 0}
+  playerLoadRotation: {x: 0, y: 0, z: 0}
 --- !u!65 &7286685048671932712
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -71,6 +75,7 @@ GameObject:
   - component: {fileID: 7519083323975853285}
   - component: {fileID: 7519083323975853288}
   - component: {fileID: 7519083323975853291}
+  - component: {fileID: 8211291637465370213}
   m_Layer: 10
   m_Name: MainDoor
   m_TagString: Door
@@ -114,6 +119,8 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -138,3 +145,17 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &8211291637465370213
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7519083323975853284}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
