@@ -12,7 +12,7 @@ using UnityEngine.SceneManagement;
 // Collectables: Dirt, Water, Clothing, Grace, Jewellery, Flowers, Wovens, Deceit, Box
 // River Puzzle Solution: Charon Takes H, Returns alone, Takes either L or D, Returns with H, takes other (either L or D), Returns alone, Takes H
 // Simon Says Colour Buttons: 1 = Pink, 2 = Orange, 3 = Yellow, 4 = Green, 5 = Blue, 6 = Purple, 7 = White, 8 = Black
-// Puzzle Points Array Order: 0 = Maze, 1 = River Puzzle
+// Puzzle Points Array Order: 0 = Maze, 1 = River Puzzle, 2 = Simon Says, 3 = Questions
 
 public class GameManager : MonoBehaviour
 {
@@ -109,21 +109,30 @@ public class GameManager : MonoBehaviour
    public void StartTeleport(string place) //Assign this in the menu button.
     {
         isPlayerActive = false;
-        if(place == "Underworld")
-        {
-            teleportLocation = new Vector3(hadesTeleport.x, playerStartY, hadesTeleport.z); // if on underworld teleport go up to hades room
-            playerInRoom = 6;
-        }
-        else if(place == "Hades")
-        {
-            playerStartY = ovrPlayer.transform.position.y;
-            teleportLocation = new Vector3(underTeleport.x, underTeleport.y + playerStartY, underTeleport.z); // if on hades teleport go to underworld
-            playerInRoom = 7;
-        }
-        else
-        {
-            Debug.Log("Invalid Teleport");
-            return;
+        switch (place) {
+            case "Underworld":
+                teleportLocation = new Vector3(hadesTeleport.x, playerStartY, hadesTeleport.z); // if on underworld teleport go up to hades room
+                playerInRoom = 6;
+                break;
+            case "Hades":
+                playerStartY = ovrPlayer.transform.position.y;
+                teleportLocation = new Vector3(underTeleport.x, underTeleport.y + playerStartY, underTeleport.z); // if on hades teleport go to underworld
+                playerInRoom = 7;
+                break;
+            case "maze":
+                teleportLocation = MazePuzzle.Instance.startOfMaze;
+                break;
+            case "startMaze":
+                teleportLocation = MazePuzzle.Instance.returnFromMaze;
+                MazePuzzle.Instance.hasLost = true;
+                break;
+            case "endMaze":
+                teleportLocation = MazePuzzle.Instance.returnFromMaze;
+                MazePuzzle.Instance.hasWon = true;
+                break;
+            default:
+                Debug.Log("Invalid Teleport");
+                return;
         }
         SoundManager.Instance.PlayOneShot(SoundManager.Instance.teleportClip);
 
@@ -132,7 +141,6 @@ public class GameManager : MonoBehaviour
 
     public void StartAt()
     {
-        Debug.Log("PlayerLocation Before:" + ovrPlayer.transform.position);
         isPlayerActive = false;
         playerLoadLocation.y = playerStartY;
         teleportLocation = playerLoadLocation;
@@ -145,13 +153,11 @@ public class GameManager : MonoBehaviour
     {
         // after half a second, move player to new location and restore movement
         yield return new WaitForSeconds(0.5f);
-        Debug.Log(playerLoadLocation);
         ovrPlayer.transform.position = teleportLocation;
         ovrPlayer.transform.localRotation = Quaternion.identity;
         ovrPlayer.transform.Rotate(teleportRotation);
         isPlayerActive = true;
         // recentre = true;
-        Debug.Log("PlayerLocation After:" + ovrPlayer.transform.position);
     }
 
     public void ResetForNextScene(int scene)
@@ -160,7 +166,6 @@ public class GameManager : MonoBehaviour
         riddleSpots.Clear();
         ovrPlayer = null;
         cameraRig = null;
-        PuzzleManager.Instance.simonSaysPuzzle = null;
         InventoryManager.Instance.roomCollectable = null;
         prevScene = newScene;
         newScene = scene;

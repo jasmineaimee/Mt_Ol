@@ -5,12 +5,11 @@ public class Doors : MonoBehaviour
     [Header("Set in Inspector")]
     [Header("D O O R S")]
     public int toRoomNum;
-    public int doorNum;
-    public float playerLocation;
-    [Header("Set Dynamically")]
-    public bool isColliding = false;
     public Vector3 playerLoadLocation = new Vector3(0f,0f,0f);
     public Vector3 playerLoadRotation = new Vector3(0f,0f,0f);
+    [Header("Set Dynamically")]
+    public bool isColliding = false;
+
     // Private Vars
     
 

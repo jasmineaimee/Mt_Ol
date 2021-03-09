@@ -11,11 +11,12 @@ public class Collectable : MonoBehaviour
     void Start()
     {
         InventoryManager.Instance.roomCollectable = this.gameObject;
+        this.gameObject.SetActive(false);
         if(GameManager.Instance.playerInRoom == 0)
         {
-            if(!GameManager.Instance.hasSeenZeus || InventoryManager.Instance.isInInventory(type))
+            if(GameManager.Instance.hasSeenZeus && !InventoryManager.Instance.isInInventory(type))
             {
-                this.gameObject.SetActive(false);
+                this.gameObject.SetActive(true);
             }
         }
     }

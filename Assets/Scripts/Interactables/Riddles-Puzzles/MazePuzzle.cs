@@ -10,6 +10,7 @@ public class MazePuzzle : MonoBehaviour
     [Header("Set In Inspector")]
     public GameObject[] mazePrefabs; // all the maze prefabs from easy to hard
     public Vector3 mazeLocation; // This is where the maze is placed in the world
+    public int difficulty = 0;
     
     [Header("Set Dynamically")]
     public bool hasLost = false; // if player quit the maze
@@ -20,7 +21,6 @@ public class MazePuzzle : MonoBehaviour
     public Vector3 returnFromMaze; // the position in the room to teleport the player back to
     public Teleport endMaze; // the teleport that takes you back from the maze end
     public Teleport startMaze; // the teleport that takes you back from the maze start
-    //public RiddleSpot riddleSpot; // the corresponding riddlespot to this maze
     public bool inMaze = false; // if the player is in the maze
 
     // Private vars
@@ -47,9 +47,14 @@ public class MazePuzzle : MonoBehaviour
                 ResetMaze();
             }
         }
+        if(hasWon)
+        {
+            toMaze.gameObject.SetActive(false);
+            InventoryManager.Instance.roomCollectable.SetActive(true);
+        }
     }
 
-    public void SetMaze(int difficulty, Teleport teleport)
+    public void SetMaze()
     {
         // set maze to random prefab with chosen difficulty.
         if(difficulty == 0)
@@ -69,12 +74,15 @@ public class MazePuzzle : MonoBehaviour
             mazeNum = 0;
         }
         // set teleports/teleport locations/ instantiate maze
-        toMaze = teleport;
+        //toMaze = teleport;
         maze = Instantiate(mazePrefabs[mazeNum], mazeLocation, Quaternion.identity);
         startMaze = maze.transform.Find("StartingTeleport").GetComponent<Teleport>();
         endMaze = maze.transform.Find("EndingTeleport").GetComponent<Teleport>();
         startOfMaze = startMaze.transform.position;
+        startOfMaze.y += GameManager.Instance.playerStartY;
         endOfMaze = endMaze.transform.position;
+        returnFromMaze = toMaze.transform.position;
+        returnFromMaze.y = GameManager.Instance.playerStartY;
     }
 
     private void ResetMaze()

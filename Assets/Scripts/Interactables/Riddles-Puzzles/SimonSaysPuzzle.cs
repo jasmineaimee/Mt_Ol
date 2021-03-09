@@ -27,7 +27,6 @@ public class SimonSaysPuzzle : MonoBehaviour
         if(Instance == null)
         {
             Instance = this;
-            PuzzleManager.Instance.simonSaysPuzzle = this;
             // set new sequence list, and fill start with a colour.
             sequence = new List<int>();
             sequence.Add(Random.Range(1,9));

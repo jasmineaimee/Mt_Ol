@@ -4,8 +4,8 @@ public class Teleport : MonoBehaviour
 {
     [Header("T E L E P O R T")]
     [Header("Set In Inspector")]
-    public string place; // is this underworld or hades room
-    public bool isMaze = false;
+    public string place; // is this underworld or hades room or maze
+    public bool isMaze = false; // does this teleport go to a maze
 
     // Private Vars
     private bool canTeleport; // is player on teleporation spot?
@@ -49,17 +49,7 @@ public class Teleport : MonoBehaviour
             {
                 if((Input.GetKeyDown(KeyCode.A) || OVRInput.Get(OVRInput.Touch.One)))
                 {
-                    MazePuzzle.Instance.SetMaze(0, this);
-                    GameManager.Instance.StartTeleport(place);
-                }
-                else if((Input.GetKeyDown(KeyCode.A) || OVRInput.Get(OVRInput.Touch.Two)))
-                {
-                    MazePuzzle.Instance.SetMaze(1, this);
-                    GameManager.Instance.StartTeleport(place);
-                }
-                else if((Input.GetKeyDown(KeyCode.A) || OVRInput.Get(OVRInput.Touch.Three)))
-                {
-                    MazePuzzle.Instance.SetMaze(2, this);
+                    MazePuzzle.Instance.SetMaze();
                     GameManager.Instance.StartTeleport(place);
                 }
             }
