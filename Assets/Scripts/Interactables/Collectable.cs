@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public enum Collectables {Dirt, Water, Clothing, Grace, Jewellery, Flowers, Wovens, Deceit, Box};
 public class Collectable : MonoBehaviour
@@ -9,6 +7,18 @@ public class Collectable : MonoBehaviour
     [Header("Set in Inspector")]
     public Collectables type;
     public int roomNum;
+
+    void Start()
+    {
+        InventoryManager.Instance.roomCollectable = this.gameObject;
+        if(GameManager.Instance.playerInRoom == 0)
+        {
+            if(!GameManager.Instance.hasSeenZeus || InventoryManager.Instance.isInInventory(type))
+            {
+                this.gameObject.SetActive(false);
+            }
+        }
+    }
 
     void Update()
     {
@@ -22,16 +32,8 @@ public class Collectable : MonoBehaviour
     {
         InventoryManager.Instance.AddToInventory(type);
         InventoryManager.Instance.SetPodiumHalo(type);
-        InventoryManager.Instance.MoveCollectable(this);
         this.GetComponent<OVRGrabbable>().allowOffhandGrab = false;
         this.GetComponent<Collider>().enabled = false;
+        this.gameObject.SetActive(false);
     }
-
-    // private void OnTriggerEnter(Collider other)
-    // {
-    //     if(other.gameObject.tag == "rHand" || other.gameObject.tag == "lHand")
-    //     {
-            
-    //     }
-    // }
 }

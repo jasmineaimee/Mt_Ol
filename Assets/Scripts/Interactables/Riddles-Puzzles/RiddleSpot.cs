@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class RiddleSpot : MonoBehaviour
 {
@@ -33,30 +31,30 @@ public class RiddleSpot : MonoBehaviour
         
         if(onSpot)
         {
-            if(answer == 0)
-            {
-                if((Input.GetKeyDown(KeyCode.A) || OVRInput.Get(OVRInput.Touch.One)))
-                {
-                    answer = 1;
-                    GameManager.Instance.answers[roomNum] = 1;
-                    onSpot = false;
-                    this.gameObject.SetActive(false);
-                }
-                else if((Input.GetKeyDown(KeyCode.B) || OVRInput.Get(OVRInput.Touch.Two)))
-                {
-                    if(roomNum == 0)
-                    {
-                        answer = 1;
-                    }
-                    else
-                    {
-                        answer = 2;
-                    }
-                    GameManager.Instance.answers[roomNum] = 2;
-                    onSpot = false;
-                    this.gameObject.SetActive(false);
-                }
-            }
+            // if(answer == 0)
+            // {
+            //     if((Input.GetKeyDown(KeyCode.A) || OVRInput.Get(OVRInput.Touch.One)))
+            //     {
+            //         answer = 1;
+            //         GameManager.Instance.answers[roomNum] = 1;
+            //         onSpot = false;
+            //         this.gameObject.SetActive(false);
+            //     }
+            //     else if((Input.GetKeyDown(KeyCode.B) || OVRInput.Get(OVRInput.Touch.Two)))
+            //     {
+            //         if(roomNum == 0)
+            //         {
+            //             answer = 1;
+            //         }
+            //         else
+            //         {
+            //             answer = 2;
+            //         }
+            //         GameManager.Instance.answers[roomNum] = 2;
+            //         onSpot = false;
+            //         this.gameObject.SetActive(false);
+            //     }
+            // }
         }
     }
 }

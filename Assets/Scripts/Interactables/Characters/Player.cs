@@ -1,13 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Player : MonoBehaviour
 {
     public static Player Instance; // only want one Player
 
-    //[Header("P L A Y E R")]
     //[Header("Set In Inspector")]
+    //[Header("P L A Y E R")]
     //[Header("Set Dynamically")]
     
 
@@ -16,5 +14,13 @@ public class Player : MonoBehaviour
         GameManager.Instance.ovrPlayer = this.gameObject;
         GameManager.Instance.cameraRig = this.transform.Find("OVRCameraRig").gameObject;
         GameManager.Instance.StartAt();
+        if(GameManager.Instance.playerInRoom == 10)
+        {
+            InventoryManager.Instance.SetInventory(InventoryManager.Instance.GetInventory());
+            if(GameManager.Instance.numCollectables >= 6)
+            {
+                InventoryManager.Instance.SetWinCondition();
+            }
+        }
     }
 }

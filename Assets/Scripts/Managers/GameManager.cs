@@ -26,14 +26,14 @@ public class GameManager : MonoBehaviour
     public int[] answers = new int[10] {0,0,0,0,0,0,0,0,0,0}; // player's answers to the riddles, in room order
     public List<Doors> doors; // the doors currently in the scene
 
-
     [Header("Set Dynamically")]
     public bool hasSeenZeus = false; // if the player has seen zeus to get the quest.
     public bool isPaused = false; // is the player paused right now (in the menu area)
     public bool isPlayerActive = true; // false if the player being teleported right now
-    public bool recentre = false; // should we recentre the local positions of vr player/camera
+    // public bool recentre = false; // should we recentre the local positions of vr player/camera
     public int prevScene = -1;
     public int newScene = -1;
+    public int numCollectables = 0;
     public Vector3 teleportLocation; // where are we going?
     public Vector3 teleportRotation; // where are we facing?
     public Vector3 underTeleport; // underworld teleport location
@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour
     public float playerStartY; // player's y position (so they don't become real short or hella tall after teleport)
     public Vector3 playerLoadLocation = new Vector3(0f,1.6f,0f); // the location the player should move to on scene load
     public Vector3 playerLoadRotation = new Vector3(0f,0f,0f); // the rotation the player should move to on scene load
+    public int playerInRoom = 0;
     
     // Private Vars
 
@@ -111,11 +112,13 @@ public class GameManager : MonoBehaviour
         if(place == "Underworld")
         {
             teleportLocation = new Vector3(hadesTeleport.x, playerStartY, hadesTeleport.z); // if on underworld teleport go up to hades room
+            playerInRoom = 6;
         }
         else if(place == "Hades")
         {
             playerStartY = ovrPlayer.transform.position.y;
             teleportLocation = new Vector3(underTeleport.x, underTeleport.y + playerStartY, underTeleport.z); // if on hades teleport go to underworld
+            playerInRoom = 7;
         }
         else
         {
@@ -147,7 +150,7 @@ public class GameManager : MonoBehaviour
         ovrPlayer.transform.localRotation = Quaternion.identity;
         ovrPlayer.transform.Rotate(teleportRotation);
         isPlayerActive = true;
-        recentre = true;
+        // recentre = true;
         Debug.Log("PlayerLocation After:" + ovrPlayer.transform.position);
     }
 
@@ -155,6 +158,10 @@ public class GameManager : MonoBehaviour
     {
         doors.Clear();
         riddleSpots.Clear();
+        ovrPlayer = null;
+        cameraRig = null;
+        PuzzleManager.Instance.simonSaysPuzzle = null;
+        InventoryManager.Instance.roomCollectable = null;
         prevScene = newScene;
         newScene = scene;
     }
@@ -163,7 +170,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log(scene + " <- scene   location ->  " + location + "   rotation -> " + rotation);
         ResetForNextScene(scene);
-
+        playerInRoom = scene;
         if(scene != 10)
         {
             // we're going to the menu
@@ -221,18 +228,6 @@ public class GameManager : MonoBehaviour
     
     void Update()
     {
-        // check if player is active and recenter local positions if necessary
-        // if(ovrPlayer.GetComponent<CharacterController>())
-        // {
-        //     ovrPlayer.GetComponent<CharacterController>().enabled = isPlayerActive;
-        // }
-        // if(recentre)
-        // {
-
-            // ovrPlayer.transform.localPosition = new Vector3(0, ovrPlayer.transform.localPosition.y, 0);
-            // cameraRig.transform.localPosition = new Vector3(0, cameraRig.transform.localPosition.y, 0);
-            // recentre = false;            
-        // }
         // if the player hit the menu button, teleport them to menu and pause the game.
         if(!isPaused && ((Input.GetKeyDown(KeyCode.Escape) || OVRInput.Get(OVRInput.Button.Start))))
         {

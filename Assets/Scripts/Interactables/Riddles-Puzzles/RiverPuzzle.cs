@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 // Hades/ Underworld Puzzle/Riddle
 // You must get all three over the River Styx
