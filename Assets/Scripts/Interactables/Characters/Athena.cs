@@ -12,6 +12,5 @@ public class Athena : Character
         talkingPoints[1] = "The idea of a human woman makes me nervous. I wondxer what Zeus is up to.";
         talkingPoints[2] = "I wouldn't keep Zeus waiting. Go find all of the things he needs.";
         talkingPoints[3] = "I heard Zeus said something about a box. I hope for everyone's sake that isn't true.";
-
     }
 }

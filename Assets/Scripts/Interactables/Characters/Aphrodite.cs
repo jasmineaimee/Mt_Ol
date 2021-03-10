@@ -12,6 +12,5 @@ public class Aphrodite : Character
         talkingPoints[1] = "Is it true that Zeus wants to create a human? Actually, don't answer that.\n\n I've made another maze for you to complete. Although, I have nothing else to give you.";
         talkingPoints[2] = "Why is Zeus making a human? Oh! Philotes! I didn't see you there.\n\n There's another maze for you to complete. Although, I have nothing else to give you.";
         talkingPoints[3] = "I have a bad feeling about this human thing. Oh! Philotes! I didn't see you there.\n\n There's another maze for you to complete. I have nothing else to give you, though.";
-
     }
 }

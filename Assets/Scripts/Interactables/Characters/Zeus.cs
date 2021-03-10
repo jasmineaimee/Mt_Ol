@@ -9,6 +9,7 @@ public class Zeus : Character
         talkingPoints[1] = "Thank you for finding everything I needed. You can find Pandora and the box in her room. Her favourite flowers are purple.";
     }
 
+    // zeus overrides control speaking because he gives the quest, rather than an item
     public override void ControlSpeaking()
     {
         //base.ControlSpeaking();
