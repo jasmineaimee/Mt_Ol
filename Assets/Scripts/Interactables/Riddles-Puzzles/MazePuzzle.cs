@@ -18,7 +18,9 @@ public class MazePuzzle : MonoBehaviour
     public Teleport toMaze; // the teleport that is taking you to the maze
     public Vector3 endOfMaze; // this is the end of the maze (probably a teleport here)
     public Vector3 startOfMaze; // this is the start of the maze (probably a teleport here)
+    public Vector3 rotationOfMaze;
     public Vector3 returnFromMaze; // the position in the room to teleport the player back to
+    public Vector3 rotationFromMaze;
     public Teleport endMaze; // the teleport that takes you back from the maze end
     public Teleport startMaze; // the teleport that takes you back from the maze start
     public bool inMaze = false; // if the player is in the maze
@@ -80,8 +82,10 @@ public class MazePuzzle : MonoBehaviour
         endMaze = maze.transform.Find("EndingTeleport").GetComponent<Teleport>();
         startOfMaze = startMaze.transform.position;
         startOfMaze.y += GameManager.Instance.playerStartY;
+        rotationOfMaze = startMaze.transform.rotation.eulerAngles;
         endOfMaze = endMaze.transform.position;
         returnFromMaze = toMaze.transform.position;
+        rotationFromMaze = toMaze.transform.rotation.eulerAngles;
         returnFromMaze.y = GameManager.Instance.playerStartY;
     }
 
@@ -91,8 +95,12 @@ public class MazePuzzle : MonoBehaviour
         startMaze = null;
         endMaze = null;
         startOfMaze = Vector3.zero;
+        rotationOfMaze = Vector3.zero;
         endOfMaze = Vector3.zero;
+        toMaze.gameObject.SetActive(false);
         toMaze = null;
+        returnFromMaze = Vector3.zero;
+        rotationFromMaze = Vector3.zero;
         mazeNum = -1;
         inMaze = false;
         Destroy(maze);

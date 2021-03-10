@@ -18404,6 +18404,31 @@ PrefabInstance:
       propertyPath: yOpenRot
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 6773293357319834464, guid: e9c1eef39b037d9468b28d75c0402dd8,
+        type: 3}
+      propertyPath: toRoomNum
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6773293357319834464, guid: e9c1eef39b037d9468b28d75c0402dd8,
+        type: 3}
+      propertyPath: playerLoadLocation.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6773293357319834464, guid: e9c1eef39b037d9468b28d75c0402dd8,
+        type: 3}
+      propertyPath: playerLoadLocation.y
+      value: 1.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6773293357319834464, guid: e9c1eef39b037d9468b28d75c0402dd8,
+        type: 3}
+      propertyPath: playerLoadLocation.z
+      value: -59.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6773293357319834464, guid: e9c1eef39b037d9468b28d75c0402dd8,
+        type: 3}
+      propertyPath: playerLoadRotation.y
+      value: 180
+      objectReference: {fileID: 0}
     - target: {fileID: 7519083323975853285, guid: e9c1eef39b037d9468b28d75c0402dd8,
         type: 3}
       propertyPath: m_LocalScale.y

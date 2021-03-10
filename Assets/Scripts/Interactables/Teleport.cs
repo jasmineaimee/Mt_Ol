@@ -2,8 +2,8 @@
 
 public class Teleport : MonoBehaviour
 {
-    [Header("T E L E P O R T")]
     [Header("Set In Inspector")]
+    [Header("T E L E P O R T")]
     public string place; // is this underworld or hades room or maze
     public bool isMaze = false; // does this teleport go to a maze
 
@@ -33,25 +33,19 @@ public class Teleport : MonoBehaviour
     {
         canTeleport = false;
     }
+
     void Update()
     {
         // if player presses A on teleportation pad, player gets telported
         if(canTeleport)
         {
-            if(!isMaze)
+            if((Input.GetKeyDown(KeyCode.A) || OVRInput.Get(OVRInput.Touch.One)))
             {
-                if((Input.GetKeyDown(KeyCode.A) || OVRInput.Get(OVRInput.Touch.One)))
-                {
-                    GameManager.Instance.StartTeleport(place);
-                }
-            }
-            else
-            {
-                if((Input.GetKeyDown(KeyCode.A) || OVRInput.Get(OVRInput.Touch.One)))
+                if(isMaze)
                 {
                     MazePuzzle.Instance.SetMaze();
-                    GameManager.Instance.StartTeleport(place);
                 }
+                GameManager.Instance.StartTeleport(place);
             }
         }
     }

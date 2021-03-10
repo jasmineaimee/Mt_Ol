@@ -44,6 +44,8 @@ public class GameManager : MonoBehaviour
     public int playerInRoom = 0;
     
     // Private Vars
+    private int[] correctAnswers = new int[10]{0,1,1,2,1,2,2,1,2,1}; // the correct answers to the questions in Athena(5)
+
 
     void Start()
     {
@@ -121,13 +123,16 @@ public class GameManager : MonoBehaviour
                 break;
             case "maze":
                 teleportLocation = MazePuzzle.Instance.startOfMaze;
+                teleportRotation = MazePuzzle.Instance.rotationOfMaze;
                 break;
             case "startMaze":
                 teleportLocation = MazePuzzle.Instance.returnFromMaze;
+                teleportRotation = MazePuzzle.Instance.rotationFromMaze;
                 MazePuzzle.Instance.hasLost = true;
                 break;
             case "endMaze":
                 teleportLocation = MazePuzzle.Instance.returnFromMaze;
+                teleportRotation = MazePuzzle.Instance.rotationFromMaze;
                 MazePuzzle.Instance.hasWon = true;
                 break;
             default:
@@ -229,6 +234,23 @@ public class GameManager : MonoBehaviour
                 break;
         }
 
+    }
+
+    public bool CheckAnswers()
+    {
+        int correct = 1;
+        for(int i = 1; i < correctAnswers.Length; i++)
+        {
+            if(correctAnswers[i] == answers[i])
+            {
+                correct++;
+            }
+        }
+        if(correct > 6)
+        {
+            InventoryManager.Instance.roomCollectable.SetActive(true);
+        }
+        return correct > 6;
     }
     
     void Update()

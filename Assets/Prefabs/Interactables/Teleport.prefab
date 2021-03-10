@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1283642669951647264}
   - component: {fileID: 9149452090234855415}
   m_Layer: 0
-  m_Name: hadesTeleport
+  m_Name: Teleport
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -109,7 +109,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4294159262
-  m_Size: 0.5
+  m_Size: 1
 --- !u!114 &9149452090234855415
 MonoBehaviour:
   m_ObjectHideFlags: 0

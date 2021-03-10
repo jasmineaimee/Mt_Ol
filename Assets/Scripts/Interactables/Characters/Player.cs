@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
         GameManager.Instance.StartAt();
         if(GameManager.Instance.playerInRoom == 10)
         {
-            InventoryManager.Instance.SetInventory(InventoryManager.Instance.GetInventory());
+            InventoryManager.Instance.SetInventoryRoom();
             if(GameManager.Instance.numCollectables >= 6)
             {
                 InventoryManager.Instance.SetWinCondition();

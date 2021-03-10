@@ -26,6 +26,7 @@ abstract public class Character : MonoBehaviour
         if(!missionActive)
         {
             speechText.text = missionStatement;
+            missionActive = true;
         }
         else
         {
@@ -51,6 +52,7 @@ abstract public class Character : MonoBehaviour
         if(other.tag == "lHand" || other.tag == "rHand")
         {
             inRange = true;
+            aText.text = "Press A";
         }
     }
     
@@ -59,7 +61,7 @@ abstract public class Character : MonoBehaviour
         if(other.tag == "lHand" || other.tag == "rHand")
         {
             inRange = false;
-            isSpeaking = false;
+            aText.text = "";
         }
     }
 }

@@ -6,15 +6,15 @@ public class RiddleSpot : MonoBehaviour
     [Header("R I D D L E  S P O T")]
     [Header("Set In Inspector")]
     public int roomNum;
-    public int correctAnswer;
 
     [Header("Set Dynamically")]
-    public int answer;
+    public int answer = 0;
 
     public bool onSpot {
         get;
         private set;
     }
+    private int questionNum = 0;
 
     void OnTriggerEnter(Collider other)
     {
@@ -28,33 +28,31 @@ public class RiddleSpot : MonoBehaviour
 
     void Update()
     {
-        
         if(onSpot)
         {
-            // if(answer == 0)
-            // {
-            //     if((Input.GetKeyDown(KeyCode.A) || OVRInput.Get(OVRInput.Touch.One)))
-            //     {
-            //         answer = 1;
-            //         GameManager.Instance.answers[roomNum] = 1;
-            //         onSpot = false;
-            //         this.gameObject.SetActive(false);
-            //     }
-            //     else if((Input.GetKeyDown(KeyCode.B) || OVRInput.Get(OVRInput.Touch.Two)))
-            //     {
-            //         if(roomNum == 0)
-            //         {
-            //             answer = 1;
-            //         }
-            //         else
-            //         {
-            //             answer = 2;
-            //         }
-            //         GameManager.Instance.answers[roomNum] = 2;
-            //         onSpot = false;
-            //         this.gameObject.SetActive(false);
-            //     }
-            // }
+            if(roomNum == 5)
+            {
+                if((Input.GetKeyDown(KeyCode.A) || OVRInput.Get(OVRInput.Touch.One)))
+                {
+                    answer = 1;
+                    GameManager.Instance.answers[questionNum] = 1;
+                    questionNum++;
+                }
+                else if((Input.GetKeyDown(KeyCode.B) || OVRInput.Get(OVRInput.Touch.Two)))
+                {
+                    answer = 2;
+                    GameManager.Instance.answers[questionNum] = 2;
+                    questionNum++;
+                }
+
+                if(answer != 0)
+                {
+                    GameManager.Instance.answers[questionNum] = answer;
+                    questionNum++;
+                    TextManager.Instance.SetQuestionText(roomNum, questionNum);
+                    answer = 0;
+                }
+            }
         }
     }
 }

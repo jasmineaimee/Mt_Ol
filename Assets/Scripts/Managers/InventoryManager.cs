@@ -5,8 +5,9 @@ public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Instance; // only want one InventoryManager
 
-    [Header("I N V E N T O R Y  M A N A G E R")]
     [Header("Set In Inspector")]
+    [Header("I N V E N T O R Y  M A N A G E R")]
+
     public GameObject[] collectableGOs; // The collectables in collectable order
     public GameObject roomCollectable;
     public GameObject[] podiums; // inventory room collectible podiums, in collectable order
@@ -68,6 +69,10 @@ public class InventoryManager : MonoBehaviour
     {
         // called when loading saved data, update list, and active
         inventory = inven;
+    }
+
+    public void SetInventoryRoom()
+    {
         foreach(Collectables i in inventory)
         {
             SetPodiumHalo(i);
