@@ -30,7 +30,7 @@ abstract public class Character : MonoBehaviour
         }
         else
         {
-            speechText.text = talkingPoints[Random.Range(0,3)];
+            speechText.text = talkingPoints[Random.Range(0,4)];
         }
     }
 

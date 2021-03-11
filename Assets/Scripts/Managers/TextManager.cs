@@ -14,7 +14,7 @@ public class TextManager : MonoBehaviour
     private string[] riddles = new string[10]
     {"Are you ready to begin? \n A: Yes! \t B: Sure?",
     "What is Hephaistos' job on Olympus? \n A: Blacksmithing \t B: Architecture",
-    "What represents Aphrodite? \n A: Deer \t B: Myrtles",
+    "What represents Aphrodite? \n A: Myrtles \t B: Deer",
     "Who is not one of the Kharities? \n A: Thalia \t B: Eunomia",
     "What is Hera known for being? \n A: Vengeful \t B: Forgiving",
     "What is one thing Athena is the Goddess of? \n A: Young Girls \t B: Warfare",
@@ -28,7 +28,6 @@ public class TextManager : MonoBehaviour
         if(Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(this);
         }
         else
         {

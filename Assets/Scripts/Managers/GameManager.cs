@@ -181,7 +181,7 @@ public class GameManager : MonoBehaviour
         Debug.Log(scene + " <- scene   location ->  " + location + "   rotation -> " + rotation);
         ResetForNextScene(scene);
         playerInRoom = scene;
-        if(scene != 10)
+        if(scene != 11)
         {
             // we're going to the menu
             playerStartY = ovrPlayer.transform.position.y;
@@ -230,7 +230,7 @@ public class GameManager : MonoBehaviour
                 SceneManager.LoadScene("Hallway");
                 break;
             default:
-                Debug.Log("Something went wrong. scene not exist" + scene);
+                Debug.Log("Something went wrong. scene does not exist" + scene);
                 break;
         }
 
@@ -259,7 +259,7 @@ public class GameManager : MonoBehaviour
         if(!isPaused && ((Input.GetKeyDown(KeyCode.Escape) || OVRInput.Get(OVRInput.Button.Start))))
         {
             isPaused = true;
-            ChangeSceneTo(10, playerLoadLocation, playerLoadRotation);
+            ChangeSceneTo(11, playerLoadLocation, playerLoadRotation);
         }
         if(Input.GetKeyDown(KeyCode.Return) || OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger) >= 0.5f)
         {

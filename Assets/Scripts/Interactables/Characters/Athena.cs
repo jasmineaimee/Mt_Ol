@@ -2,7 +2,8 @@ public class Athena : Character
 {
     protected override void Start()
     {
-        if(InventoryManager.Instance.isInInventory(InventoryManager.Instance.roomCollectable.GetComponent<Collectable>().type))
+        base.Start();
+        if(InventoryManager.Instance.isInInventory(Collectables.Clothing))
         {
             missionActive = true;
             riddleSpot.SetActive(false);
