@@ -9,7 +9,6 @@ public class InventoryManager : MonoBehaviour
     [Header("I N V E N T O R Y  M A N A G E R")]
 
     public GameObject[] collectableGOs; // The collectables in collectable order
-    public GameObject roomCollectable;
     public GameObject[] podiums; // inventory room collectible podiums, in collectable order
     public GameObject pandorasBox; // the final collectable
     public GameObject pandora; // win character
@@ -18,7 +17,7 @@ public class InventoryManager : MonoBehaviour
     public bool boxActive = false; // if box is showing
 
     //Private Vars
-    private List<Collectables> inventory; // player's current collected collectables
+
     private int tail = 0; // end of the inventory list
 
     void Start()
@@ -26,9 +25,6 @@ public class InventoryManager : MonoBehaviour
         if(Instance == null)
         {
             Instance = this;
-            // set new inventory
-            inventory = new List<Collectables>();
-            DontDestroyOnLoad(this);
         }
         else
         {
@@ -36,43 +32,9 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    public Collectables GetLastInventory()
-    {
-        return inventory[tail];
-    }
-
-    public void AddToInventory(Collectables type)
-    {
-        inventory.Add(type);
-        roomCollectable.SetActive(false);
-        tail++;
-    }
-
-    public void RemoveFromInventory(Collectables type)
-    {
-        int i = inventory.IndexOf(type);
-        inventory.RemoveAt(i);
-        tail--;
-    }
-    
-    public List<Collectables> GetInventory()
-    {
-        return inventory;
-    }
-
-    public bool isInInventory(Collectables type)
-    {
-        return inventory.Contains(type);
-    }
-
-    public void SetInventory(List<Collectables> inven)
-    {
-        // called when loading saved data, update list, and active
-        inventory = inven;
-    }
-
     public void SetInventoryRoom()
     {
+        List<Collectables> inventory = GameManager.Instance.GetInventory();
         foreach(Collectables i in inventory)
         {
             SetPodiumHalo(i);

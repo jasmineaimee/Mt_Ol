@@ -3,7 +3,7 @@ public class Aphrodite : Character
     protected override void Start()
     {
         base.Start();
-        if(InventoryManager.Instance.isInInventory(Collectables.Grace))
+        if(GameManager.Instance.isInInventory(Collectables.Grace))
         {
             missionActive = true;
         }

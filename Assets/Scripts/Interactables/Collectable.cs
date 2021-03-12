@@ -10,12 +10,23 @@ public class Collectable : MonoBehaviour
 
     void Start()
     {
-        InventoryManager.Instance.roomCollectable = this.gameObject;
+        GameManager.Instance.roomCollectable = this.gameObject;
         if(GameManager.Instance.playerInRoom == 0)
         {
-            if(GameManager.Instance.hasSeenZeus && !InventoryManager.Instance.isInInventory(type))
+            if(!GameManager.Instance.hasSeenZeus || GameManager.Instance.isInInventory(type))
+            {
+                this.gameObject.SetActive(false);
+            }
+        }
+        else if(GameManager.Instance.playerInRoom == 10)
+        {
+            if(GameManager.Instance.isInInventory(type))
             {
                 this.gameObject.SetActive(true);
+            }
+            else
+            {
+                this.gameObject.SetActive(false);
             }
         }
         else
@@ -34,8 +45,7 @@ public class Collectable : MonoBehaviour
 
     private void SendToInventory()
     {
-        InventoryManager.Instance.AddToInventory(type);
-        InventoryManager.Instance.SetPodiumHalo(type);
+        GameManager.Instance.AddToInventory(type);
         this.GetComponent<OVRGrabbable>().allowOffhandGrab = false;
         this.GetComponent<Collider>().enabled = false;
         this.gameObject.SetActive(false);

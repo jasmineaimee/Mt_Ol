@@ -3,7 +3,7 @@ public class Athena : Character
     protected override void Start()
     {
         base.Start();
-        if(InventoryManager.Instance.isInInventory(Collectables.Clothing))
+        if(GameManager.Instance.isInInventory(Collectables.Clothing))
         {
             missionActive = true;
             riddleSpot.SetActive(false);

@@ -42,9 +42,11 @@ public class GameManager : MonoBehaviour
     public Vector3 playerLoadLocation = new Vector3(0f,1.6f,0f); // the location the player should move to on scene load
     public Vector3 playerLoadRotation = new Vector3(0f,0f,0f); // the rotation the player should move to on scene load
     public int playerInRoom = 0;
-    
+    public GameObject roomCollectable;
+
     // Private Vars
     private int[] correctAnswers = new int[10]{0,1,1,2,1,2,2,1,2,1}; // the correct answers to the questions in Athena(5)
+    private List<Collectables> inventory; // player's current collected collectables
 
 
     void Start()
@@ -54,6 +56,8 @@ public class GameManager : MonoBehaviour
             Instance = this;
             // grab the player's y position for teleportion reasons
             playerStartY = ovrPlayer.transform.position.y;
+            // set new inventory
+            inventory = new List<Collectables>();
             if(!PlayerPrefs.HasKey("loadGame"))
             {
                 Debug.Log("Something went wrong. Could not find player prefs");
@@ -68,47 +72,79 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(this);
         }
     }
-
-    public void Save()
+    
+    void Update()
     {
-        // turn data into binary format and save to persistent data
-        Save save = CreateSave();
-
-        BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.Create(Application.persistentDataPath + "/gamesave.save");
-        bf.Serialize(file, save);
-        file.Close();
-
-        Debug.Log("Game Saved");
-    }
-
-    public void Load()
-    {
-        // if player has previously saved, there will be persistent data, and we can pull it.
-        if(File.Exists(Application.persistentDataPath + "/gamesave.save"))
+        // if the player hit the menu button, teleport them to menu and pause the game.
+        if(!isPaused && ((Input.GetKeyDown(KeyCode.Escape) || OVRInput.Get(OVRInput.Button.Start))))
         {
-            //loading = true;
-            BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/gamesave.save", FileMode.Open);
-            Save save = (Save) bf.Deserialize(file);
-            file.Close();
-
-            InventoryManager.Instance.SetInventory(save.inventory);
-            PuzzleManager.Instance.puzzleStatus = save.puzzleStatus;
-            hasSeenZeus = save.hasSeenZeus;
-            prevScene = 0;
-            newScene = 0;
-
-            Debug.Log("Game Loaded");
-            MenuManager.Instance.Unpause();
+            isPaused = true;
+            ChangeSceneTo(11, playerLoadLocation, playerLoadRotation);
         }
-        else
+        if(Input.GetKeyDown(KeyCode.Return) || OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger) >= 0.5f)
         {
-            Debug.Log("No Game Saved!");
+            Debug.Log("Wants to Change Scene");
+            foreach(Doors door in doors)
+            {
+                if(door.isColliding)
+                {
+                    ChangeSceneTo(door.toRoomNum, door.playerLoadLocation, door.playerLoadRotation);
+                    door.isColliding = false;
+                    break;
+                }
+            }
         }
     }
 
-   public void StartTeleport(string place) //Assign this in the menu button.
+    //* UTILITIES
+    public bool CheckAnswers()
+    {
+        int correct = 1;
+        for(int i = 1; i < correctAnswers.Length; i++)
+        {
+            if(correctAnswers[i] == answers[i])
+            {
+                correct++;
+            }
+        }
+        if(correct > 6)
+        {
+            roomCollectable.SetActive(true);
+        }
+        return correct > 6;
+    }
+
+    //* INVENTORY
+    public void AddToInventory(Collectables type)
+    {
+        inventory.Add(type);
+        roomCollectable.SetActive(false);
+    }
+
+    public void RemoveFromInventory(Collectables type)
+    {
+        int i = inventory.IndexOf(type);
+        inventory.RemoveAt(i);
+    }
+    
+    public List<Collectables> GetInventory()
+    {
+        return inventory;
+    }
+
+    public bool isInInventory(Collectables type)
+    {
+        return inventory.Contains(type);
+    }
+
+    public void SetInventory(List<Collectables> inven)
+    {
+        // called when loading saved data, update list, and active
+        inventory = inven;
+    }
+
+    //* TELEPORTATION AND ROOM SCENE CHANGE
+       public void StartTeleport(string place) //Assign this in the menu button.
     {
         isPlayerActive = false;
         switch (place) {
@@ -171,7 +207,7 @@ public class GameManager : MonoBehaviour
         riddleSpots.Clear();
         ovrPlayer = null;
         cameraRig = null;
-        InventoryManager.Instance.roomCollectable = null;
+        roomCollectable = null;
         prevScene = newScene;
         newScene = scene;
     }
@@ -233,46 +269,45 @@ public class GameManager : MonoBehaviour
                 Debug.Log("Something went wrong. scene does not exist" + scene);
                 break;
         }
-
     }
 
-    public bool CheckAnswers()
+    //* PERSISTENT DATA MANAGEMENT
+        public void Save()
     {
-        int correct = 1;
-        for(int i = 1; i < correctAnswers.Length; i++)
-        {
-            if(correctAnswers[i] == answers[i])
-            {
-                correct++;
-            }
-        }
-        if(correct > 6)
-        {
-            InventoryManager.Instance.roomCollectable.SetActive(true);
-        }
-        return correct > 6;
+        // turn data into binary format and save to persistent data
+        Save save = CreateSave();
+
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream file = File.Create(Application.persistentDataPath + "/gamesave.save");
+        bf.Serialize(file, save);
+        file.Close();
+
+        Debug.Log("Game Saved");
     }
-    
-    void Update()
+
+    public void Load()
     {
-        // if the player hit the menu button, teleport them to menu and pause the game.
-        if(!isPaused && ((Input.GetKeyDown(KeyCode.Escape) || OVRInput.Get(OVRInput.Button.Start))))
+        // if player has previously saved, there will be persistent data, and we can pull it.
+        if(File.Exists(Application.persistentDataPath + "/gamesave.save"))
         {
-            isPaused = true;
-            ChangeSceneTo(11, playerLoadLocation, playerLoadRotation);
+            //loading = true;
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(Application.persistentDataPath + "/gamesave.save", FileMode.Open);
+            Save save = (Save) bf.Deserialize(file);
+            file.Close();
+
+            SetInventory(save.inventory);
+            PuzzleManager.Instance.puzzleStatus = save.puzzleStatus;
+            hasSeenZeus = save.hasSeenZeus;
+            prevScene = 0;
+            newScene = 0;
+
+            Debug.Log("Game Loaded");
+            MenuManager.Instance.Unpause();
         }
-        if(Input.GetKeyDown(KeyCode.Return) || OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger) >= 0.5f)
+        else
         {
-            Debug.Log("Wants to Change Scene");
-            foreach(Doors door in doors)
-            {
-                if(door.isColliding)
-                {
-                    ChangeSceneTo(door.toRoomNum, door.playerLoadLocation, door.playerLoadRotation);
-                    door.isColliding = false;
-                    break;
-                }
-            }
+            Debug.Log("No Game Saved!");
         }
     }
 
@@ -280,7 +315,7 @@ public class GameManager : MonoBehaviour
     {
         // save data in the Save script for binary formatting.
         Save save = new Save();
-        save.inventory = InventoryManager.Instance.GetInventory();
+        save.inventory = inventory;
         save.puzzleStatus = PuzzleManager.Instance.puzzleStatus;
         save.hasSeenZeus = hasSeenZeus;
         return save;

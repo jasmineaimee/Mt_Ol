@@ -8,7 +8,7 @@ public class Hades : Character
     protected override void Start()
     {
         base.Start();
-        if(InventoryManager.Instance.isInInventory(Collectables.Wovens))
+        if(GameManager.Instance.isInInventory(Collectables.Wovens))
         {
             missionActive = true;
             riddleSpot.SetActive(false);

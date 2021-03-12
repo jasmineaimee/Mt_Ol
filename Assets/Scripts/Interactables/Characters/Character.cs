@@ -7,6 +7,7 @@ abstract public class Character : MonoBehaviour
     public TextMeshProUGUI aText; // if in range press a is shown
     public TextMeshProUGUI speechText; // if in range and a is pressed this shows character dialogue
     public GameObject riddleSpot; // if this is needed for the character it's here
+    public GameObject teleport; // if this is needed for the character it's here
 
     [Header("Set Dynamically")]
     public bool missionActive = false; // if the player is currently accomplishing this mission
