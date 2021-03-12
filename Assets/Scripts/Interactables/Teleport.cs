@@ -6,6 +6,10 @@ public class Teleport : MonoBehaviour
     [Header("T E L E P O R T")]
     public string place; // is this underworld or hades room or maze
     public bool isMaze = false; // does this teleport go to a maze
+    public bool changeScene = false; // does this teleport actually change scenes
+    public int toRoomNum = 0;
+    public Vector3 playerLoadLocation;
+    public Vector3 playerLoadRotation;
 
     // Private Vars
     private bool canTeleport; // is player on teleporation spot?
@@ -13,13 +17,9 @@ public class Teleport : MonoBehaviour
     void Start()
     {
         // set GameManager vars for teleportation locations
-        if(place == "Hades")
+        if(place == "Hades" || place == "Underworld")
         {
-            GameManager.Instance.hadesTeleport = transform.position;
-        }
-        else if (place == "Underworld")
-        {
-            GameManager.Instance.underTeleport = transform.position;
+            playerLoadLocation.y = GameManager.Instance.playerStartY;
         }
     }
 
@@ -41,11 +41,18 @@ public class Teleport : MonoBehaviour
         {
             if((Input.GetKeyDown(KeyCode.A) || OVRInput.Get(OVRInput.Touch.One)))
             {
-                if(isMaze)
+                if(changeScene)
                 {
-                    MazePuzzle.Instance.SetMaze();
+                    GameManager.Instance.ChangeSceneTo(toRoomNum, playerLoadLocation, playerLoadRotation);
                 }
-                GameManager.Instance.StartTeleport(place);
+                else
+                {
+                    if(isMaze)
+                    {
+                        MazePuzzle.Instance.SetMaze();
+                    }
+                    GameManager.Instance.StartTeleport(place);
+                }
             }
         }
     }

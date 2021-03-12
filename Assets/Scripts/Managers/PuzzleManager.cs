@@ -6,7 +6,7 @@ public class PuzzleManager : MonoBehaviour
 
     // [Header("Set In Inspector")]
     public const int NUM_PUZZLES = 4; // number of puzzles in the game (regardless of how many times player plays it)
-    // ! If above is changes the save file also needs to be changed
+    // ! If above is changed the save file also needs to be changed
     [Header("Set Dynamically")]
     [Header("P U Z Z L E  M A N A G E R")]
     public RiverPuzzle rightRiverSide; // reference to the winning side of the river

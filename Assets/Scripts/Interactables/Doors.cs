@@ -19,6 +19,19 @@ public class Doors : MonoBehaviour
         playerLoadLocation.y = GameManager.Instance.playerStartY;
     }
 
+    void Update()
+    {
+        if(isColliding)
+        {
+            if(Input.GetKeyDown(KeyCode.Return) || OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger) >= 0.5f)
+            {
+                Debug.Log("Wants to Change Scene");
+                GameManager.Instance.ChangeSceneTo(toRoomNum, playerLoadLocation, playerLoadRotation);
+                isColliding = false;
+            }
+        }
+    }
+
     void OnTriggerEnter(Collider other)
     {
         if(other.tag == "rHand" || other.tag == "lHand")

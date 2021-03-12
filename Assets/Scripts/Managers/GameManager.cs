@@ -22,7 +22,6 @@ public class GameManager : MonoBehaviour
     [Header("Set In Inspector")]
     public GameObject ovrPlayer; // vr player
     public GameObject cameraRig; // vr camera
-    public List<GameObject> riddleSpots; // all the RiddleSpots in the game in room order.
     public int[] answers = new int[10] {0,0,0,0,0,0,0,0,0,0}; // player's answers to the riddles, in room order
     public List<Doors> doors; // the doors currently in the scene
 
@@ -32,13 +31,11 @@ public class GameManager : MonoBehaviour
     public bool isPlayerActive = true; // false if the player being teleported right now
     // public bool recentre = false; // should we recentre the local positions of vr player/camera
     public int prevScene = -1;
-    public int newScene = -1;
+    public int newScene = 0;
     public int numCollectables = 0;
     public Vector3 teleportLocation; // where are we going?
     public Vector3 teleportRotation; // where are we facing?
-    public Vector3 underTeleport; // underworld teleport location
-    public Vector3 hadesTeleport; // hades room teleport location
-    public float playerStartY; // player's y position (so they don't become real short or hella tall after teleport)
+    public float playerStartY = 0.0f; // player's y position (so they don't become real short or hella tall after teleport)
     public Vector3 playerLoadLocation = new Vector3(0f,1.6f,0f); // the location the player should move to on scene load
     public Vector3 playerLoadRotation = new Vector3(0f,0f,0f); // the rotation the player should move to on scene load
     public int playerInRoom = 0;
@@ -78,20 +75,10 @@ public class GameManager : MonoBehaviour
         // if the player hit the menu button, teleport them to menu and pause the game.
         if(!isPaused && ((Input.GetKeyDown(KeyCode.Escape) || OVRInput.Get(OVRInput.Button.Start))))
         {
-            isPaused = true;
-            ChangeSceneTo(11, playerLoadLocation, playerLoadRotation);
-        }
-        if(Input.GetKeyDown(KeyCode.Return) || OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger) >= 0.5f)
-        {
-            Debug.Log("Wants to Change Scene");
-            foreach(Doors door in doors)
+            if(!TitleScreen.Instance)
             {
-                if(door.isColliding)
-                {
-                    ChangeSceneTo(door.toRoomNum, door.playerLoadLocation, door.playerLoadRotation);
-                    door.isColliding = false;
-                    break;
-                }
+                isPaused = true;
+                ChangeSceneTo(11, playerLoadLocation, playerLoadRotation);
             }
         }
     }
@@ -148,15 +135,6 @@ public class GameManager : MonoBehaviour
     {
         isPlayerActive = false;
         switch (place) {
-            case "Underworld":
-                teleportLocation = new Vector3(hadesTeleport.x, playerStartY, hadesTeleport.z); // if on underworld teleport go up to hades room
-                playerInRoom = 6;
-                break;
-            case "Hades":
-                playerStartY = ovrPlayer.transform.position.y;
-                teleportLocation = new Vector3(underTeleport.x, underTeleport.y + playerStartY, underTeleport.z); // if on hades teleport go to underworld
-                playerInRoom = 7;
-                break;
             case "maze":
                 teleportLocation = MazePuzzle.Instance.startOfMaze;
                 teleportRotation = MazePuzzle.Instance.rotationOfMaze;
@@ -204,7 +182,6 @@ public class GameManager : MonoBehaviour
     public void ResetForNextScene(int scene)
     {
         doors.Clear();
-        riddleSpots.Clear();
         ovrPlayer = null;
         cameraRig = null;
         roomCollectable = null;
@@ -215,18 +192,12 @@ public class GameManager : MonoBehaviour
     public void ChangeSceneTo(int scene, Vector3 location, Vector3 rotation)
     {
         Debug.Log(scene + " <- scene   location ->  " + location + "   rotation -> " + rotation);
-        ResetForNextScene(scene);
+
         playerInRoom = scene;
-        if(scene != 11)
-        {
-            // we're going to the menu
-            playerStartY = ovrPlayer.transform.position.y;
-        }
+        playerStartY = ovrPlayer.transform.position.y;
         playerLoadLocation = location;
         playerLoadRotation = rotation;
-        // playerLoadLocation = new Vector3(1.01f,playerStartY,12.96f);
-        // playerLoadRotation = new Vector3(0f,180f,0f);
-
+        ResetForNextScene(scene);
         switch(scene)
         {
             case 0:
@@ -249,6 +220,9 @@ public class GameManager : MonoBehaviour
                 break;
             case 6:
                 SceneManager.LoadScene("HadesRoom");
+                break;
+            case 7:
+                SceneManager.LoadScene("Underworld");
                 break;
             case 8:
                 SceneManager.LoadScene("HermesRoom");

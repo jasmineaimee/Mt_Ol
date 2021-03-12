@@ -20,7 +20,7 @@ public class InventoryManager : MonoBehaviour
 
     private int tail = 0; // end of the inventory list
 
-    void Start()
+    void Awake()
     {
         if(Instance == null)
         {
