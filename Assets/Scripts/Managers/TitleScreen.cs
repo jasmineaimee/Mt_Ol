@@ -26,8 +26,6 @@ public class TitleScreen : MonoBehaviour
         // start new game
         buttonPanel.SetActive(false);
         loadingText.text = "Loading...";
-        PlayerPrefs.SetInt("loadGame", 0);
-        PlayerPrefs.Save();
         SceneManager.LoadScene("StartRoom");
     }
 
@@ -36,8 +34,7 @@ public class TitleScreen : MonoBehaviour
         // load from previous save, if any
         buttonPanel.SetActive(false);
         loadingText.text = "Loading...";
-        PlayerPrefs.SetInt("loadGame", 1);
-        PlayerPrefs.Save();
+        GameManager.Instance.Load();
         SceneManager.LoadScene("StartRoom");
     }
 

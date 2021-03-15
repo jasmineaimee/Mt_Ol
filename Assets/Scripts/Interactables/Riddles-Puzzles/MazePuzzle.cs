@@ -43,11 +43,11 @@ public class MazePuzzle : MonoBehaviour
         // if player is playing maze, if they press B, teleport them back to start.
         if(inMaze)
         {
-             if((Input.GetKeyDown(KeyCode.B) || OVRInput.Get(OVRInput.Touch.Two)))
-            {
-                GameManager.Instance.StartTeleport(startMaze.place);
-                ResetMaze();
-            }
+             if(OVRInput.GetUp(OVRInput.Button.Two))
+                {
+                    GameManager.Instance.StartTeleport(startMaze.place);
+                    ResetMaze();
+                }
         }
         if(hasWon)
         {

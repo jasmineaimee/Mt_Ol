@@ -13,4 +13,10 @@ public class Aphrodite : Character
         talkingPoints[2] = "Eventually I'll have Myrtles in the mazes.\n\n There's another maze for you to complete. Although, I have nothing else to give you.";
         talkingPoints[3] = "I have a bad feeling about this human thing. Oh! Philotes! I didn't see you there.\n\n There's another maze for you to complete. I have nothing else to give you, though.";
     }
+
+    protected override void ControlSpeaking()
+    {
+        base.ControlSpeaking();
+        teleport.SetActive(true);
+    }
 }

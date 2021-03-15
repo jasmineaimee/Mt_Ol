@@ -23,7 +23,7 @@ public class Doors : MonoBehaviour
     {
         if(isColliding)
         {
-            if(Input.GetKeyDown(KeyCode.Return) || OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger) >= 0.5f)
+            if(OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger) >= 0.5f || OVRInput.Get(OVRInput.Axis1D.SecondaryIndexTrigger) >= 0.5f)
             {
                 Debug.Log("Wants to Change Scene");
                 GameManager.Instance.ChangeSceneTo(toRoomNum, playerLoadLocation, playerLoadRotation);

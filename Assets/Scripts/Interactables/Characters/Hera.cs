@@ -13,4 +13,10 @@ public class Hera : Character
         talkingPoints[2] = "Apparently, I'm known for being vengeful. But if you ask me, they had it coming.";
         talkingPoints[3] = "Zeus is making the box? That's concerning, but ultimately not my problem. If Zeus makes a mess, he can fix it himself.";
     }
+
+    protected override void ControlSpeaking()
+    {
+        base.ControlSpeaking();
+        teleport.SetActive(true);
+    }
 }

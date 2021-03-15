@@ -21,4 +21,13 @@ public class Hades : Character
         talkingPoints[2] = "If Zeus is creating a human woman, that can only mean one thing. And it's not good.";
         talkingPoints[3] = "Persephone tells me zeus mentioned a box? That is disturbing news indeed.";
     }
+
+    protected override void ControlSpeaking()
+    {
+        base.ControlSpeaking();
+        if(!GameManager.Instance.isInInventory(Collectables.Wovens))
+        {
+            riddleSpot.SetActive(true);
+        }
+    }
 }

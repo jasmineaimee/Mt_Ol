@@ -39,7 +39,7 @@ public class Teleport : MonoBehaviour
         // if player presses A on teleportation pad, player gets telported
         if(canTeleport)
         {
-            if((Input.GetKeyDown(KeyCode.A) || OVRInput.Get(OVRInput.Touch.One)))
+            if(OVRInput.GetUp(OVRInput.Button.One))
             {
                 if(changeScene)
                 {

@@ -1910,7 +1910,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1329192597}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &577301902
 MonoBehaviour:
@@ -2193,6 +2193,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 789870020}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &676882635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 676882634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1056d65d6d69fb145813a83fe5bba45b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &681653056
 GameObject:
   m_ObjectHideFlags: 0
@@ -3505,8 +3517,8 @@ Transform:
   m_Children:
   - {fileID: 1344609993}
   - {fileID: 1481021817}
-  - {fileID: 1393253178}
   - {fileID: 577301901}
+  - {fileID: 1393253178}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5271,6 +5283,7 @@ MonoBehaviour:
   aText: {fileID: 0}
   speechText: {fileID: 0}
   riddleSpot: {fileID: 0}
+  teleport: {fileID: 0}
   missionActive: 0
   talkingPoints:
   - 

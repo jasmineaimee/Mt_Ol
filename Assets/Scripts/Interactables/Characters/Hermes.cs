@@ -13,4 +13,10 @@ public class Hermes : Character
         talkingPoints[2] = "The only thing missing from my colection is a tortoise. I do love those things.";
         talkingPoints[3] = "Someone told me that Zeus is making the box as well? That is very grave news. In other news, I might leave for a while.";
     }
+
+    protected override void ControlSpeaking()
+    {
+        base.ControlSpeaking();
+        teleport.SetActive(true);
+    }
 }

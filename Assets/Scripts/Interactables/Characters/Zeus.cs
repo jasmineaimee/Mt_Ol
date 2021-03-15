@@ -10,7 +10,7 @@ public class Zeus : Character
     }
 
     // zeus overrides control speaking because he gives the quest, rather than an item
-    public override void ControlSpeaking()
+    protected override void ControlSpeaking()
     {
         //base.ControlSpeaking();
         if(!GameManager.Instance.hasSeenZeus)

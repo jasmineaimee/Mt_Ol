@@ -13,4 +13,10 @@ public class Persephone : Character
         talkingPoints[2] = "Everytime I come back from seeing hades in the Underworld, he gives me a flower to bring back here for my mother, Demeter.";
         talkingPoints[3] = "I've been thinking of things that Zeus could put in the box. I'm not sure he'll like my ideas though. Maybe I'll go to the Underworld and ask Hades what he thinks.";
     }
+
+    protected override void ControlSpeaking()
+    {
+        base.ControlSpeaking();
+        riddleSpot.SetActive(true);
+    }
 }

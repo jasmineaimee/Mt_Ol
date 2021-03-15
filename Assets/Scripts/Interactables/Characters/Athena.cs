@@ -14,4 +14,13 @@ public class Athena : Character
         talkingPoints[2] = "I wouldn't keep Zeus waiting. Go find all of the things he needs.";
         talkingPoints[3] = "I heard Zeus said something about a box. I hope for everyone's sake that isn't true.";
     }
+
+    protected override void ControlSpeaking()
+    {
+        base.ControlSpeaking();
+        if(!GameManager.Instance.isInInventory(Collectables.Clothing))
+        {
+            riddleSpot.SetActive(true);
+        }
+    }
 }

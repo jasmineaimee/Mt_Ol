@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
     public bool hasSeenZeus = false; // if the player has seen zeus to get the quest.
     public bool isPaused = false; // is the player paused right now (in the menu area)
     public bool isPlayerActive = true; // false if the player being teleported right now
-    // public bool recentre = false; // should we recentre the local positions of vr player/camera
+    public bool recentre = false; // should we recentre the local positions of vr player/camera
     public int prevScene = -1;
     public int newScene = 0;
     public int numCollectables = 0;
@@ -55,17 +55,6 @@ public class GameManager : MonoBehaviour
             playerStartY = ovrPlayer.transform.position.y;
             // set new inventory
             inventory = new List<Collectables>();
-            if(!PlayerPrefs.HasKey("loadGame"))
-            {
-                Debug.Log("Something went wrong. Could not find player prefs");
-            }
-            else
-            {
-                if(PlayerPrefs.GetInt("loadGame") == 1)
-                {
-                    Invoke("Load", 1f);
-                }
-            }
             DontDestroyOnLoad(this);
         }
     }
@@ -81,6 +70,14 @@ public class GameManager : MonoBehaviour
                 ChangeSceneTo(11, playerLoadLocation, playerLoadRotation);
             }
         }
+        // recenter local positions if necessary
+        // if(recentre)
+        // {
+
+        //     ovrPlayer.transform.localPosition = new Vector3(0, ovrPlayer.transform.localPosition.y, 0);
+        //     cameraRig.transform.localPosition = new Vector3(0, cameraRig.transform.localPosition.y, 0);
+        //     recentre = false;            
+        // }
     }
 
     //* UTILITIES
@@ -138,6 +135,7 @@ public class GameManager : MonoBehaviour
             case "maze":
                 teleportLocation = MazePuzzle.Instance.startOfMaze;
                 teleportRotation = MazePuzzle.Instance.rotationOfMaze;
+                MazePuzzle.Instance.inMaze = true;
                 break;
             case "startMaze":
                 teleportLocation = MazePuzzle.Instance.returnFromMaze;
@@ -176,7 +174,10 @@ public class GameManager : MonoBehaviour
         ovrPlayer.transform.localRotation = Quaternion.identity;
         ovrPlayer.transform.Rotate(teleportRotation);
         isPlayerActive = true;
-        // recentre = true;
+        // if(MazePuzzle.Instance.hasWon || MazePuzzle.Instance.hasLost || teleportLocation.y > 90.0f)
+        // {
+        //     recentre = true;
+        // }
     }
 
     public void ResetForNextScene(int scene)
@@ -194,7 +195,11 @@ public class GameManager : MonoBehaviour
         Debug.Log(scene + " <- scene   location ->  " + location + "   rotation -> " + rotation);
 
         playerInRoom = scene;
-        playerStartY = ovrPlayer.transform.position.y;
+        if(newScene != 11)
+        {
+            // if we are coming back from the menu, ovr player has not been set, so we don't want to access it.
+            playerStartY = ovrPlayer.transform.position.y;
+        }
         playerLoadLocation = location;
         playerLoadRotation = rotation;
         ResetForNextScene(scene);
@@ -273,7 +278,7 @@ public class GameManager : MonoBehaviour
             SetInventory(save.inventory);
             PuzzleManager.Instance.puzzleStatus = save.puzzleStatus;
             hasSeenZeus = save.hasSeenZeus;
-            prevScene = 0;
+            prevScene = -1;
             newScene = 0;
 
             Debug.Log("Game Loaded");

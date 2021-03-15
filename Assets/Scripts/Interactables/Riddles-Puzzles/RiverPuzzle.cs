@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using TMPro;
 
 // Hades/ Underworld Puzzle/Riddle
 // You must get all three over the River Styx
@@ -21,30 +22,76 @@ public class RiverPuzzle : MonoBehaviour
     public bool isLeft; // if this hitbox is the left(starting hitbox)
     public RiddleSpot riddleSpot; // the corresponding RiddleSpot in the room
     public RiverPuzzle otherSide; // the other hitbox on other side of the river
+    public Vector3 boatLocation; // the location the boat moves to when leaving this object
+    public Vector3 characterLocation; // where the character the player has chosen should move to (the other side of the boat form charon)
+    public TextMeshProUGUI optionPanel;
     [Header("Set Dynamically")]
     public bool hasLost = false; // player lost the riddle
     public bool hasWon = false;
+    public bool isPlaying = false;
     // Private vars
     private bool deathHere = false; // death character is in this hitbox
     private bool lifeHere = false; // life character is in this hitbox
     private bool humanHere = false; // human character is in this hitbox
     private bool charonHere = false; // charon is in this hitbox
-    private bool decisionMade = false; // player has made decision for this turn
+    public bool decisionMade = false; // player has made decision for this turn
     private int decision = 0; // decision player made this turn
+    private string options = "Press number to choose: \n";
 
     void Start()
     {
         // if this is the hitbox on the left (the start of the river), then all the characters are here.
         if(isLeft)
         {
+            PuzzleManager.Instance.riverPuzzleLeft = this;
             deathHere = lifeHere = humanHere = charonHere = true;
             Debug.Log("RiverPuzzle: Set Left bools");
-            riddleSpot.answer = -1; // this stops the code in RiddleSpot from going with the keycode/ovrinput
         }
         else
         {
-            PuzzleManager.Instance.rightRiverSide = this;
+            PuzzleManager.Instance.riverPuzzleRight = this;
         }
+    }
+
+    public string GetOptions()
+    {
+        if(isLeft)
+        {
+            if(PuzzleManager.Instance.onLeft)
+            {
+                options = "Choose who Charon takes across the Styx: \n";
+                if(deathHere)
+                {
+                    options = options + "1 : Death\n";
+                }
+                if(lifeHere)
+                {
+                    options = options + "2 : Life\n";
+                }
+                if(humanHere)
+                {
+                    options = options + "3 : Human\n";
+                }
+            }
+            else
+            {
+                options = "Choose who Charon takes across the Styx: \n";
+                if(!deathHere)
+                {
+                    options = options + "1 : Death\n";
+                }
+                if(!lifeHere)
+                {
+                    options = options + "2 : Life\n";
+                }
+                if(!humanHere)
+                {
+                    options = options + "3 : Human\n";
+                }
+            }
+        }
+        options = options + "4 : No one. He crosses alone.";
+        return options;
     }
 
     void Update()
@@ -55,7 +102,7 @@ public class RiverPuzzle : MonoBehaviour
             if((PuzzleManager.Instance.onLeft && isLeft) || (!PuzzleManager.Instance.onLeft && !isLeft))
             {
                 // Take Death
-                if((Input.GetKeyDown(KeyCode.A) || OVRInput.Get(OVRInput.Touch.One)))
+                if(OVRInput.Get(OVRInput.Button.One))
                 {
                     if(deathHere)
                     {
@@ -65,7 +112,7 @@ public class RiverPuzzle : MonoBehaviour
                     }
                 }
                 // Take Life
-                if((Input.GetKeyDown(KeyCode.B) || OVRInput.Get(OVRInput.Touch.Two)))
+                if(OVRInput.Get(OVRInput.Button.Two))
                 {
                     if(lifeHere)
                     {
@@ -75,7 +122,7 @@ public class RiverPuzzle : MonoBehaviour
                     }
                 }
                 // Take Human
-                if((Input.GetKeyDown(KeyCode.X) || OVRInput.Get(OVRInput.Touch.Three)))
+                if(OVRInput.Get(OVRInput.Button.Three))
                 {
                     if(humanHere)
                     {
@@ -85,7 +132,7 @@ public class RiverPuzzle : MonoBehaviour
                     }
                 }
                 // Go Alone
-                if((Input.GetKeyDown(KeyCode.Y) || OVRInput.Get(OVRInput.Touch.Four)))
+                if(OVRInput.Get(OVRInput.Button.Four))
                 {
                     if(charonHere)
                     {
@@ -171,34 +218,29 @@ public class RiverPuzzle : MonoBehaviour
         // player has made the decision, do stuff lol
         // TODO: Characters Cross River
         Debug.Log("RiverPuzzle: Made decision: " + decision);
-        if(decision == 0)
-        {
-            return;
-        }
+        Debug.Log("WE ARE ON THE LEFT!!!!! " + isLeft);
+        Debug.Log(PuzzleManager.Instance.onLeft);
         decisionMade = true;
-        if (decision == 1)
+        isPlaying = false;
+        if(deathHere && decision == 1)
         {
-            Debug.Log("Chose Life");
+            Debug.Log("Chose death");
+            PuzzleManager.Instance.RaiseBridge(decision, !isLeft);
         }
-        else if (decision == 2)
+        if(lifeHere && decision == 2)
         {
-            Debug.Log("Chose Death");
+            Debug.Log("Chose life");
+            PuzzleManager.Instance.RaiseBridge(decision, !isLeft);
         }
-        else if (decision == 3)
+        if(humanHere && decision == 3)
         {
-            Debug.Log("Chose Human");
+            Debug.Log("Chose human");
+            PuzzleManager.Instance.RaiseBridge(decision, !isLeft);
         }
-        else if(decision == 4)
+        if(charonHere && decision == 4)
         {
-            Debug.Log("Crossing Alone");
+            Debug.Log("Chose Alone");
+            PuzzleManager.Instance.RaiseBridge(decision, !isLeft);
         }
-        Invoke("PlaceHolder", 3.0f);
-    }
-
-    private void PlaceHolder()
-    {
-        // reset decision vars for nect decision
-        decision = 0;
-        decisionMade = false;
     }
 }
