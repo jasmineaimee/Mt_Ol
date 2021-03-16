@@ -101,8 +101,11 @@ public class GameManager : MonoBehaviour
     //* INVENTORY
     public void AddToInventory(Collectables type)
     {
-        inventory.Add(type);
-        roomCollectable.SetActive(false);
+        if(!isInInventory(type))
+        {
+            inventory.Add(type);
+            roomCollectable.SetActive(false);
+        }
     }
 
     public void RemoveFromInventory(Collectables type)
@@ -192,7 +195,7 @@ public class GameManager : MonoBehaviour
 
     public void ChangeSceneTo(int scene, Vector3 location, Vector3 rotation)
     {
-        Debug.Log(scene + " <- scene   location ->  " + location + "   rotation -> " + rotation);
+        // Debug.Log(scene + " <- scene   location ->  " + location + "   rotation -> " + rotation);
 
         playerInRoom = scene;
         if(newScene != 11)

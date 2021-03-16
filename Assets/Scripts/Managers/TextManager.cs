@@ -46,17 +46,18 @@ public class TextManager : MonoBehaviour
             {
                 questionText.text = riddles[questionNum];
             }
-            else
-            {
-                if(GameManager.Instance.CheckAnswers())
-                {
-                    questionText.text = "The item you seek is in the chest.";
-                }
-                else
-                {
-                    questionText.text = "Your knowledge was insufficient. You may not have the item.";
-                }
-            }
+        }
+    }
+
+    public void SetFinalText()
+    {
+        if(GameManager.Instance.CheckAnswers())
+        {
+            questionText.text = "The item you seek is in the chest.";
+        }
+        else
+        {
+            questionText.text = "Your knowledge was insufficient. You may not have the item.";
         }
     }
 

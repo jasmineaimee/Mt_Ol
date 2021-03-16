@@ -46,7 +46,6 @@ public class SimonSaysPuzzle : MonoBehaviour
                 if(OVRInput.GetUp(OVRInput.Button.One))
                 {                    
                     isPlaying = true;
-                    Debug.Log("SHOWING SEQUENCE");
                     ShowSequence();
                     gameStarted = true;
                     hasLost = false;
@@ -88,7 +87,6 @@ public class SimonSaysPuzzle : MonoBehaviour
         {
             Component halo = buttons[colour].GetComponent("Halo");
             halo.GetType().GetProperty("enabled").SetValue(halo, true, null);
-            Debug.Log(colour + " is Showing!!!");
             StartCoroutine(HideHalo(colour));
         }
         // if not at the end of the sequence, recursion call
@@ -110,13 +108,12 @@ public class SimonSaysPuzzle : MonoBehaviour
         {
             Component halo = buttons[colour].GetComponent("Halo");
             halo.GetType().GetProperty("enabled").SetValue(halo, false, null);
-            Debug.Log(colour + " is Hidden!!!");
         }
     }
 
     public void UpdateAnswers(int answer)
     {
-        Debug.Log(answer);
+        Debug.Log("Hit:: " + answer);
         // if the player has started the game
         if(gameStarted) {
             // if this hit is still in the correct sequence order
@@ -140,13 +137,14 @@ public class SimonSaysPuzzle : MonoBehaviour
             else // player did not play correct sequence
             {
                 // player lost, reset sequence, and sequence position, and score
-                Debug.Log("Player Lost. Correct Sequence: " + sequence.ToString());
+                Debug.Log("Player Lost.");
                 SoundManager.Instance.PlayOneShot(SoundManager.Instance.incorrectClip);
                 hasLost = true;
                 currentSeqPos = 0;
                 numberCorrect = 0;
                 sequence.Clear();
                 sequence.Add(Random.Range(0,8));
+                canvas.text = "You lost. Try again next time.";
                 gameStarted = false;
             }
         }

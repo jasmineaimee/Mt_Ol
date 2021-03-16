@@ -7,7 +7,7 @@ public class Pandora : Character
     protected override void Start()
     {
         base.Start();
-        animator = this.gameObject.GetComponent<Animator>();
+        animator = this.gameObject.GetComponentInChildren<Animator>();
     }
 
     protected override void Update() //Pandora isn't a speaking character, so we override update.

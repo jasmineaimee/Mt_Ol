@@ -17,6 +17,8 @@ public class RiddleSpot : MonoBehaviour
     private int questionNum = 0;
     public bool hasAnswered = false;
 
+    private bool hasStarted = false;
+
     void OnTriggerEnter(Collider other)
     {
         onSpot = true;
@@ -31,32 +33,49 @@ public class RiddleSpot : MonoBehaviour
     {
         if(onSpot)
         {
-            if(roomNum == 5 && questionNum < GameManager.Instance.answers.Length)
+            if(!hasStarted)
             {
-                if(!hasAnswered)
+                if(roomNum == 5 && OVRInput.GetUp(OVRInput.Button.One))
                 {
-                    if(OVRInput.GetUp(OVRInput.Button.One))
-                    {
-                        hasAnswered = true;
-                        answer = 1;
-                        GameManager.Instance.answers[questionNum] = 1;
-                        questionNum++;
-                    }
-                    else if(OVRInput.GetUp(OVRInput.Button.Two))
-                    {
-                        hasAnswered = true;
-                        answer = 2;
-                        GameManager.Instance.answers[questionNum] = 2;
-                        questionNum++;
-                    }
-                }
-
-                if(answer != 0)
-                {
-                    GameManager.Instance.answers[questionNum] = answer;
+                    hasStarted = true;
                     TextManager.Instance.SetQuestionText(roomNum, questionNum);
-                    answer = 0;
-                    Invoke("ResetQuestionVars", 1.0f);
+                }
+            }
+            else
+            {
+                if(roomNum == 5 && questionNum < GameManager.Instance.answers.Length)
+                {
+                    if(!hasAnswered)
+                    {
+                        if(OVRInput.GetUp(OVRInput.Button.One))
+                        {
+                            hasAnswered = true;
+                            answer = 1;
+                        }
+                        else if(OVRInput.GetUp(OVRInput.Button.Two))
+                        {
+                            hasAnswered = true;
+                            answer = 2;
+                        }
+                    }
+
+                    if(answer != 0)
+                    {
+                        Debug.Log("TEXT ANSWER " + answer + " ::: FOR QUESTION NUMBER " + questionNum);
+                        GameManager.Instance.answers[questionNum] = answer;
+                        answer = 0;
+                        if(questionNum == 9)
+                        {
+                            TextManager.Instance.SetFinalText();
+                            this.gameObject.SetActive(false);
+                        }
+                        else
+                        {
+                            TextManager.Instance.SetQuestionText(roomNum, questionNum + 1);
+                            Invoke("ResetQuestionVars", 1.0f);
+                        }
+                        
+                    }
                 }
             }
         }
