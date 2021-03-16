@@ -7,6 +7,10 @@ TagManager:
   - Door
   - rHand
   - lHand
+  - Death
+  - Life
+  - Human
+  - Charon
   layers:
   - Default
   - TransparentFX
