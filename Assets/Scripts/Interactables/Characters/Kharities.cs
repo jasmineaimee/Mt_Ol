@@ -17,6 +17,9 @@ public class Kharities : Character
     protected override void ControlSpeaking()
     {
         base.ControlSpeaking();
-        riddleSpot.SetActive(true);
+        if(GameManager.Instance.hasSeenZeus)
+        {
+            riddleSpot.SetActive(true);
+        }
     }
 }

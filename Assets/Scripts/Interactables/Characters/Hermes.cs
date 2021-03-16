@@ -17,6 +17,9 @@ public class Hermes : Character
     protected override void ControlSpeaking()
     {
         base.ControlSpeaking();
-        teleport.SetActive(true);
+        if(GameManager.Instance.hasSeenZeus)
+        {
+            teleport.SetActive(true);
+        }
     }
 }

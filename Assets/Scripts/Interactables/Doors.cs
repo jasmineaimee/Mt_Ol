@@ -25,7 +25,6 @@ public class Doors : MonoBehaviour
         {
             if(OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger) >= 0.5f || OVRInput.Get(OVRInput.Axis1D.SecondaryIndexTrigger) >= 0.5f)
             {
-                Debug.Log("Wants to Change Scene");
                 GameManager.Instance.ChangeSceneTo(toRoomNum, playerLoadLocation, playerLoadRotation);
                 isColliding = false;
             }
@@ -37,7 +36,6 @@ public class Doors : MonoBehaviour
         if(other.tag == "rHand" || other.tag == "lHand")
         {
             isColliding = true;
-            Debug.Log("isColliding");
         }
     }
 

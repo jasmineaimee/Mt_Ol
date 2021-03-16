@@ -102,7 +102,7 @@ public class RiverPuzzle : MonoBehaviour
             if((PuzzleManager.Instance.onLeft && isLeft) || (!PuzzleManager.Instance.onLeft && !isLeft))
             {
                 // Take Death
-                if(OVRInput.Get(OVRInput.Button.One))
+                if(OVRInput.GetUp(OVRInput.Button.One))
                 {
                     if(deathHere)
                     {
@@ -112,7 +112,7 @@ public class RiverPuzzle : MonoBehaviour
                     }
                 }
                 // Take Life
-                if(OVRInput.Get(OVRInput.Button.Two))
+                if(OVRInput.GetUp(OVRInput.Button.Two))
                 {
                     if(lifeHere)
                     {
@@ -122,7 +122,7 @@ public class RiverPuzzle : MonoBehaviour
                     }
                 }
                 // Take Human
-                if(OVRInput.Get(OVRInput.Button.Three))
+                if(OVRInput.GetUp(OVRInput.Button.Three))
                 {
                     if(humanHere)
                     {
@@ -132,7 +132,7 @@ public class RiverPuzzle : MonoBehaviour
                     }
                 }
                 // Go Alone
-                if(OVRInput.Get(OVRInput.Button.Four))
+                if(OVRInput.GetUp(OVRInput.Button.Four))
                 {
                     if(charonHere)
                     {
@@ -225,22 +225,22 @@ public class RiverPuzzle : MonoBehaviour
         if(deathHere && decision == 1)
         {
             Debug.Log("Chose death");
-            PuzzleManager.Instance.RaiseBridge(decision, !isLeft);
+            PuzzleManager.Instance.CrossRiver(decision, !isLeft);
         }
         if(lifeHere && decision == 2)
         {
             Debug.Log("Chose life");
-            PuzzleManager.Instance.RaiseBridge(decision, !isLeft);
+            PuzzleManager.Instance.CrossRiver(decision, !isLeft);
         }
         if(humanHere && decision == 3)
         {
             Debug.Log("Chose human");
-            PuzzleManager.Instance.RaiseBridge(decision, !isLeft);
+            PuzzleManager.Instance.CrossRiver(decision, !isLeft);
         }
         if(charonHere && decision == 4)
         {
             Debug.Log("Chose Alone");
-            PuzzleManager.Instance.RaiseBridge(decision, !isLeft);
+            PuzzleManager.Instance.CrossRiver(decision, !isLeft);
         }
     }
 }

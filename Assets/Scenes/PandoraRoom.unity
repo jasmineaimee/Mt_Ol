@@ -2629,18 +2629,6 @@ MonoBehaviour:
   m_TrackingType: 0
   m_UpdateType: 0
   m_UseRelativeTransform: 0
---- !u!114 &789870041
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 789870024}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2fadf230d1919748a9aa21d40f74619, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &793010481 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3619641576012475629, guid: 6633ab1ca39a4334b9d57a9c42663d8f,
@@ -5280,7 +5268,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63eac74917a881b40bbbed5825583b82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aText: {fileID: 0}
   speechText: {fileID: 0}
   riddleSpot: {fileID: 0}
   teleport: {fileID: 0}
@@ -6561,7 +6548,7 @@ PrefabInstance:
     - target: {fileID: 2325931952176045606, guid: e9c1eef39b037d9468b28d75c0402dd8,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 30.59
+      value: 30.5
       objectReference: {fileID: 0}
     - target: {fileID: 2325931952176045606, guid: e9c1eef39b037d9468b28d75c0402dd8,
         type: 3}
@@ -6653,11 +6640,6 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0.6
       objectReference: {fileID: 0}
-    - target: {fileID: 7519083323975853291, guid: e9c1eef39b037d9468b28d75c0402dd8,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 5631ae5966e9e8e4ca45b084d00e660c, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9c1eef39b037d9468b28d75c0402dd8, type: 3}
 --- !u!4 &7794015807553996565 stripped

@@ -17,9 +17,6 @@ public class InventoryManager : MonoBehaviour
     public bool boxActive = false; // if box is showing
 
     //Private Vars
-
-    private int tail = 0; // end of the inventory list
-
     void Awake()
     {
         if(Instance == null)

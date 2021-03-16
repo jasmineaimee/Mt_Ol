@@ -10,6 +10,7 @@ public class SoundManager : MonoBehaviour
     public AudioClip incorrectClip; // clip that plays when player doesn't solve riddle
     public AudioClip correctClip; // clip that plays when player solves riddle
     public AudioClip teleportClip; // clip that plays when teleporting player
+    public AudioClip thunkClip;
     public AudioMixer masterMixer; // the sound mixer
     // [Header("Set Dynamically")]
 

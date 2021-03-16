@@ -8,6 +8,8 @@ public class TextManager : MonoBehaviour
     [Header("T E X T  M A N A G E R")]
     public TextMeshPro winText;
     public TextMeshProUGUI questionText;
+    public RiddleSpot riddleSpot;
+
     // [Header("Set Dynamically")]
 
     // Private Vars
@@ -28,6 +30,7 @@ public class TextManager : MonoBehaviour
         if(Instance == null)
         {
             Instance = this;
+            GameManager.Instance.hasSeenZeus = true;
         }
         else
         {

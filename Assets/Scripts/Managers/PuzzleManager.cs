@@ -47,41 +47,46 @@ public class PuzzleManager : MonoBehaviour
 
     void Update()
     {
-        if(notStarted)
+        if(riverPuzzleLeft)
         {
-            if(Input.GetKeyDown(KeyCode.A))
+            if(notStarted)
             {
-                notStarted = false;
-                ShowOptions();
-                riverPuzzleLeft.isPlaying = true;
-                riverPuzzleRight.isPlaying = true;
-            }
-        }
-        // if they won the river puzzle, give them points
-        if(!riverPuzzleLeft.hasLost && !riverPuzzleLeft.hasWon)
-        {
-            if(characterMoving)
-            {
-                Debug.Log("Moving Character");
-                float distCovered = (Time.time - startTime) * speed;
-
-                // Fraction of journey completed equals current distance divided by total distance.
-                float fractionOfJourney = distCovered / journeyLength;
-
-                // Set our position as a fraction of the distance between the markers.
-                objectToMove.transform.position = Vector3.Lerp(objectToMove.transform.position, characterPosition, fractionOfJourney);
-                if(Vector3.Distance(objectToMove.transform.position, characterPosition) < 0.01)
+                if(OVRInput.GetUp(OVRInput.Button.One))
                 {
-                    characterMoving = false;
-                    isMoving = true;
-                    // Keep a note of the time the movement started.
-                    startTime = Time.time;
+                    notStarted = false;
+                    ShowOptions();
+                    riverPuzzleLeft.isPlaying = true;
+                    riverPuzzleRight.isPlaying = true;
+                }
+            }
+            
+            // if they won the river puzzle, give them points
+            if(!riverPuzzleLeft.hasLost && !riverPuzzleLeft.hasWon)
+            {
+                if(characterMoving)
+                {
+                    Debug.Log("Moving Character");
+                    float distCovered = (Time.time - startTime) * speed;
 
-                    // Calculate the journey length.
-                    journeyLength = Vector3.Distance(boat.transform.position, movePosition);
+                    // Fraction of journey completed equals current distance divided by total distance.
+                    float fractionOfJourney = distCovered / journeyLength;
+
+                    // Set our position as a fraction of the distance between the markers.
+                    objectToMove.transform.position = Vector3.Lerp(objectToMove.transform.position, characterPosition, fractionOfJourney);
+                    if(Vector3.Distance(objectToMove.transform.position, characterPosition) < 0.01)
+                    {
+                        characterMoving = false;
+                        isMoving = true;
+                        // Keep a note of the time the movement started.
+                        startTime = Time.time;
+
+                        // Calculate the journey length.
+                        journeyLength = Vector3.Distance(boat.transform.position, movePosition);
+                    }
                 }
             }
         }
+
         if(isMoving)
         {
             float distCovered = (Time.time - startTime) * speed;
@@ -119,7 +124,7 @@ public class PuzzleManager : MonoBehaviour
     }
 
 
-    public void RaiseBridge(int position, bool goLeft)
+    public void CrossRiver(int position, bool goLeft)
     {
         if(goLeft)
         {

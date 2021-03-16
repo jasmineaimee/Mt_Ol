@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class SimonSaysPuzzle : MonoBehaviour
 {
@@ -11,11 +12,13 @@ public class SimonSaysPuzzle : MonoBehaviour
     public bool isSounds; // the sound version of simon says
     public GameObject[] buttons; // the buttons the player can hit
     public RiddleSpot riddleSpot; // the corresponding RiddleSpot in the room
+    public TextMeshProUGUI canvas;
     [Header("Set Dynamically")]
     public int numberCorrect = 0; // how far the player played to.
     public bool hasLost = false; // if the player has lost
     public bool hasWon = false; // if the player has won
     // Private vars
+    [SerializeField]
     private List<int> sequence; // the current sequence of colours/sounds
     private int currentSeqPos = 0; // currnt position player is in the sequence
     private bool isPlaying = false; // if the sequence is currently playing
@@ -29,7 +32,7 @@ public class SimonSaysPuzzle : MonoBehaviour
             Instance = this;
             // set new sequence list, and fill start with a colour.
             sequence = new List<int>();
-            sequence.Add(Random.Range(1,9));
+            sequence.Add(Random.Range(0,8));
         }
     }
 
@@ -40,12 +43,14 @@ public class SimonSaysPuzzle : MonoBehaviour
             // if the sequence is not currently playing and the player presses A while on the riddlespot, show them the sequence again, or start game if not already started.
             if(!isPlaying && riddleSpot.onSpot)
             {
-                if((Input.GetKeyDown(KeyCode.A) || OVRInput.Get(OVRInput.Touch.One)))
-                {
+                if(OVRInput.GetUp(OVRInput.Button.One))
+                {                    
+                    isPlaying = true;
                     Debug.Log("SHOWING SEQUENCE");
-                    showSequence();
+                    ShowSequence();
                     gameStarted = true;
                     hasLost = false;
+
                 }
             }
         }
@@ -55,20 +60,20 @@ public class SimonSaysPuzzle : MonoBehaviour
             Debug.Log("Won SIMON SAYS");
             riddleSpot.gameObject.SetActive(false);
             GameManager.Instance.roomCollectable.SetActive(true);
+            canvas.text = "You've wone! Collect your prize from the chest!";
         }
     }
 
-    private void showSequence()
+    private void ShowSequence()
     {
         // show first halo in two seconds (1, plus the IEnumerator 1)
-        isPlaying = true;
-        Invoke("ShowHalo", 1.0f);
+        StartCoroutine(ShowHalo());
     }
 
     private IEnumerator ShowHalo(int colour = -1, int counter = 0)
     {
         Debug.Log("Colour: " + colour + " Count: " + counter);
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(3.0f);
         // if this was just invoked, we know it's the start of the sequence.
         if(colour == -1)
         {
@@ -83,12 +88,13 @@ public class SimonSaysPuzzle : MonoBehaviour
         {
             Component halo = buttons[colour].GetComponent("Halo");
             halo.GetType().GetProperty("enabled").SetValue(halo, true, null);
-            HideHalo(colour);
+            Debug.Log(colour + " is Showing!!!");
+            StartCoroutine(HideHalo(colour));
         }
         // if not at the end of the sequence, recursion call
         if(counter < sequence.Count - 1)
         {
-            ShowHalo(sequence[counter+1], counter+1);
+            StartCoroutine(ShowHalo(sequence[counter+1], counter+1));
         }
         else // at end of sequence, it's not playing anymore
         {
@@ -99,11 +105,12 @@ public class SimonSaysPuzzle : MonoBehaviour
     private IEnumerator HideHalo(int colour)
     {
         // turn of halo after .5 seconds
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(2.0f);
         if(!isSounds)
         {
             Component halo = buttons[colour].GetComponent("Halo");
             halo.GetType().GetProperty("enabled").SetValue(halo, false, null);
+            Debug.Log(colour + " is Hidden!!!");
         }
     }
 
@@ -118,12 +125,13 @@ public class SimonSaysPuzzle : MonoBehaviour
                 // if player is at end of sequence, play win sound, reset position, add to level score, and add a new value to the sequence
                 if(currentSeqPos == sequence.Count - 1)
                 {
-                    // play win sound, resest sequence position, 
+                    // play win sound, resest sequence position,
+                    gameStarted = false;
                     SoundManager.Instance.PlayOneShot(SoundManager.Instance.correctClip);
                     Debug.Log("GOT TO END OF SEQUENCE");
                     currentSeqPos = 0;
                     numberCorrect++;
-                    sequence.Add(Random.Range(1,9));
+                    sequence.Add(Random.Range(0,8));
                     return;
                 }
                 // incremenet sequence position 
@@ -132,13 +140,13 @@ public class SimonSaysPuzzle : MonoBehaviour
             else // player did not play correct sequence
             {
                 // player lost, reset sequence, and sequence position, and score
-                Debug.Log("Player Lost. Correct Sequence: " + sequence);
+                Debug.Log("Player Lost. Correct Sequence: " + sequence.ToString());
                 SoundManager.Instance.PlayOneShot(SoundManager.Instance.incorrectClip);
                 hasLost = true;
                 currentSeqPos = 0;
                 numberCorrect = 0;
                 sequence.Clear();
-                sequence.Add(Random.Range(1,9));
+                sequence.Add(Random.Range(0,8));
                 gameStarted = false;
             }
         }

@@ -506,6 +506,7 @@ MonoBehaviour:
   incorrectClip: {fileID: 8300000, guid: 501a91f79b5e08948a90c9231ba1da03, type: 3}
   correctClip: {fileID: 8300000, guid: fb257b0dd64ba69409137aa0aa7280d5, type: 3}
   teleportClip: {fileID: 8300000, guid: 9bdccf72eef116d4f8bef587f4a231f2, type: 3}
+  thunkClip: {fileID: 8300000, guid: 2fc1c2dd256f0eb4db38ccb172566a35, type: 3}
   masterMixer: {fileID: 24100000, guid: 3faa2d744e9533a4eba8b0c7001a9f80, type: 2}
 --- !u!4 &239812631
 Transform:
@@ -2674,7 +2675,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d38f50c123304e45a1bd61ae1f04282, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rightRiverSide: {fileID: 0}
+  boat: {fileID: 0}
+  death: {fileID: 0}
+  life: {fileID: 0}
+  human: {fileID: 0}
+  riverPuzzleLeft: {fileID: 0}
+  riverPuzzleRight: {fileID: 0}
+  speed: 1
   onLeft: 1
 --- !u!4 &2069867088
 Transform:
@@ -2726,6 +2733,7 @@ MonoBehaviour:
   hasSeenZeus: 0
   isPaused: 0
   isPlayerActive: 1
+  recentre: 0
   prevScene: -1
   newScene: -1
   numCollectables: 0

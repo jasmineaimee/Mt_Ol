@@ -15,6 +15,7 @@ public class RiddleSpot : MonoBehaviour
         private set;
     }
     private int questionNum = 0;
+    public bool hasAnswered = false;
 
     void OnTriggerEnter(Collider other)
     {
@@ -30,29 +31,40 @@ public class RiddleSpot : MonoBehaviour
     {
         if(onSpot)
         {
-            if(roomNum == 5)
+            if(roomNum == 5 && questionNum < GameManager.Instance.answers.Length)
             {
-                if((Input.GetKeyDown(KeyCode.A) || OVRInput.Get(OVRInput.Touch.One)))
+                if(!hasAnswered)
                 {
-                    answer = 1;
-                    GameManager.Instance.answers[questionNum] = 1;
-                    questionNum++;
-                }
-                else if((Input.GetKeyDown(KeyCode.B) || OVRInput.Get(OVRInput.Touch.Two)))
-                {
-                    answer = 2;
-                    GameManager.Instance.answers[questionNum] = 2;
-                    questionNum++;
+                    if(OVRInput.GetUp(OVRInput.Button.One))
+                    {
+                        hasAnswered = true;
+                        answer = 1;
+                        GameManager.Instance.answers[questionNum] = 1;
+                        questionNum++;
+                    }
+                    else if(OVRInput.GetUp(OVRInput.Button.Two))
+                    {
+                        hasAnswered = true;
+                        answer = 2;
+                        GameManager.Instance.answers[questionNum] = 2;
+                        questionNum++;
+                    }
                 }
 
                 if(answer != 0)
                 {
                     GameManager.Instance.answers[questionNum] = answer;
-                    questionNum++;
                     TextManager.Instance.SetQuestionText(roomNum, questionNum);
                     answer = 0;
+                    Invoke("ResetQuestionVars", 1.0f);
                 }
             }
         }
+    }
+
+    private void ResetQuestionVars()
+    {
+        hasAnswered = false;
+        questionNum++;
     }
 }

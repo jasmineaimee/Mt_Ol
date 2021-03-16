@@ -28,6 +28,10 @@ abstract public class Character : MonoBehaviour
             speechText.text = missionStatement;
             missionActive = true;
         }
+        else if(!GameManager.Instance.hasSeenZeus)
+        {
+            speechText.text = "I heard Zeus was looking for you. He's in the clouds.";
+        }
         else
         {
             speechText.text = talkingPoints[Random.Range(0,4)];
