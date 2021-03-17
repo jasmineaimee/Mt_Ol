@@ -46,6 +46,8 @@ public class RiverPuzzle : MonoBehaviour
             PuzzleManager.Instance.riverPuzzleLeft = this;
             deathHere = lifeHere = humanHere = charonHere = true;
             Debug.Log("RiverPuzzle: Set Left bools");
+            GameManager.Instance.hasSeenZeus = true;
+
         }
         else
         {
@@ -97,7 +99,7 @@ public class RiverPuzzle : MonoBehaviour
     void Update()
     {   
         // if player is making a Choice for Charon to take
-        if(riddleSpot.onSpot && !decisionMade)
+        if(riddleSpot.onSpot && !decisionMade && isPlaying)
         {
             if((PuzzleManager.Instance.onLeft && isLeft) || (!PuzzleManager.Instance.onLeft && !isLeft))
             {

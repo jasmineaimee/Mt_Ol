@@ -9,18 +9,19 @@ public class PuzzleManager : MonoBehaviour
     // ! If above is changed the save file also needs to be changed
     [Header("Set in Inspector")]
     [Header("P U Z Z L E  M A N A G E R")]
-    public GameObject boat;
-    public GameObject death;
-    public GameObject life;
-    public GameObject human;
+    public RiverCharacter boat;
+    public RiverCharacter death;
+    public RiverCharacter life;
+    public RiverCharacter human;
     public RiverPuzzle riverPuzzleLeft;
     public RiverPuzzle riverPuzzleRight;
     private Vector3 characterPosition;
     private Vector3 movePosition;
-    private GameObject objectToMove;
+    private RiverCharacter objectToMove;
     private bool isMoving = false;
     private bool characterMoving = false;
-    private bool notStarted = true;
+    public bool notStarted = true;
+    private bool boatNeedsMove = false;
     // Movement speed in units per second.
     public float speed = 1.0F;
     // Time when the movement started.
@@ -44,6 +45,11 @@ public class PuzzleManager : MonoBehaviour
             Destroy(this);
         }
     }
+    private void Timer()
+    {
+        riverPuzzleLeft.isPlaying = true;
+        riverPuzzleRight.isPlaying = true;
+    }
 
     void Update()
     {
@@ -54,9 +60,8 @@ public class PuzzleManager : MonoBehaviour
                 if(OVRInput.GetUp(OVRInput.Button.One))
                 {
                     notStarted = false;
+                    Invoke("Timer", 1.0f);
                     ShowOptions();
-                    riverPuzzleLeft.isPlaying = true;
-                    riverPuzzleRight.isPlaying = true;
                 }
             }
             
@@ -76,12 +81,19 @@ public class PuzzleManager : MonoBehaviour
                     if(Vector3.Distance(objectToMove.transform.position, characterPosition) < 0.01)
                     {
                         characterMoving = false;
-                        isMoving = true;
-                        // Keep a note of the time the movement started.
-                        startTime = Time.time;
-
-                        // Calculate the journey length.
-                        journeyLength = Vector3.Distance(boat.transform.position, movePosition);
+                        if(boatNeedsMove)
+                        {
+                            isMoving = true;
+                            // Keep a note of the time the movement started.
+                            startTime = Time.time;
+                            characterPosition = onLeft ? riverPuzzleLeft.characterLocation : riverPuzzleRight.characterLocation;
+                            // Calculate the journey length.
+                            journeyLength = Vector3.Distance(boat.transform.position, movePosition);
+                        }
+                        else
+                        {
+                            FinishAnimation();
+                        }
                     }
                 }
             }
@@ -96,13 +108,25 @@ public class PuzzleManager : MonoBehaviour
 
             // Set our position as a fraction of the distance between the markers.
             boat.transform.position = Vector3.Lerp(boat.transform.position, movePosition, fractionOfJourney);
+            if(objectToMove)
+            {
+                objectToMove.transform.position = Vector3.Lerp(objectToMove.transform.position, characterPosition, fractionOfJourney);
+            }
             if(Vector3.Distance(boat.transform.position, movePosition) < 0.01)
             {
                 isMoving = false;
+                boatNeedsMove = false;
+                if(objectToMove)
+                {
+                    characterPosition = onLeft ? objectToMove.leftPosition : objectToMove.rightPosition;
+                    characterMoving = true;
+                }
+                else
+                {
+                    FinishAnimation();
+                }
                 movePosition = new Vector3(0,0,0);
-                objectToMove = null;
-                FinishAnimation();
-                ShowOptions();
+                
             }
         }
         if(riverPuzzleRight)
@@ -138,12 +162,12 @@ public class PuzzleManager : MonoBehaviour
         if(goLeft)
         {
             characterPosition = riverPuzzleRight.characterLocation;
-            movePosition = riverPuzzleRight.boatLocation;
+            movePosition = boat.leftPosition;
         }
         else
         {
             characterPosition = riverPuzzleLeft.characterLocation;
-            movePosition = riverPuzzleLeft.boatLocation;
+            movePosition = boat.rightPosition;
         }
         if(position == 1)
         {
@@ -168,7 +192,7 @@ public class PuzzleManager : MonoBehaviour
             isMoving = true;
             journeyLength = Vector3.Distance(boat.transform.position, movePosition);
         }
-
+        boatNeedsMove = true;
         // Keep a note of the time the movement started.
         startTime = Time.time;
     }
@@ -194,9 +218,14 @@ public class PuzzleManager : MonoBehaviour
 
     private void FinishAnimation()
     {
-        riverPuzzleLeft.isPlaying = true;
-        riverPuzzleRight.isPlaying = true;
-        riverPuzzleLeft.decisionMade = false;
-        riverPuzzleRight.decisionMade = false;
+        if(!isMoving && !characterMoving)
+        {
+            objectToMove = null;
+            ShowOptions();
+            riverPuzzleLeft.isPlaying = true;
+            riverPuzzleRight.isPlaying = true;
+            riverPuzzleLeft.decisionMade = false;
+            riverPuzzleRight.decisionMade = false;
+        }
     }
 }

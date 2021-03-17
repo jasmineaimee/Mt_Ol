@@ -30,7 +30,6 @@ public class TextManager : MonoBehaviour
         if(Instance == null)
         {
             Instance = this;
-            GameManager.Instance.hasSeenZeus = true;
         }
         else
         {

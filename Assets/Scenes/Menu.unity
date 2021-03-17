@@ -393,7 +393,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rayTransform: {fileID: 1899737926}
   m_Cursor: {fileID: 759863919}
-  joyPadClickButton: 8192
+  joyPadClickButton: 2097153
   gazeClickKey: 32
   performSphereCastForGazepointer: 0
   useRightStickScroll: 1
@@ -1154,6 +1154,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 789870020}
   m_PrefabAsset: {fileID: 0}
+--- !u!20 &789870022 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 2015248, guid: ce816f2e6abb0504092c23ed9b970dfd,
+    type: 3}
+  m_PrefabInstance: {fileID: 789870020}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &789870023 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100014, guid: ce816f2e6abb0504092c23ed9b970dfd,
@@ -1728,7 +1734,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 2
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 789870022}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
