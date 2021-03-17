@@ -1,10 +1,13 @@
-﻿public class PandorasBox : Collectable
+public class PandorasBox : Collectable
 {
-    //[Header("P A N D O R A S  B O X")]
-    void Start()
+    // I have other plans for this object later on. for now it just overrides the main collectable functions.
+    protected override void Start()
     {
-        // set collectable type
-        type = Collectables.Box;
+        
     }
 
+    protected override void Update()
+    {
+        
+    }
 }

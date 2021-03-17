@@ -58,7 +58,11 @@ public class SimonSaysPuzzle : MonoBehaviour
             // TODO: All the other win stuff from RiddleSpot lol
             Debug.Log("Won SIMON SAYS");
             riddleSpot.gameObject.SetActive(false);
-            GameManager.Instance.roomCollectable.SetActive(true);
+            if(GameManager.Instance.roomCollectable)
+            {
+                GameManager.Instance.roomCollectable.SetActive(true);
+                GameManager.Instance.roomCollectable = null;
+            }
             canvas.text = "You've wone! Collect your prize from the chest!";
         }
     }

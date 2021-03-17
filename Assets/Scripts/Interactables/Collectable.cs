@@ -8,7 +8,7 @@ public class Collectable : MonoBehaviour
     public Collectables type;
     public int roomNum;
 
-    void Start()
+    protected virtual void Start()
     {
         GameManager.Instance.roomCollectable = this.gameObject;
         if(GameManager.Instance.playerInRoom == 0)
@@ -35,7 +35,7 @@ public class Collectable : MonoBehaviour
         }
     }
 
-    void Update()
+    protected virtual void Update()
     {
         if(this.GetComponent<OVRGrabbable>().isGrabbed)
         {

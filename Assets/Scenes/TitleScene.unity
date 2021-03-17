@@ -2234,7 +2234,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  pointer: {fileID: 0}
+  pointer: {fileID: 1789205508}
   sortOrder: 0
 --- !u!114 &1585730883
 MonoBehaviour:
@@ -2681,6 +2681,7 @@ MonoBehaviour:
   human: {fileID: 0}
   riverPuzzleLeft: {fileID: 0}
   riverPuzzleRight: {fileID: 0}
+  notStarted: 1
   speed: 1
   onLeft: 1
 --- !u!4 &2069867088

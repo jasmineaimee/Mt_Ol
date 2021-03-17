@@ -62,7 +62,10 @@ public class MenuManager : MonoBehaviour
     
     public void Save()
     {
+        buttonPanel.SetActive(false);
         GameManager.Instance.Save();
+        loadingText.text = "Saved!";
+        Invoke("ResetText",2.0f);
     }
 
     public void Load()
@@ -78,5 +81,11 @@ public class MenuManager : MonoBehaviour
         buttonPanel.SetActive(false);
         loadingText.text = "Loading...";
         Application.Quit();
+    }
+
+    private void ResetText()
+    {
+        loadingText.text = "";
+        buttonPanel.SetActive(true);
     }
 }

@@ -6044,7 +6044,7 @@ PrefabInstance:
     - target: {fileID: 3619641576012475628, guid: 6633ab1ca39a4334b9d57a9c42663d8f,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3619641576012475629, guid: 6633ab1ca39a4334b9d57a9c42663d8f,
         type: 3}
@@ -6101,7 +6101,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 3619641576012475630, guid: 6633ab1ca39a4334b9d57a9c42663d8f,
+        type: 3}
+      propertyPath: roomNum
+      value: 10
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 3619641576012475630, guid: 6633ab1ca39a4334b9d57a9c42663d8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6633ab1ca39a4334b9d57a9c42663d8f, type: 3}
 --- !u!1 &3619641575722782173 stripped
 GameObject:
@@ -6155,6 +6161,20 @@ MonoBehaviour:
   m_snapOrientation: 0
   m_snapOffset: {fileID: 0}
   m_grabPoints: []
+--- !u!114 &3619641575722782177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3619641575722782173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6481b91028afb1147b2b7dfa7cf837b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 8
+  roomNum: 10
 --- !u!4 &3718365338913280084
 Transform:
   m_ObjectHideFlags: 0

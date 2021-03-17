@@ -284,8 +284,11 @@ public class GameManager : MonoBehaviour
             prevScene = -1;
             newScene = 0;
 
+            if(playerInRoom == 11)
+            {
+                MenuManager.Instance.Unpause();
+            }
             Debug.Log("Game Loaded");
-            MenuManager.Instance.Unpause();
         }
         else
         {

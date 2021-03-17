@@ -1635,7 +1635,6 @@ GameObject:
   - component: {fileID: 1385773157}
   - component: {fileID: 1385773161}
   - component: {fileID: 1385773160}
-  - component: {fileID: 1385773159}
   - component: {fileID: 1385773158}
   m_Layer: 0
   m_Name: Canvas
@@ -1684,23 +1683,6 @@ MonoBehaviour:
     m_Bits: 4294967295
   pointer: {fileID: 759863918}
   sortOrder: 0
---- !u!114 &1385773159
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1385773156}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
-  m_BlockingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
 --- !u!114 &1385773160
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1831,11 +1813,11 @@ MonoBehaviour:
       - m_Target: {fileID: 1255226632}
         m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
         m_MethodName: ButtonHit
-        m_Mode: 5
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 2
           m_BoolArgument: 0
@@ -2399,11 +2381,11 @@ MonoBehaviour:
       - m_Target: {fileID: 1255226632}
         m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
         m_MethodName: ButtonHit
-        m_Mode: 5
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: -1
           m_FloatArgument: 0
           m_StringArgument: -1
           m_BoolArgument: 0
@@ -2775,7 +2757,7 @@ MonoBehaviour:
       - m_Target: {fileID: 1255226632}
         m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
         m_MethodName: ButtonHit
-        m_Mode: 5
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3034,11 +3016,11 @@ MonoBehaviour:
       - m_Target: {fileID: 1255226632}
         m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
         m_MethodName: ButtonHit
-        m_Mode: 5
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 1
           m_BoolArgument: 0

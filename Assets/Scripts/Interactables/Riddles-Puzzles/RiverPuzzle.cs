@@ -164,6 +164,7 @@ public class RiverPuzzle : MonoBehaviour
             hasWon = true;
             otherSide.hasWon = true;
             otherSide.gameObject.SetActive(false);
+            GameManager.Instance.roomCollectable.SetActive(true);
             this.gameObject.SetActive(false);
         }
     }

@@ -52,7 +52,11 @@ public class MazePuzzle : MonoBehaviour
         if(hasWon)
         {
             toMaze.gameObject.SetActive(false);
-            GameManager.Instance.roomCollectable.SetActive(true);
+            if(GameManager.Instance.roomCollectable)
+            {
+                GameManager.Instance.roomCollectable.SetActive(true);
+                GameManager.Instance.roomCollectable = null;
+            }
         }
     }
 
