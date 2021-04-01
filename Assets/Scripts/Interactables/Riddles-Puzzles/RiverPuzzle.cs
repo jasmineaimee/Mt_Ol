@@ -46,8 +46,6 @@ public class RiverPuzzle : MonoBehaviour
             PuzzleManager.Instance.riverPuzzleLeft = this;
             deathHere = lifeHere = humanHere = charonHere = true;
             Debug.Log("RiverPuzzle: Set Left bools");
-            GameManager.Instance.hasSeenZeus = true;
-
         }
         else
         {
@@ -64,15 +62,15 @@ public class RiverPuzzle : MonoBehaviour
                 options = "Choose who Charon takes across the Styx: \n";
                 if(deathHere)
                 {
-                    options = options + "1 : Death\n";
+                    options = options + "A : Death\n";
                 }
                 if(lifeHere)
                 {
-                    options = options + "2 : Life\n";
+                    options = options + "B : Life\n";
                 }
                 if(humanHere)
                 {
-                    options = options + "3 : Human\n";
+                    options = options + "X : Human\n";
                 }
             }
             else
@@ -80,19 +78,19 @@ public class RiverPuzzle : MonoBehaviour
                 options = "Choose who Charon takes across the Styx: \n";
                 if(!deathHere)
                 {
-                    options = options + "1 : Death\n";
+                    options = options + "A : Death\n";
                 }
                 if(!lifeHere)
                 {
-                    options = options + "2 : Life\n";
+                    options = options + "B : Life\n";
                 }
                 if(!humanHere)
                 {
-                    options = options + "3 : Human\n";
+                    options = options + "X : Human\n";
                 }
             }
         }
-        options = options + "4 : No one. He crosses alone.";
+        options = options + "Y : No one. He crosses alone.";
         return options;
     }
 
@@ -153,6 +151,7 @@ public class RiverPuzzle : MonoBehaviour
             GameManager.Instance.answers[riddleSpot.roomNum] = 1;
             riddleSpot.gameObject.SetActive(false);
             otherSide.hasLost = true;
+            PuzzleManager.Instance.RemoveOptions();
             otherSide.gameObject.SetActive(false);
             this.gameObject.SetActive(false);
         }
@@ -163,6 +162,7 @@ public class RiverPuzzle : MonoBehaviour
             riddleSpot.gameObject.SetActive(false);
             hasWon = true;
             otherSide.hasWon = true;
+            PuzzleManager.Instance.RemoveOptions();
             otherSide.gameObject.SetActive(false);
             GameManager.Instance.roomCollectable.SetActive(true);
             this.gameObject.SetActive(false);
@@ -196,53 +196,49 @@ public class RiverPuzzle : MonoBehaviour
     
     void OnTriggerExit(Collider other)
     {
-        // if we're still playing, and a character has exited the hitbox, adjust location
-        Debug.Log("RiverPuzzle: Trigger Exit with tagged: " + other.tag);
-        if(other.tag == "Death")
+        // if we're still playing, and a character has entered the hitbox, adjust location
+        if(!hasLost)
         {
-            deathHere = false;
-        }
-        if(other.tag == "Life")
-        {
-            lifeHere = false;
-        }
-        if(other.tag == "Human")
-        {
-            humanHere = false;
-        }
-        if(other.tag == "Charon")
-        {
-            charonHere = false;
+            Debug.Log("RiverPuzzle: Trigger Exit with tagged: " + other.tag);
+            if(other.tag == "Death")
+            {
+                deathHere = false;
+            }
+            if(other.tag == "Life")
+            {
+                lifeHere = false;
+            }
+            if(other.tag == "Human")
+            {
+                humanHere = false;
+            }
+            if(other.tag == "Charon")
+            {
+                charonHere = false;
+            }
         }
     }
 
     private void MakeDecision()
     {
         // player has made the decision, do stuff lol
-        // TODO: Characters Cross River
-        Debug.Log("RiverPuzzle: Made decision: " + decision);
-        Debug.Log("WE ARE ON THE LEFT!!!!! " + isLeft);
-        Debug.Log(PuzzleManager.Instance.onLeft);
+        Debug.Log("WE ARE ON THE LEFT!" + isLeft);
         decisionMade = true;
         isPlaying = false;
         if(deathHere && decision == 1)
         {
-            Debug.Log("Chose death");
             PuzzleManager.Instance.CrossRiver(decision, !isLeft);
         }
         if(lifeHere && decision == 2)
         {
-            Debug.Log("Chose life");
             PuzzleManager.Instance.CrossRiver(decision, !isLeft);
         }
         if(humanHere && decision == 3)
         {
-            Debug.Log("Chose human");
             PuzzleManager.Instance.CrossRiver(decision, !isLeft);
         }
         if(charonHere && decision == 4)
         {
-            Debug.Log("Chose Alone");
             PuzzleManager.Instance.CrossRiver(decision, !isLeft);
         }
     }

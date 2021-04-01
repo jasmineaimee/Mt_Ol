@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     public bool isPaused = false; // is the player paused right now (in the menu area)
     public bool isPlayerActive = true; // false if the player being teleported right now
     public bool recentre = false; // should we recentre the local positions of vr player/camera
-    public int prevScene = -1;
+    public int prevScene = 0;
     public int newScene = 0;
     public int numCollectables = 0;
     public Vector3 teleportLocation; // where are we going?
@@ -62,12 +62,12 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         // if the player hit the menu button, teleport them to menu and pause the game.
-        if(!isPaused && ((Input.GetKeyDown(KeyCode.Escape) || OVRInput.Get(OVRInput.Button.Start))))
+        if(!isPaused && (OVRInput.Get(OVRInput.Button.Start)))
         {
             if(!TitleScreen.Instance)
             {
                 isPaused = true;
-                ChangeSceneTo(11, playerLoadLocation, playerLoadRotation);
+                ChangeSceneTo(11, new Vector3(0f,1.6f,0f), Vector3.zero);
             }
         }
         // recenter local positions if necessary
@@ -131,7 +131,7 @@ public class GameManager : MonoBehaviour
     }
 
     //* TELEPORTATION AND ROOM SCENE CHANGE
-       public void StartTeleport(string place) //Assign this in the menu button.
+    public void StartTeleport(string place) //Assign this in the menu button.
     {
         isPlayerActive = false;
         switch (place) {
@@ -158,17 +158,6 @@ public class GameManager : MonoBehaviour
 
         StartCoroutine(Teleport());
     }
-
-    public void StartAt()
-    {
-        isPlayerActive = false;
-        playerLoadLocation.y = playerStartY;
-        teleportLocation = playerLoadLocation;
-        teleportRotation = playerLoadRotation;
-        StartCoroutine(Teleport());
-    }
-
-
     public IEnumerator Teleport()
     {
         // after half a second, move player to new location and restore movement
@@ -177,10 +166,23 @@ public class GameManager : MonoBehaviour
         ovrPlayer.transform.localRotation = Quaternion.identity;
         ovrPlayer.transform.Rotate(teleportRotation);
         isPlayerActive = true;
-        // if(MazePuzzle.Instance.hasWon || MazePuzzle.Instance.hasLost || teleportLocation.y > 90.0f)
-        // {
-        //     recentre = true;
-        // }
+    }
+
+    public void StartAt()
+    {
+        isPlayerActive = false;
+        playerLoadLocation.y = playerStartY;
+        StartCoroutine(MovePlayer());
+    }
+
+    public IEnumerator MovePlayer()
+    {
+        // after half a second, move player to new location and restore movement
+        yield return new WaitForSeconds(0.5f);
+        ovrPlayer.transform.position = playerLoadLocation;
+        ovrPlayer.transform.localRotation = Quaternion.identity;
+        ovrPlayer.transform.Rotate(playerLoadRotation);
+        isPlayerActive = true;
     }
 
     public void ResetForNextScene(int scene)
@@ -200,8 +202,19 @@ public class GameManager : MonoBehaviour
         playerInRoom = scene;
         if(newScene != 11)
         {
-            // if we are coming back from the menu, ovr player has not been set, so we don't want to access it.
-            playerStartY = ovrPlayer.transform.position.y;
+            if(MazePuzzle.Instance)
+            {
+                if(!MazePuzzle.Instance.inMaze)
+                {
+                    // if we are in a maze we are up in the sky and don't want to set the y pos.
+                    playerStartY = ovrPlayer.transform.position.y;
+                }
+            }
+            else
+            {
+                // if we are coming back from the menu, ovr player has not been set, so we don't want to access it.
+                playerStartY = ovrPlayer.transform.position.y;
+            }
         }
         playerLoadLocation = location;
         playerLoadRotation = rotation;
@@ -281,7 +294,7 @@ public class GameManager : MonoBehaviour
             SetInventory(save.inventory);
             PuzzleManager.Instance.puzzleStatus = save.puzzleStatus;
             hasSeenZeus = save.hasSeenZeus;
-            prevScene = -1;
+            prevScene = 0;
             newScene = 0;
 
             if(playerInRoom == 11)

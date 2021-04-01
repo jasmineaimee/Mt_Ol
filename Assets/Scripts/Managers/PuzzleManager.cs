@@ -1,10 +1,8 @@
 ﻿using UnityEngine;
-using TMPro;
 
 public class PuzzleManager : MonoBehaviour
 {
     public static PuzzleManager Instance; // only want one PuzzleManager
-
     public const int NUM_PUZZLES = 4; // number of puzzles in the game (regardless of how many times player plays it)
     // ! If above is changed the save file also needs to be changed
     [Header("Set in Inspector")]
@@ -118,8 +116,10 @@ public class PuzzleManager : MonoBehaviour
                 boatNeedsMove = false;
                 if(objectToMove)
                 {
-                    characterPosition = onLeft ? objectToMove.leftPosition : objectToMove.rightPosition;
                     characterMoving = true;
+                    startTime = Time.time;
+                    characterPosition = onLeft ? objectToMove.leftPosition : objectToMove.rightPosition;
+                    journeyLength = Vector3.Distance(objectToMove.transform.position, characterPosition);
                 }
                 else
                 {
@@ -127,14 +127,6 @@ public class PuzzleManager : MonoBehaviour
                 }
                 movePosition = new Vector3(0,0,0);
                 
-            }
-        }
-        if(riverPuzzleRight)
-        {
-            if(riverPuzzleRight.hasWon)
-            {
-                puzzleStatus[1,0] += 1; // how many times this puzzle has been attempted
-                puzzleStatus[1,1] += 1; // how many points player has gotten from this puzzle
             }
         }
         if(MazePuzzle.Instance != null)
@@ -147,28 +139,20 @@ public class PuzzleManager : MonoBehaviour
         }
     }
 
-
     public void CrossRiver(int position, bool goLeft)
     {
-        if(goLeft)
-        {
-            onLeft = true;
-        }
-        if(!goLeft)
-        {
-            onLeft = false;
-        }
-        
+        onLeft = goLeft;
         if(goLeft)
         {
             characterPosition = riverPuzzleRight.characterLocation;
             movePosition = boat.leftPosition;
         }
-        else
+        if(!goLeft)
         {
             characterPosition = riverPuzzleLeft.characterLocation;
             movePosition = boat.rightPosition;
         }
+
         if(position == 1)
         {
             objectToMove = death;
@@ -201,7 +185,6 @@ public class PuzzleManager : MonoBehaviour
         if(!riverPuzzleLeft.hasLost && !riverPuzzleLeft.hasWon)
         {
             riverPuzzleLeft.optionPanel.text = riverPuzzleLeft.GetOptions();
-            Debug.Log("Showing Options");
         }
     }
     public void RemoveOptions()
@@ -209,10 +192,13 @@ public class PuzzleManager : MonoBehaviour
         if(riverPuzzleLeft.hasLost)
         {
             riverPuzzleLeft.optionPanel.text = "Try Again :(";
+            puzzleStatus[1,0] += 1; // how many times this puzzle has been attempted
         }
         if(riverPuzzleLeft.hasWon)
         {
             riverPuzzleLeft.optionPanel.text = "Good Job :)";
+            puzzleStatus[1,0] += 1; // how many times this puzzle has been attempted
+            puzzleStatus[1,1] += 1; // how many points player has gotten from this puzzle
         }
     }
 
